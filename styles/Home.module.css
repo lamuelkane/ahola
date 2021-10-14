@@ -85,7 +85,7 @@
   cursor: pointer;
   padding: 5px;
   width: 180px;
-  background: rgb(47, 59, 238);
+  background: rgb(175, 36, 36);
   color: black;
   border-radius: 10px;
   transition: all .5s ease;
@@ -120,12 +120,16 @@
 }
 
 .showcase{
-  background: rgb(47, 59, 238);
+  /* background: rgb(131, 139, 252); */
+  background: white;
+  /* background: rgb(175, 36, 36); */
   /* color: white; */
   width: 300px;
   padding: 10px;
   margin-bottom: 20px;
   margin-left: 10px;
+  border-radius: 10px;
+  
 }
 
 .showcaseimg{
@@ -165,7 +169,7 @@
 }
 
 .shwcasewrapper{
-  background: rgba(177, 175, 175, .2)
+  background: rgb(250, 242, 242)
         
 }
 

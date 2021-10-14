@@ -352,11 +352,11 @@ tr{
 }
 
 .main-bg{
-  background: #0a1b0a !important;
+  background: rgb(175, 36, 36) !important;
 }
 
 .main-color{
-  background: rgb(10, 27, 10) !important;
+  color: rgb(175, 36, 36) !important;
 }
 
 .bluebg{

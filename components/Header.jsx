@@ -10,8 +10,8 @@ export default function Header() {
                   <div className='flex align-center'>
                       <img src="./images/oleoscript.png" alt="" className={`${styles.logoimg}`} />
                   </div>
-                  <nav className={`${styles.menunav}`}>
-                    <ul className={`${styles.menu} flex justify-between align-center`} >
+                  <nav className={`${styles.menunav} `}>
+                    <ul className={`${styles.menu} flex justify-between border-left align-center`} >
                         <li className={`${styles.menuitem} margin-right`}><Link href='/tutors' >find a tutor</Link></li>
                         <li className={`${styles.menuitem} margin-right`}><Link href='/register' >become a tutor</Link></li>
                         <li className={`${styles.menuitem} margin-right`}><Link href='/contactus' >contact us</Link></li>
