@@ -1,10 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&family=Oswald:wght@694&display=swap');
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  /* font-family: 'Oswald', sans-serif; */
+  font-family: 'Open Sans Condense'
+  /* font-family: 'Scheherazade New', serif; */
+  /* line-height: normal !important; */
+  /* line-height: 30%; */
 }
+
+.bold{
+  font-weight: bold;
+}
+
+.large{
+  font-size: large;
+}
+
+.larger{
+  font-size: larger;
+}
+.x-large{
+  font-size: x-large;
+}
+
+.border-left{
+  border-left: 1px solid black;
+}
+
+.border-right{
+  border-right: 1px solid black;
+}
+
+.border{
+   border: 1px solid black;
+}
+
+li{
+  list-style: none;
+}
+
+.xx-large{
+  font-size: xx-large;
+}
+
+.bolder{
+  font-weight: bolder;
+}
+
+.main{
+  font-family: 'Scheherazade New', serif;
+}
+.cracked{
+  font-family: 'Stick No Bills', sans-serif;
+}
+
+.curly{
+  font-family: 'Ephesis', cursive;
+}
+
+.bushy{
+  font-family: 'Rubik Beastly', cursive;
+}
+/* .curly-font{
+  font-family: 'Lobster', cursive;
+}
+
+.font{
+  font-family: 'Lobster', cursive;
+
+  font-family: 'Quicksand', sans-serif;
+
+  font-family: 'Raleway', sans-serif;
+
+  font-family: 'Tenali Ramakrishna', sans-serif;
+} */
 
 a {
   color: inherit;
@@ -14,3 +85,854 @@ a {
 * {
   box-sizing: border-box;
 }
+
+::-webkit-scrollbar{
+  width: 5px !important;
+}
+
+::-webkit-scrollbar-button{
+  background-color: blueviolet;
+}
+
+::-webkit-scrollbar-corner{
+  background-color: teal;
+}
+
+::-webkit-scrollbar-track{
+  background: rgb(247, 245, 245);
+}
+
+::-webkit-scrollbar-thumb{
+  background: rgb(10, 27, 10) ;
+} 
+
+/* -------------------------------------- flex styles ------------------------------------- */
+
+.pagination{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  list-style: none;
+  font-size: small;
+  max-width: 250px;
+}
+
+.pagination li{
+  cursor: pointer;
+  padding: 3px 6px;
+  border: .1px solid rgba(0, 0, 255, .4);
+  margin: 3px 0px;
+}
+
+.pagination .active{
+  background-color: chartreuse;
+  color: white;
+}
+
+
+.flex{
+  display: flex;
+}
+
+
+.justify-center{
+  justify-content: center;
+}
+
+.justify-between{
+  justify-content: space-between;
+}
+
+/* img{
+  height: 60px;
+  width: 60px
+} */
+
+table{
+  width: 100%;
+  display: grid;
+  /* border: 1px solid black; */
+}
+
+tr{
+  width: 100%;
+  border-top: 1px solid grey;
+  padding: 10px 0;
+}
+
+.info{
+  position: relative;
+  height: 200px;
+}
+
+.order-totaltext{
+  color: rgb(10, 27, 10) ;
+  text-align: center;
+}
+
+.order-total{
+  text-align: center;
+}
+
+.shipping{
+  position: absolute;
+  left: 0;
+}
+
+.details{
+  position: absolute;
+  right: 0;
+}
+
+.td2{
+  width: 250px;
+  max-width: 15%;
+  text-align: center;
+  /* border: 1px solid black; */
+}
+
+.td3, .td4, .td5{
+  width: 100px;
+  max-width: 10%;
+  text-align: center;
+  /* border: 1px solid black; */
+}
+
+.justify-around{
+  justify-content: space-around;
+}
+
+.justify-evenly{
+  justify-content: space-evenly;
+}
+
+.align-center{
+  align-items: center;
+}
+
+.align-between{
+  align-items: space-between;
+}
+
+.align-around{
+  align-items: space-around;
+}
+
+.nowrap{
+  flex-wrap: nowrap;
+}
+
+.wrap{
+  flex-wrap: wrap;
+}
+
+
+.column{
+  flex-direction: column;
+}
+
+.row{
+  flex-direction: row;
+}
+
+.flex-3{
+  flex: 3;
+}
+
+
+/* -------------------------------------- flex styles ------------------------------------- */
+
+/* --------------------------------------- padding ------------------------------ */
+
+.padding{
+  padding: 15px !important;
+}
+
+.padding-top,
+.padding-y{
+  padding-top: 15px !important;
+}
+
+.padding-bottom,
+.padding-y{
+  padding-bottom: 15px !important;
+}
+
+.padding-left,
+.padding-x{
+  padding-left: 15px !important;
+}
+
+.padding-right,
+.padding-x{
+  padding-right: 15px !important;
+}
+
+
+
+/* --------------------------------------- padding ------------------------------ */
+
+
+/* --------------------------------------- margin ------------------------------ */
+
+.margin{
+  margin: 15px !important;
+}
+
+.margin-top-100{
+  margin-top: 100px;
+}
+
+.margin-bottom-100{
+  margin-bottom: 100px;
+}
+
+.margin-top,
+.margin-y{
+  margin-top: 15px !important;
+}
+
+.margin-bottom,
+.margin-y{
+  margin-bottom: 15px !important;
+}
+
+.margin-left,
+.margin-x{
+  margin-left: 15px !important;
+}
+
+.margin-right,
+.margin-x{
+  margin-right: 15px !important;
+}
+
+.margin-auto{
+  margin: auto;
+}
+
+.margin-r-auto{
+  margin-right: auto;
+}
+
+.margin-l-auto{
+  margin-left: auto;
+}
+.swiper-slide{
+  margin-right: 2px !important;
+}
+
+
+/* --------------------------------------- margin ------------------------------ */
+/* --------------------------------------- width ----------------------------------------------- */
+
+.w-100{
+  width: 100% !important;
+}
+.w-80{
+  width: 80% !important;
+}
+.w-50{
+  width: 50% !important;
+}
+.w-90{
+  width: 90% !important;
+}
+.w-70{
+  width: 70% !important;
+}
+
+.w-60{
+  width: 70% !important;
+}
+
+/* --------------------------------------- width ----------------------------------------------- */
+.blue{
+  color: blue;
+}
+
+.main-bg{
+  background: #0a1b0a !important;
+}
+
+.main-color{
+  background: rgb(10, 27, 10) !important;
+}
+
+.bluebg{
+  /* background: rgba(148, 218, 148, 0.2) !important; */
+}
+
+.totop{
+  position: fixed;
+    bottom: 90px;
+    right: 28px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(2, 43, 17);
+    /* border-radius: 50%; */
+    color: white;
+    z-index: 300;
+}
+
+.time{
+  color: grey;
+  font-style: smaller;
+}
+
+.align-center{
+  align-items: center;
+}
+
+.white{
+  color: white !important;
+}
+
+.bold{
+  font-weight: bold;
+}
+.red{
+  color: red;
+}
+
+.noborder{
+  border: none;
+}
+
+
+hr{
+  border: 0px;
+  border-bottom: .3px solid rgb(10, 10, 10);
+  margin: 0px;
+}
+
+.round{
+  border-radius: 50%;
+}
+
+.link{
+  color: blue;
+}
+
+a:hover{
+  color: blue;
+}
+
+.hide{
+  display: none;
+}
+
+.blackbg{
+  background-color: black;
+}
+
+.rating{
+  color: blue;
+}
+
+.transparent{
+    /* color: white; */
+}
+
+.show{
+  display: block;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+.scroll{
+  overflow: scroll;
+}
+
+.scrollx{
+  overflow-x: scroll;
+}
+
+.comeup{
+  transform: translateY(0) !important;
+}
+
+.iconholder{
+  padding: 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+}
+
+.cartbadge{
+  color: rgb(230, 3, 3);
+  position: absolute;
+  top: -10px;
+  right: 0;
+  align-items: center;
+  font-size: small;
+}
+
+footer{
+  padding: 30px;
+  background-color: black;
+  color: white;
+}
+
+.footertitle{
+  padding-bottom: 10px;
+  border-bottom: 1px dotted white;
+}
+
+.iconholder:hover{
+  background-color: rgb(197, 196, 196);
+}
+
+
+
+.absolute{
+  position: absolute;
+}
+
+.relative{
+  position: relative;
+}
+
+section{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.text-center{
+  text-align: center
+}
+
+.container {
+ width: 50%;
+}
+
+/* ----------------------------------------------------- jumbotron ------------------------------------ */
+.jumb{
+  width: 100%;
+  height: 500px;
+  position: relative;
+  margin-top: 3% !important;
+  overflow-x: hidden;
+}
+
+.jumbbackground{
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: -5%;
+  left: 10px;
+  animation: scrolltotop 1s  linear ;
+}
+
+.jumbtext{
+  font-weight: bolder;
+  font-size: 110%;
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  transform: translateX(150%);
+  animation: scrollleft 1s .5s forwards linear ;
+}
+
+.jumboverlay{
+  background: limegreen;
+  width: 80%;
+  height: 100%;
+  position: absolute;
+  top:0;
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.swipeimage{
+  width: 100%;
+  height: 100%;
+  max-width: 100px;
+}
+
+input{
+  padding: 5px;
+}
+/* -------------------------------------------------------- order styles ------------------------------------------------ */
+.cartItem{
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 6px;
+  background: white;
+  border-top: 0.0001px solid rgb(204, 202, 202);
+  height: 100px;
+}
+
+.products-container{
+  padding: 10px;
+  border: 0.3px solid rgb(214, 212, 212);
+  width: 100%;
+}
+.cartItems{
+  /* display: grid;
+  grid-auto-flow: row; */
+}
+
+.cartItem .description{
+  grid-column: 3 /7;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.cartItem .description h3,
+.cartItem .description p{
+  margin: 0px;
+}
+.cartItem .description h3{
+  font-weight: bold;
+}
+.cartItem .img{
+  height: 80px;
+  width: 100px;
+  grid-column: 1/ 3;
+  margin: auto;
+}
+
+.cartItem .cartItem-total{
+  margin-top: auto;
+  margin-bottom: 0px;
+  margin-right: 0px;
+  color: rgb(115, 115, 156);
+}
+.content{
+  flex-grow: 1;
+  height: 100vh;
+  overflow: auto;
+}
+
+.fottersearch{
+  overflow-y: scroll;
+  height: 300px;
+}
+
+.center{
+  text-align: center;
+}
+
+.section-divider-center{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.section-divider-center div{
+  line-height: 2px;
+}
+
+.section-divider-center span{
+  color: #008;
+}
+
+.section-divider{
+  display: flex;
+  justify-content: center;
+}
+
+.section-divider h3{
+  line-height: 2px;
+}
+
+.section-divider span{
+  color: #008;
+}
+
+/* -------------------------------------------------------------- order details ------------------------------------------------- */
+@media screen and (max-width: 900px){
+ 
+}
+
+@keyframes scrolltotop {
+    from { 
+        transform: translateY(80%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes scrollleft {
+  from { 
+      transform: translateX(80%);
+  }
+  to {
+      transform: translateX(0);
+  }
+}
+/* ----------------------------------------------------- jumbotron ------------------------------------ */
+
+
+
+
+/* ----------------------------------------------------- media queries -------------------------------- */
+/* ---------------------------- extra small -------------------- */
+@media screen and (max-width: 576px) {
+  /* ------------------------------- width ------------------------ */
+  .w-xs-100{
+    width: 100% !important;
+  }
+  .w-xs-80{
+    width: 80%;
+  }
+  .w-xs-50{
+    width: 50%;
+  }
+  .w-xs-90{
+    width: 90%;
+  }
+  .w-xs-70{
+    width: 70%;
+  }
+  .w-xs-60{
+    width: 70%;
+  }
+
+ 
+  /* ------------------------------- width ------------------------ */
+  /* ------------------------- display ----------------------- */
+.hidexs{
+  display: none;
+}
+
+.showxs{
+display: block;
+}
+
+/* ------------------------- display ----------------------- */
+
+
+/* ------------------------- flexcol ------------------------ */
+.columnxs{
+  flex-direction: column;
+}
+
+.rowxs{
+flex-direction: row;
+}
+/* ------------------------- flexcol ------------------------ */
+}
+/* ---------------------------- extra small --------------------- */
+/* ---------------------------- small --------------------------- */
+@media screen and (max-width: 768px){
+
+  /* ------------------------- width ------------------------ */
+  .w-s-100{
+    width: 100% !important;
+  }
+  .w-s-80{
+    width: 80%;
+  }
+  .w-s-50{
+    width: 50%;
+  }
+  .w-s-90{
+    width: 90% !important;
+  }
+  .w-s-70{
+    width: 70%;
+  }
+
+  .w-s-60{
+    width: 70%;
+  }
+ 
+  /* ------------------------- width ------------------------ */
+
+  /* ------------------------- display ----------------------- */
+.hides{
+  display: none;
+}
+
+.shows{
+display: block;
+}
+
+/* ------------------------- display ----------------------- */
+
+
+/* ------------------------- flexcol ------------------------ */
+.columns{
+  flex-direction: column;
+}
+
+.rows{
+flex-direction: row;
+}
+/* ------------------------- flexcol ------------------------ */
+
+
+
+
+
+}
+
+/* ---------------------------- small --------------------------- */
+/* ---------------------------- large --------------------------- */
+@media screen and (max-width: 900px){
+  /* ----------------------- width ------------------------- */
+      .w-l-100{
+        width: 100%;
+      }
+      .w-l-80{
+        width: 80%;
+      }
+      .w-l-50{
+        width: 50%;
+      }
+      .w-l-90{
+        width: 90%;
+      }
+      .w-l-70{
+        width: 70%;
+      }
+
+      .w-l-60{
+        width: 70%;
+      }
+  /* ----------------------- width ------------------------- */
+
+/* ------------------------- display ----------------------- */
+.hidel{
+        display: none;
+      }
+
+.showl{
+      display: block;
+}
+
+/* ------------------------- display ----------------------- */
+
+
+/* ------------------------- flexcol ------------------------ */
+.columnl{
+        flex-direction: column;
+}
+
+.rowl{
+  flex-direction: row;
+}
+/* ------------------------- flexcol ------------------------ */
+  /* ------------------------- jumb -------------------------- */
+  .jumb{
+    width: 100%;
+    height: 40vh;
+}
+
+.jumbtext{
+    font-weight: bolder;
+    font-size: 110%;
+    position: absolute;
+    top: 10%;
+    right: 0;
+    max-width: 50%;
+  }
+
+/* ------------------------- jumb -------------------------- */
+
+}
+
+/* ---------------------------- large --------------------------- */
+/* ---------------------------- extra large --------------------- */
+@media screen and (max-width: 1200px){
+  /* ------------------------------ width ---------------------------- */
+  .w-xl-100{
+    width: 100%;
+  }
+  .w-xl-80{
+    width: 80%;
+  }
+  .w-xl-50{
+    width: 50%;
+  }
+  .w-xl-90{
+    width: 90%;
+  }
+  .w-xl-70{
+    width: 70%;
+  }
+  .w-xl-60{
+    width: 70%;
+  }
+
+  /* ---------------------------------- width ----------------------------------- */
+  /* ------------------------- display ----------------------- */
+.hidexl{
+  display: none;
+}
+
+.showxl{
+display: block;
+}
+
+/* ------------------------- display ----------------------- */
+
+
+/* ------------------------- flexcol ------------------------ */
+.columnxl{
+  flex-direction: column;
+}
+
+.rowxl{
+flex-direction: row;
+}
+/* ------------------------- flexcol ------------------------ */
+ 
+}
+/* ---------------------------- extra large --------------------- */
+/* ---------------------------- extra extra large --------------- */
+@media screen and (max-width: 1400px){
+
+/* ------------------------------ width -------------------- */
+  .w-xxl-100{
+    width: 100%;
+  }
+  .w-xxl-80{
+    width: 80%;
+  }
+  .w-xxl-50{
+    width: 50%;
+  }
+  .w-xxl-90{
+    width: 90%;
+  }
+  .w-xxl-70{
+    width: 70%;
+  }
+  .w-xxl-60{
+    width: 70%;
+  }
+/* ------------------------------ width -------------------- */
+
+/* ------------------------- display ----------------------- */
+.hidexxl{
+  display: none;
+}
+
+.showxxl{
+display: block;
+}
+
+/* ------------------------- display ----------------------- */
+
+
+/* ------------------------- flexcol ------------------------ */
+.columnxxl{
+  flex-direction: column;
+}
+
+.rowxxl{
+flex-direction: row;
+}
+/* ------------------------- flexcol ------------------------ */
+}
+/* ---------------------------- extra extra large --------------- */
+/* ----------------------------------------------------- media queries -------------------------------- */
