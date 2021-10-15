@@ -1,0 +1,46 @@
+.filter{
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    /* background: red; */
+}
+
+.tutorimg{
+    height: 200px;
+    width: 200px;
+}
+
+.tutorshedule{
+    height: 215px;
+    width: 400px;
+}
+
+.tutors{
+    margin-top: 30px;
+}
+
+.tutorpage{
+    background: rgb(224, 224, 224);
+    padding: 50px;
+}
+
+.tutor{
+    margin-top: 10px;
+}
+
+
+@media screen and (max-width: 576px) {
+    .tutorpage{
+        padding: 10px;
+    }
+
+    .tutorinfo{
+        border-right: none;
+        padding-right: 3px !important;
+    }
+
+    .tutorimg{
+        width: 250px;
+    }
+
+}

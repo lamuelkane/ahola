@@ -12,8 +12,9 @@ export default function CheckboxesTags() {
   return (
     <Autocomplete
       multiple
-      id="checkboxes-tags-demo"
-      limitTags={2}
+      // id="checkboxes-tags-demo"
+      id="multiple-limit-tags"
+      limitTags={1}
       options={top100Films}
       disableCloseOnSelect
       getOptionLabel={(option) => option.title}
