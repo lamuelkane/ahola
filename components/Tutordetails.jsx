@@ -80,7 +80,7 @@ export default function Tutordetails() {
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
                     <iframe width="400" height="215"
-            src="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&mute=1">
+            src="https://www.youtube.com/embed/j4cuSOz6PHM">
             </iframe>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>

@@ -45,7 +45,10 @@
 
 .homeheroh1{
   font-weight: 900;
-  color: red;
+  background: linear-gradient(to right, #f32170,
+                    #ff6b08, #cf23cf, #eedd44);
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
 }
 
 .logoimg{
@@ -70,7 +73,7 @@
 .homeherobutton:hover{
   background: transparent;
   color: white;
-  border: .5px solid red;
+  border: .5px solid rgb(122, 215, 243);
 }
 
 .courseimg{
@@ -85,7 +88,8 @@
   cursor: pointer;
   padding: 5px;
   width: 180px;
-  background: rgb(175, 36, 36);
+  /* background: rgb(175, 36, 36); */
+  background: rgb(122, 215, 243);
   color: black;
   border-radius: 10px;
   transition: all .5s ease;
@@ -99,37 +103,43 @@
 }
 
 .course:hover{
-  background: rgb(221, 27, 27);
+  background: white;
   color: black;
+  border: .2px solid rgb(122, 215, 243);
 }
 
 .showmoercoursesbutton{
-  background-color: white;
   padding: 10px;
-  border: 1px solid rgb(221, 27, 27);
+  background: rgb(122, 215, 243);
+  color: black;
   border-radius: 10px;
   padding-left: 35px;
   padding-right: 35px;
   transition: all .5s ease;
   margin-top: 30px;
+  border: 1px solid rgb(122, 215, 243 );
 }
 
 .showmoercoursesbutton:hover{
-  background: rgb(221, 27, 27);
-  color: white;
+  background-color: white;
 }
 
 .showcase{
   /* background: rgb(131, 139, 252); */
-  background: white;
-  /* background: rgb(175, 36, 36); */
+  /* background: white; */
+  background: rgb(175, 36, 36);
+  border-left: 5px solid rgb(122, 215, 243);
+    /* border: .2px solid blue; */
   /* color: white; */
   width: 300px;
-  padding: 10px;
   margin-bottom: 20px;
   margin-left: 10px;
   border-radius: 10px;
   
+}
+
+.showcaseinner{
+  padding: 10px;
 }
 
 .showcaseimg{
@@ -141,7 +151,7 @@
 .showcaseh2{
   margin-bottom: 5px;
   text-align: center;
-  color: white;
+  color: black;
   font-weight: 100;
 }
 
@@ -169,7 +179,7 @@
 }
 
 .shwcasewrapper{
-  background: rgb(250, 242, 242)
+  /* background: rgb(163, 159, 159) */
         
 }
 

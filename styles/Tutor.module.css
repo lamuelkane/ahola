@@ -2,7 +2,7 @@
     position: sticky;
     top: 0;
     z-index: 1;
-    /* background: red; */
+    background: red;
 }
 
 .tutorimg{
@@ -20,7 +20,7 @@
 }
 
 .tutorpage{
-    background: rgb(224, 224, 224);
+    background: rgb(253, 251, 251);
     padding: 50px;
 }
 
@@ -28,10 +28,142 @@
     margin-top: 10px;
 }
 
+.tutoridentity{
+    padding: 30px;
+}
+
+.tutoridentityinfo{
+    margin-top:10px;
+    margin-bottom:10px
+}
+
+.tutoridentityvideo{
+    width: 100%;
+    height: 400px;
+    margin-bottom: 30px;
+}
+
+.tutordesciptiontext{
+    padding: 30px; 
+}
+
+.tutorinfoaboutwrapper{
+    align-items: flex-start;
+}
+
+.tutoridentityinfoimgholder{
+    margin-right: 10px;
+}
+
+.tutoridentityinfoimgholder{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.tutoraction{
+    width: 300px;
+    padding: 10px;
+}
+
+.tutorrate{
+    margin-bottom: 30px;
+}
+
+.tutoractionbtn{
+    padding: 10px;
+    border-radius: 10px;
+    border: .2px solid rgb(122, 215, 243);
+    margin-top: 20px;
+    background: white;
+}
+
+.tutorschedule{
+    width: 300px;
+    height: 300px;
+    background: blue;
+    margin-top: -540px;
+    overflow: scroll;
+}
+
+.tutoractionwrapper{
+    position: sticky;
+    top: 0;
+    border-top:  5px solid rgb(122, 215, 243 );
+    border-radius: 10px;
+}
+
+.tutorreviewoverlay{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tutorreview{
+    padding: 20px;
+    margin-top: 10px;
+    border-top: .2px solid rgba(128, 128, 128, .2);
+    border-left: 5px solid rgb(122, 215, 243 );
+    border-radius: 10px;
+}
+
+.tutorreviewimg{
+    height: 100px;
+    width: 100px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.tutorreviewtext{
+
+}
+
+.tutorpaewrapper{
+    margin-top: 30px;
+}
+
+.tutorschedulewrapper{
+    display: flex;
+    flex-direction: row-reverse;
+    margin: auto;
+    width: 80%;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.tutorreviews{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.tutorreviewswrapper{
+    margin-right: 20px;
+    max-width: 700px;
+    border-top: 5px solid rgb(122, 215, 243 );
+    border-radius: 10px;
+}
+
+.tutoridentitywrapper{
+    max-width: 700px;
+    margin-right: 20px;
+    border-top:  5px solid rgb(122, 215, 243 );
+    border-radius: 10px;
+}
 
 @media screen and (max-width: 576px) {
     .tutorpage{
         padding: 10px;
+    }
+
+    .tutoridentityinfoimg{
+
+    }
+
+    .tutoridentitywrapper, .tutoractionwrapper, .tutorreviewswrapper{
+        width: 95%;
+        margin-right: 0;
     }
 
     .tutorinfo{
@@ -43,4 +175,52 @@
         width: 250px;
     }
 
+    .tutoraction{
+        width: 80%;
+        margin: auto;
+    }
+
 }
+
+@media screen and (max-width: 1200px){
+    .tutorschedulewrapper{
+        flex-direction: column;
+
+    }
+
+    .tutorschedule{
+        margin-top: 0px;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .tutorreviewswrapper{
+        margin-top: 20px;
+    }
+  
+  }
+
+
+  @media screen and (max-width: 950px){
+    .tutoridentitywrapperparent{
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+  
+    .tutoridentitywrapper{
+        margin-bottom: 30px;
+        max-width: 95%;
+    }
+
+    .tutoraction{
+        width: 90%;
+        margin: auto;
+        max-width: 700px;
+    }
+
+    .tutoractionwrapper{
+        max-width: 700px;
+        width: 100%;
+    }
+  }
+  
