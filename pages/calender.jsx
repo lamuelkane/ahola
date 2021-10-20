@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
+import {Inject, ScheduleComponent, Day, Week, WorkWeek, Month, Agenda} from '@syncfusion/ej2-react-schedule'
 // import Paper from '@material-ui/core/Paper';
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
@@ -15,19 +16,9 @@ const schedulerData = [
 ];
 
 export default () => (
-  <Paper>
-    <Scheduler
-      data={schedulerData}
-    >
-      <ViewState
-        currentDate={currentDate}
-      />
-      <DayView
-        startDayHour={9}
-        endDayHour={14}
-      />
-      <Appointments />
-    </Scheduler>
-    
-  </Paper>
+    <div>
+            <ScheduleComponent >
+              <Inject services={[Day, Week, WorkWeek, Month, Agenda]} />
+            </ScheduleComponent>
+    </div>
 );
