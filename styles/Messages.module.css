@@ -1,0 +1,198 @@
+.messagestartwrapper{
+    flex: 2.5;
+    padding: 10px;
+    transition: all .5s ease;
+    height: calc(100vh - 117px);
+}
+/* 
+.messagescontainer{
+    height: calc(100vh - 117px);
+    overflow-y: scroll;
+} */
+
+.conversationsearchinput{
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.conversationwrapper{
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.conversationwrapper:hover{
+    background: rgb(212, 212, 212);
+    cursor: pointer;
+}
+
+.conversationswrapper{
+    overflow-y: scroll;
+    height: 76%;
+}
+
+.messagedisplay{
+    padding: 10px 20px;
+}
+
+.display{
+    padding-bottom: 5px;
+    cursor: pointer;    
+}
+
+.display:hover{
+    border-bottom: .5px solid blueviolet;
+}
+
+
+/* conversation center styles */
+
+.messagecenterwrapper{
+    flex: 4.5;
+    border: .5px solid rgb(212, 212, 212);
+    height: calc(100vh - 117px);
+    position: relative;
+    transition: all 0.5s ease;
+}
+
+.chatheader{
+    border-bottom: .5px solid rgb(212, 212, 212);
+    /* padding: 10px; */
+}
+
+.chatbottom{
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    justify-content: space-between;
+    border-top: .5px solid rgb(212, 212, 212);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: white;
+}
+
+.chatbottomfilechooser{
+    cursor: pointer;
+    flex: .5;
+}
+
+.chatbottomimojiicon{
+    flex: .5;
+    cursor: pointer;
+    color: rgb(156, 156, 13);
+}
+
+.chatbottomsendbtn{
+    flex: 1;
+    cursor: pointer;
+    color: blue;
+}
+
+.chatbottomtextareawrapper{
+    margin-right: 5px;
+    flex: 8;
+}
+
+.chatbottomtextarea{
+    width: 100%;
+    border: none;
+    padding: 10px;
+}
+
+.chatbottomtextarea:focus{
+    outline: none;
+}
+
+.chatbottomtextarea::placeholder{
+    font-size: larger;
+    /* text-align:center; */
+}
+
+.message{
+    max-width: 400px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+}
+
+.own{
+    /* justify-self: flex-end; */
+    align-self: flex-end !important;
+    flex-direction: row-reverse;
+}
+
+.ownbody{
+    background: rgb(245, 64, 64) !important;
+    color: white;
+    margin-right: 5px;
+}
+
+.messagebody{
+    background: rgb(179, 176, 176);
+    margin-left: 5px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+}
+
+.messagewrapper{
+    overflow-y: scroll;
+    max-height: 80%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.messagebodytime{
+    align-self: flex-end;
+    margin-top: 5px;
+}
+
+
+.messageendwrapper{
+    flex: 3;
+}
+
+.messagendheaditem{
+    margin: 0 10px;
+}
+
+
+.messageendhead{
+    padding: 20px;
+    border-bottom: .5px solid rgb(212, 212, 212);
+}
+
+.studentdetailsitem{
+    padding: 10px 20px;
+}
+
+.studentinfodes{
+    margin-left: 5px;
+    color: grey;
+    font-weight: 200;
+}
+
+@media screen and (max-width: 1000px) {
+    .messageendwrapper{
+        display: none;
+        flex: 0;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .messagestartwrapper{
+        width: 100vw;
+        flex: 7;
+    }
+
+    .messagecenterwrapper{
+       display: none;
+    }
+}

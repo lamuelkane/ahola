@@ -40,7 +40,10 @@
 .homeherotext{
   margin-top: 100px;
   margin-left: 50px;
-  color: black;
+  background: linear-gradient(to right, red,
+  #ff6b08, #cf23cf, #eedd44);
+-webkit-text-fill-color: transparent;
+-webkit-background-clip: text;
 }
 
 .homeheroh1{
@@ -73,7 +76,7 @@
 .homeherobutton:hover{
   background: transparent;
   color: white;
-  border: .5px solid rgb(122, 215, 243);
+  border: .5px solid #7ad7f3;
 }
 
 .courseimg{
@@ -242,6 +245,9 @@
 
 @media screen and (max-width: 556px) {
 
+  .course{
+    width: 180px;
+  }
   
 .registerimage{
   height: 200px;
