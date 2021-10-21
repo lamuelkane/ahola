@@ -5,7 +5,7 @@ const Course = () => {
     return (
         <div>
             <div className={`flex align-center ${styles.course}`}>
-                <img src='./images/heros.jpg' alt='' className={`${styles.courseimg}`} />
+                <img src='./images/teach.svg' alt='' className={`${styles.courseimg}`} />
                 <span>English</span>
             </div>
         </div>

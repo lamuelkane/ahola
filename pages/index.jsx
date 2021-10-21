@@ -20,7 +20,7 @@ export default function Home() {
       <Homehero />
       <div className={`${styles.chourseshowcase}`}>
           <div className={`flex column align-center w-xs-100 ${styles.coureswrapper}`}>
-            <h2>What you can learn with us</h2>
+            <h2 className={`text-xl font-medium text-black`}>What you can learn with us</h2>
             <div className={`flex wrap justify-between`}>
               <Course />
               <Course />
@@ -36,7 +36,7 @@ export default function Home() {
       </div>
       <div className={`${styles.shwcasewrapper}`}>
           <div className={`flex column align-center w-xs-100 ${styles.coureswrapper} ${styles.showcasewrapper}`}>
-            <h2 className='center'>We Are Available 24 hours a day, 365 days a year</h2>
+            <h2 className={`center text-xl font-medium text-black ${styles.showcaseheading}`}>We Are Available 24 hours a day, 365 days a year</h2>
             <div className={`flex wrap justify-between`}>
               <ShowCase />
               <ShowCase />
@@ -60,7 +60,7 @@ export default function Home() {
               </p>
           </div>
           <div>
-            <img src="./images/Learnfromhome.jpg" className={`${styles.coolimage}`} alt="" />
+            <img src="./images/comfort.svg" className={`${styles.coolimage}`} alt="" />
           </div>
         </div>
       </div>
@@ -68,7 +68,7 @@ export default function Home() {
       <div>
         <div className={` ${styles.coolsection} ${styles.coolsectionreverse} w-80 wrap margin-auto flex justify-between align-center`}>
           <div>
-            <img src="./images/skills1.jpg" className={`${styles.coolimagereverse}`} alt="" />
+            <img src="./images/goal.svg" className={`${styles.coolimagereverse}`} alt="" />
           </div>
           <div>
               <h2>Learn From Your Comfort Zone</h2>
@@ -88,29 +88,29 @@ export default function Home() {
               </p>
           </div>
           <div>
-            <img src="./images/skills.jpg" className={`${styles.coolimage}`} alt="" />
+            <img src="./images/friendly.svg" className={`${styles.coolimage}`} alt="" />
           </div>
         </div>
       </div>
       <div className={`${styles.shwcasewrapper}`}>
           <div className={`flex column align-center w-xs-100 ${styles.coureswrapper}`}>
-            <h2>Tutoring for all levels</h2>
+            <h2 className={` text-xl font-medium text-black`}>Tutoring for all levels</h2>
             <div className={`flex wrap justify-between ${styles.studentlevels}`}>
               <div className={`margin-right margin-top ${styles.tutringlevelsitem}`}>
-                <h2>Beginner</h2>
-                <div>Master the Basics</div>
+                <h2 className={` text-xl font-medium text-black`}>Beginner</h2>
+                <small>Master the Basics</small>
               </div>
               <div className={`margin-right margin-top ${styles.tutringlevelsitem}`}>
-                <h2>Intermediate</h2>
-                <div>Enjoy Speaking With Confidence</div>
+                <h2 className={` text-xl font-medium text-black`}>Intermediate</h2>
+                <small>Enjoy Speaking With Confidence</small>
               </div>
               <div className={`margin-right margin-top ${styles.tutringlevelsitem}`}>
-                <h2>Advanced</h2>
-                <div>Communicate in Social & Business Situations</div>
+                <h2 className={` text-xl font-medium text-black`}>Advanced</h2>
+                <small>Communicate in Social & Business Situations</small>
               </div>
               <div className={`margin-right margin-top ${styles.tutringlevelsitem}`}>
-                <h2>Proficient</h2>
-                <div>Speak Like a Native</div>
+                <h2 className={` text-xl font-medium text-black`}>Proficient</h2>
+                <small>Speak Like a Native</small>
               </div>
               
             </div>

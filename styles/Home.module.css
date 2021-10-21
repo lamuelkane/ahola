@@ -76,7 +76,7 @@
 .homeherobutton:hover{
   background: transparent;
   color: white;
-  border: .5px solid #7ad7f3;
+  border: .5px solid #4F46E5;
 }
 
 .courseimg{
@@ -88,11 +88,12 @@
 
 
 .course{
+  border: .2px solid #4F46E5;
   cursor: pointer;
   padding: 5px;
   width: 180px;
   /* background: rgb(175, 36, 36); */
-  background: rgb(122, 215, 243);
+  background: white;
   color: black;
   border-radius: 10px;
   transition: all .5s ease;
@@ -102,36 +103,35 @@
 .coureswrapper{
   width: 70vw;
   padding: 20px;
-  margin: auto;
+  margin: 30px auto;
 }
 
 .course:hover{
-  background: white;
-  color: black;
-  border: .2px solid rgb(122, 215, 243);
+  background: #4F46E5;
+  color: white;
+
 }
 
 .showmoercoursesbutton{
   padding: 10px;
-  background: rgb(122, 215, 243);
   color: black;
   border-radius: 10px;
   padding-left: 35px;
   padding-right: 35px;
   transition: all .5s ease;
   margin-top: 30px;
-  border: 1px solid rgb(122, 215, 243 );
+  border: 1px solid #4F46E5
 }
 
 .showmoercoursesbutton:hover{
-  background-color: white;
+  background: #4F46E5;
 }
 
 .showcase{
   /* background: rgb(131, 139, 252); */
   /* background: white; */
   background: rgb(175, 36, 36);
-  border-left: 5px solid rgb(122, 215, 243);
+  border-left: 5px solid #4F46E5;
     /* border: .2px solid blue; */
   /* color: white; */
   width: 300px;
@@ -139,6 +139,10 @@
   margin-left: 10px;
   border-radius: 10px;
   
+}
+
+.showcaseheading{
+  margin-bottom: 50px;
 }
 
 .showcaseinner{
