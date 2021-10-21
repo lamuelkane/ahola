@@ -6,6 +6,38 @@ import Homehero from '../components/Homehero'
 import Course from '../components/Course'
 import ShowCase from '../components/ShowCase'
 import { Carousel } from '@trendyol-js/react-carousel';
+import { AnnotationIcon, GlobeAltIcon, LightningBoltIcon, ScaleIcon } from '@heroicons/react/outline'
+
+const features = [
+  {
+    name: 'Immerse yourself in a new culture',
+    description: 'Connect with language experts from around the world, master the basics and speak like a Native',
+    icon: GlobeAltIcon,
+  },
+  {
+    name:`Get expert help when you need it
+    `,
+    description:
+      `Learn to solve any problem in any language, our tutors are always at your disposal whenever, whereever, you can get help you desire
+      `,
+    icon: ScaleIcon,
+  },
+  {
+    name: `Speak naturally`,
+    description:
+      `always
+      Make a good impression and build trust in any language , enjoy speaking with confidence and communicate in social & business situations
+      `,
+    icon: LightningBoltIcon,
+  },
+  {
+    name: `Succeed in your career`,
+    description:
+      `Develop your working vocabulary and communicate clearly and get that job you've always had your eyes on`,
+    icon: AnnotationIcon,
+  },
+]
+
 
 
 export default function Home() {
@@ -93,54 +125,38 @@ export default function Home() {
         </div>
       </div>
       <div className={`${styles.shwcasewrapper}`}>
-          <div className={`flex column align-center w-xs-100 ${styles.coureswrapper}`}>
-            <h2 className={` text-xl font-medium text-black`}>Tutoring for all levels</h2>
-            <div className={`flex wrap justify-between ${styles.studentlevels}`}>
-              <div className={`margin-right margin-top ${styles.tutringlevelsitem}`}>
-                <h2 className={` text-xl font-medium text-black`}>Beginner</h2>
-                <small>Master the Basics</small>
+      {/* feature start */}
+
+      <div className="py-12 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="lg:text-center">
+          <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+              Focus on building the skills you need
+          </p>
+          <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+            Get the best out of yoursef with our proffesionals working hands in gloves with you to ensure you acheive your goals as soon as possible
+          </p>
+        </div>
+
+        <div className="mt-10">
+          <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+            {features.map((feature) => (
+              <div key={feature.name} className="relative">
+                <dt>
+                  <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                    <feature.icon className="h-6 w-6" aria-hidden="true" />
+                  </div>
+                  <p className="ml-16 text-lg leading-6 font-medium text-gray-900">{feature.name}</p>
+                </dt>
+                <dd className="mt-2 ml-16 text-base text-gray-500">{feature.description}</dd>
               </div>
-              <div className={`margin-right margin-top ${styles.tutringlevelsitem}`}>
-                <h2 className={` text-xl font-medium text-black`}>Intermediate</h2>
-                <small>Enjoy Speaking With Confidence</small>
-              </div>
-              <div className={`margin-right margin-top ${styles.tutringlevelsitem}`}>
-                <h2 className={` text-xl font-medium text-black`}>Advanced</h2>
-                <small>Communicate in Social & Business Situations</small>
-              </div>
-              <div className={`margin-right margin-top ${styles.tutringlevelsitem}`}>
-                <h2 className={` text-xl font-medium text-black`}>Proficient</h2>
-                <small>Speak Like a Native</small>
-              </div>
-              
-            </div>
+            ))}
+          </dl>
+        </div>
       </div>
-      <div className={`flex column align-center w-xs-100 ${styles.coureswrapper}`}>
-            <h2 className='center'>Focus on building the skills you need</h2>
-            <div className={`flex wrap justify-between ${styles.studentlevels}`}>
-              <div className={`margin-right margin-top ${styles.tutringlevelsitem}`}>
-                <h2>Immerse yourself in a new culture</h2>
-                <div>Connect with language experts from around the world</div>
-              </div>
-              <div className={`margin-right margin-top ${styles.tutringlevelsitem}`}>
-                <h2>Get expert help when you need it</h2>
-                <div>Learn to solve any problem in any language</div>
-              </div>
-              <div className={`margin-right margin-top ${styles.tutringlevelsitem}`}>
-                <h2>Speak naturally, always</h2>
-                <div>Make a good impression and build trust in any language</div>
-              </div>
-              <div className={`margin-right margin-top ${styles.tutringlevelsitem}`}>
-                <h2>Succeed in your career</h2>
-                <div>Develop your working vocabulary and communicate clearly</div>
-              </div>
-              
-            </div>
-      </div>
+    </div>
 
 </div>
-
-
         <div className={`flex justify-betwee ${styles.registersection} align-center wrap`}>
           <div>
             <h3>Join Our Team</h3>
@@ -154,12 +170,9 @@ export default function Home() {
             <button className={`${styles.showmoercoursesbutton} pointer`}>Become a Tutor</button>
           </div>
           <div>
-            <img src="./images/heros.jpg" alt="" className={`${styles.registerimage}`} />
+            <img src="./images/team.svg" alt="" className={`${styles.registerimage}`} />
           </div>
         </div>
-        
-    
     </div>
-
   )
 }

@@ -4,7 +4,7 @@ import { Popover, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 
 const navigation = [
-  { name: 'Tutors', href: '/toturs' },
+  { name: 'Tutors', href: '/tutors' },
   { name: 'Register', href: '/register' },
   { name: 'Contactus', href: '/contactus' },
   { name: 'Aboutus', href: '/aboutus' },
