@@ -1,24 +1,34 @@
-import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import {Inject, ScheduleComponent, Day, Week, WorkWeek, Month, Agenda} from '@syncfusion/ej2-react-schedule'
-// import Paper from '@material-ui/core/Paper';
-import { ViewState } from '@devexpress/dx-react-scheduler';
-import {
-  Scheduler,
-  DayView,
-  Appointments,
-} from '@devexpress/dx-react-scheduler-material-ui';
+import {useState, useContext, useEffect} from 'react'
+import GlobalContext from '../context/Globalcontext'
+import CalenderHeader from '../components/CalenderHeader'
+import Sidebar from '../components/Sidebar'
+import Month from '../components/Month'
+import {getMonth} from '../components/utils'
+import Eventmodal from "../components/Eventmodal";
 
-const currentDate = '2018-11-01';
-const schedulerData = [
-  { startDate: '2018-11-01T09:45', endDate: '2018-11-01T11:00', title: 'Meeting' },
-  { startDate: '2018-11-01T12:00', endDate: '2018-11-01T13:30', title: 'Go to a gym' },
-];
 
-export default () => (
-    <div>
-            <ScheduleComponent >
-              <Inject services={[Day, Week, WorkWeek, Month, Agenda]} />
-            </ScheduleComponent>
-    </div>
-);
+
+const Calender = () => {
+
+    const [currentmonth, setcurrentmonth] = useState(getMonth())
+    const {monthindex, setMonthindex} = useContext(GlobalContext)
+
+    useEffect(() => {
+      setcurrentmonth(getMonth(monthindex))
+    }, [monthindex])
+
+  return (
+    <>
+    <Eventmodal />
+      <div className="h-screen flex flex-col">
+        <CalenderHeader />
+        <div className="flex flex-1">
+          {/* <Sidebar /> */}
+          <Month month={currentmonth} />
+        </div>
+      </div>
+    </>
+  )
+}
+
+export default Calender
