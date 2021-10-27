@@ -74,7 +74,7 @@ const Tutors = () => {
 
     return (
         <div>
-            <Header />
+            {/* <Header /> */}
             {/* <div className="border">
                 <div className={`border hidexs ${styles.filter}`}>
                     
@@ -322,7 +322,9 @@ const Tutors = () => {
               {/* Product grid */}
               <div className="lg:col-span-3">
                 {/* Replace with your content */}
-                <div className="border-4 border-dashed border-gray-200 rounded-lg h-96 lg:h-full" />
+                <div className="border-4 border-dashed border-gray-200 rounded-lg h-96 lg:h-full" >
+                  inner section
+                </div>
                 {/* /End replace */}
               </div>
             </div>

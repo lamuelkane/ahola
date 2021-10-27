@@ -101,7 +101,9 @@ const Eventmodal = () => {
               <form className={`bg-white rounded-lg shadow-2xl w-1/4`}>
                 <header className={`bg-gray-50 px-4 py-2 flex justify-between items-center`}>
                     <span className={`text-gray-400`}>lesson</span>
-                    <button className={` text-gray-400`}  onClick={e => setshoweventmodal(hideeventmodal())}><CloseIcon /> </button>
+                    <button className={` text-gray-400`}  onClick={e => {
+                        
+                        }}><CloseIcon /> </button>
                 </header>
                 <div className={`p-3`}>
                        <Selectstudent />
@@ -116,10 +118,11 @@ const Eventmodal = () => {
                     </div>
                     <div className="bg-blue-50 items-center flex justify-between p-3">
                         <div className={`pointer text-blue-400	text-sm`}><Listdropdown 
-                        array={Array.from(week, (wk) => (
+                        array={Array.from(week, (wk, i) => (
                             {
-                                day: wk.format('dd'),
-                                date: wk.format('DD')
+                                name: wk.format('dd'),
+                                avatar: wk.format('DD'),
+                                id: i
                             }
                         ))} 
                         headline={dayjs(new Date(dayjs().year(), monthindex)).format('MMMM YYYY')}
@@ -128,7 +131,11 @@ const Eventmodal = () => {
                         </div>
                         <div>
                             <span className={`pointer text-blue-400 text-sm	`}><Listdropdown 
-                            array={Array.from(Array(24), (_, i) => i.toString().length > 1 ?  i + ':00' : '0' + i + ':00' )}  
+                            array={Array.from(Array(24), (_, i) => ({
+                                name: i.toString().length > 1 ?  i + ':00' : '0' + i + ':00',
+                                id: i,
+                                avatar: ''
+                            }) )}  
                             headline={`from`} /></span>
                             {/* <div className={`flex justify-center mt-2 align-center`}><ArrowDownwardIcon  /></div>
                             <span className={`pointer text-blue-400	text-sm`}><Listdropdown 
