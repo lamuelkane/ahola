@@ -59,7 +59,7 @@ const Tutors = () => {
           <div className="border">
             <Header2 />
           </div>
-          <div className={`bg-gray-300`}>
+          <div className={`bg-gray-300 hides`}>
             <div className="flex nowrap align-center justify-between  py-1.5 w-80 margin-auto">
               <div className={`${styles.autoselect}`}><Autoselect /></div>
               <div className={`flex align-center`}><input type="number" placeholder='start price' className={`${styles.priceinput}`} /> <span>to</span> <input placeholder='end price' type="number" className={`${styles.priceinput}`} /></div>
@@ -69,10 +69,13 @@ const Tutors = () => {
                   <SearchIcon />
                  <input type="search" placeholder='search tutor' name="" id="" className={`${styles.searchinput} focus:outline-none`} />
             </div>
-            </div>   
-            {/* <Sidefilters />
-            <Chip label="Native speaker" size='medium' variant="outlined" color="primary" />
-            <Chip label="Filters" icon={<FilterListIcon />} size='medium' variant="outlined" color="primary" /> */}
+            </div> 
+            
+          </div>
+          <div className={`bg-gray-300 hide shows`}> 
+              <Sidefilters />
+              <Chip label="Native speaker" size='medium' variant="outlined" color="primary" />
+              <Chip label="Filters" icon={<FilterListIcon />} size='medium' variant="outlined" color="primary" />
           </div>
           <div className={`bg-gray-100`}>
           <div className={`center bg-indigo-400 py-10`}>
