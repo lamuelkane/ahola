@@ -1,0 +1,3 @@
+
+
+export const paypalclient = 'ARAG_3_nqY4c1BUq90EicvnGVefhkvCut3IjViRHvs5ZnbiFxQs0PaEJGOCqYN3vdl-ngpaW18XKgahH'

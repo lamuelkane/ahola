@@ -22,6 +22,9 @@ import Selectstudent from './Selectstudent'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import dayjs from 'dayjs'
 import {nextmonth, prevmonth, resetmonth, prevweek, nextweek, resetweek} from '../actions/month'
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
 
 
 
@@ -30,6 +33,11 @@ const Eventmodal = () => {
     const {setshoweventmodal, showeventmodal, monthindex, weekindex, setweekindex} = useContext(GlobalContext)
     const [month, setmonth] = useState(getMonth())
     const [week, setweek] = useState([])
+    const [age, setAge] = useState('');
+
+    const handleChange = (event) => {
+      setAge(event.target.value);
+    };
 
     useEffect(() => {
         setmonth(getMonth(monthindex))
@@ -117,7 +125,42 @@ const Eventmodal = () => {
                         </FormControl>
                     </div>
                     <div className="bg-blue-50 items-center flex justify-between p-3">
-                        <div className={`pointer text-blue-400	text-sm`}><Listdropdown 
+                    <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                            <InputLabel id="demo-simple-select-standard-label">Age</InputLabel>
+                            <Select
+                            labelId="demo-simple-select-standard-label"
+                            id="demo-simple-select-standard"
+                            value={age}
+                            onChange={handleChange}
+                            label="Age"
+                            >
+                            <MenuItem value="">
+                                <em>None</em>
+                            </MenuItem>
+                            <MenuItem value={10}>Ten</MenuItem>
+                            <MenuItem value={20}>Twenty</MenuItem>
+                            <MenuItem value={30}>Thirty</MenuItem>
+                            </Select>
+                        </FormControl>
+
+                        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                            <InputLabel id="demo-simple-select-standard-label">Age</InputLabel>
+                            <Select
+                            labelId="demo-simple-select-standard-label"
+                            id="demo-simple-select-standard"
+                            value={age}
+                            onChange={handleChange}
+                            label="Age"
+                            >
+                            <MenuItem value="">
+                                <em>None</em>
+                            </MenuItem>
+                            <MenuItem value={10}>Ten</MenuItem>
+                            <MenuItem value={20}>Twenty</MenuItem>
+                            <MenuItem value={30}>Thirty</MenuItem>
+                            </Select>
+                        </FormControl>
+                        {/* <div className={`pointer text-blue-400	text-sm`}><Listdropdown 
                         array={Array.from(week, (wk, i) => (
                             {
                                 name: wk.format('dd'),
@@ -141,7 +184,7 @@ const Eventmodal = () => {
                             <span className={`pointer text-blue-400	text-sm`}><Listdropdown 
                             array={Array.from(Array(24), (_, i) => i.toString().length > 1 ?  i + ':00' : '0' + i + ':00' )} 
                              headline={`to`} /></span> */}
-                        </div>
+                        {/* </div> */} 
                     </div>
                     <button className="rounded px-3 mt-3 bg-blue-500 hover:bg-blue-200 w-full py-2 border-blue-100">
                         Reschedule Lesson

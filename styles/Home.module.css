@@ -251,8 +251,14 @@
 
   .course{
     width: 130px;
+    padding: 1px 3px;
+
   }
   
+  .courseimg{
+    margin-right: 10px;
+  }
+
 .registerimage{
   height: 200px;
 }

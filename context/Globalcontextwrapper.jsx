@@ -6,7 +6,7 @@ import { Eventmodal, Eventreducer } from "../reducer/Event";
 
 const Globalcontextwrapper = (props) => {
     const [monthindex, setMonthindex] = useReducer(Month, dayjs().month())
-    const [showeventmodal, setshoweventmodal] = useReducer(Eventmodal, true)
+    const [showeventmodal, setshoweventmodal] = useReducer(Eventmodal, false)
     const [weekindex, setweekindex] = useReducer(week, 0)
     const [events, setevents] = useReducer(Eventreducer, [])
     

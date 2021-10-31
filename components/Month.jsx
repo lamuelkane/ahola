@@ -36,7 +36,6 @@ let weeks = Array.from(month[0], (wk) => (
     }
 ))
 
-console.log(weeks)
 }, [])
 
     return (
