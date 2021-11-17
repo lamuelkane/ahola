@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react'
 import dayjs from 'dayjs'
 import GlobalContext from '../context/Globalcontext'
-import {addevent, remove, getevents} from '../actions/Event'
+import {addevent, remove, getevents,  showeventmodalaction, hideeventmodal } from '../actions/Event'
 
 const Day = ({day, rowindx, row, hours}) => {
-    const {events, setevents} = useContext(GlobalContext)
+    const {events, setevents, seteventday, eventday, setshoweventmodal} = useContext(GlobalContext)
 
     const getnowclass = (index) => {
         return day.format('DD-MM-YY') === dayjs().format('DD-MM-YY') ? parseInt(dayjs().format('HH')) == index ? 'text-red-700 border-dashed border-2 border-red-600' : ' border-grey-200' : ' border-grey-200'
@@ -31,11 +31,21 @@ const Day = ({day, rowindx, row, hours}) => {
                 <div key={i} className={`border cursor-pointer  ${geteventclass(day, i)}  hover:bg-blue-200 flex flex-col ${getnowclass(i)}`}>
                 <header className={`flex flex-col items-center`}></header>
                   <p onClick={e => {console.log(day, i)
-                    const event = {
+                    // const event = {
+                    //     day,
+                    //     i
+                    // }
+                    // setevents(addevent(events, event))
+                    seteventday({
+                      type: 'SET_DAY',
+                      payload: {
                         day,
-                        i
-                    }
-                    setevents(addevent(events, event))
+                        hour: i
+                      }
+                    })
+
+                    setshoweventmodal(showeventmodalaction())
+                    console.log(eventday)
                 }} className={`text-xs font-thin text-opacity-5 p-6 my-1 text-center`}>
                       {h}
                   </p>

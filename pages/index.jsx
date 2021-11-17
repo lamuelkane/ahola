@@ -50,7 +50,7 @@ export default function Home() {
         
       </Head>
       <Homehero />
-      <div className={`${styles.chourseshowcase}`}>
+      <div className={`${styles.chourseshowcase} bg-gray-500`}>
           <div className={`flex column align-center w-xs-100 ${styles.coureswrapper}`}>
             <h2 className={`text-xl font-medium text-black`}>What you can learn with us</h2>
             <div className={`flex wrap justify-between`}>
@@ -66,7 +66,7 @@ export default function Home() {
             <button className={`${styles.showmoercoursesbutton} pointer`}>View More</button>
           </div>
       </div>
-      <div className={`${styles.shwcasewrapper}`}>
+      <div className={`${styles.shwcasewrapper} bg-gray-300`}>
           <div className={`flex column align-center w-xs-100 ${styles.coureswrapper} ${styles.showcasewrapper}`}>
             <h2 className={`center text-xl font-medium text-black ${styles.showcaseheading}`}>We Are Available 24 hours a day, 365 days a year</h2>
             <div className={`flex wrap justify-between`}>
@@ -127,7 +127,7 @@ export default function Home() {
       <div className={`${styles.shwcasewrapper}`}>
       {/* feature start */}
 
-      <div className="py-12 bg-white">
+      <div className="py-12 bg-gray-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="lg:text-center">
           <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
@@ -146,9 +146,9 @@ export default function Home() {
                   <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
                     <feature.icon className="h-6 w-6" aria-hidden="true" />
                   </div>
-                  <p className="ml-16 text-lg leading-6 font-medium text-gray-900">{feature.name}</p>
+                  <p className="ml-16 text-lg leading-6 font-medium">{feature.name}</p>
                 </dt>
-                <dd className="mt-2 ml-16 text-base text-gray-500">{feature.description}</dd>
+                <dd className="mt-2 ml-16 text-base text-white-500">{feature.description}</dd>
               </div>
             ))}
           </dl>

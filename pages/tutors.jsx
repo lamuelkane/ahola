@@ -1,6 +1,6 @@
 
 import Header2 from '../components/Header2'
-import {teachers} from '../components/lists'
+// import {teachers} from '../components/lists'
 import Autoselect from '../components/Autoselect'
 import Tutorprofile from '../components/Tutorprofile'
 import FilterListIcon from '@mui/icons-material/FilterList';
@@ -11,7 +11,8 @@ import Chip from '@mui/material/Chip';
 import SearchIcon from '@mui/icons-material/Search';
 import Stack from '@mui/material/Stack';
 import Filters from '../components/Filters'
-import { Fragment, useState, useEffect } from 'react'
+import GlobalContext from '../context/Globalcontext'
+import { Fragment, useState, useEffect, useContext } from 'react'
 import React, { useMemo } from 'react'
 import Select from 'react-select'
 import countryList from 'react-select-country-list'
@@ -19,6 +20,7 @@ import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import Sidefilters from '../components/Sidefilters'
 import { ChevronDownIcon, FilterIcon, MinusSmIcon, PlusSmIcon, ViewGridIcon } from '@heroicons/react/solid'
+import axios from 'axios'
 import Tutorpopup from '../components/Tutorpopup';
 
 const sortOptions = [
@@ -42,16 +44,27 @@ const Tutors = () => {
     const options = useMemo(() => countryList().getData(), [])
     const [open, setOpen] = useState(false)
     const [teach, setteacher] = useState({})
+    const [tutors, settutors, ] = useState([])
+    const {sever} = useContext(GlobalContext)
 
 
       const changeHandler = value => {
         setValue(value)
       }
 
+      const gettutors = async() => {
+        try {
+          const {data} = await axios.get(`${sever}/api/users/tutors`)
+          settutors(data)
+        } catch (error) {
+          alert(error)
+        }
+      }
+
 
       useEffect(() => {
-        console.log(options)
-      }, [options])
+        gettutors()
+      }, [])
            
     return (
         <div>
@@ -85,11 +98,12 @@ const Tutors = () => {
           <div className={`flex justify-center align-center`}>
             <div className={`flex justify-center align-center ${styles.tutorprofileswraper} column w-4/5`}>
                {
-                teachers.map((teacher, i) => (
+                tutors.map((teacher, i) => (
                    <Tutorprofile key={i} open={open} teacher={teacher} setOpen={setOpen} setteacher={setteacher} />
                  ))
                }
             </div>
+           
           </div>
           </div>
         </div>

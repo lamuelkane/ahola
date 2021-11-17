@@ -4,6 +4,7 @@ import CalenderHeader from '../components/CalenderHeader'
 import Sidebar from '../components/Sidebar'
 import Month from '../components/Month'
 import {getMonth} from '../components/utils'
+import DashBoardHeader from '../components/DashBoardHeader'
 import Eventmodal from "../components/Eventmodal";
 
 
@@ -20,6 +21,9 @@ const Calender = () => {
   return (
     <>
     <Eventmodal />
+            <div className="border">
+                <DashBoardHeader />
+            </div>
       <div className="h-screen flex flex-col">
         <CalenderHeader />
         <div className="flex flex-1">

@@ -3,32 +3,10 @@ import { Fragment, useState, useEffect } from 'react'
 import { Dialog, RadioGroup, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import { StarIcon } from '@heroicons/react/solid'
+import axios from 'axios'
+import GlobalContext from '../context/Globalcontext';
+import { useContext } from 'react';
 import {paypalclient} from './keys'
-
-// const product = {
-//   name: 'Fabrice the nerd',
-//   price: '$19',
-//   rating: 3.9,
-//   reviewCount: 117,
-//   href: '#',
-//   imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-quick-preview-02-detail.jpg',
-//   imageAlt: 'Two each of gray, white, and black shirts arranged on table.',
-//   colors: [
-//     { name: 'White', class: 'bg-white', selectedClass: 'ring-gray-400' },
-//     { name: 'Gray', class: 'bg-gray-200', selectedClass: 'ring-gray-400' },
-//     { name: 'Black', class: 'bg-gray-900', selectedClass: 'ring-gray-900' },
-//   ],
-//   sizes: [
-//     { name: '4hrs', inStock: true, value:4 },
-//     { name: '6hrs', inStock: true,  value:6  },
-//     { name: '8hrs', inStock: true,  value:8  },
-//     { name: '10hrs', inStock: true,  value:10  },
-//     { name: '12hrs', inStock: true,  value:12  },
-//     { name: '16hrs', inStock: true,  value:16  },
-//     { name: '18hrs', inStock: true,  value:18  },
-//     { name: '20hrs', inStock: true ,  value:20 },
-//   ],
-// }
 
 
 const packages = [
@@ -48,10 +26,9 @@ function classNames(...classes) {
 
 export default function Tutorpopup({open, setOpen, teacher}) {
 
-  // const [selectedColor, setSelectedColor] = useState(product.colors[0])
   const [selectedSize, setSelectedSize] = useState(packages[2])
-  const [packagetotal, setpackagetotal] = useState(selectedSize.value * teacher.rate)
   const [paypalready, setpaypalready] = useState()
+  const {sever, user: student} = useContext(GlobalContext)
 
   const addpaypalscript = () => {
    let script = document.createElement('script')
@@ -66,13 +43,65 @@ export default function Tutorpopup({open, setOpen, teacher}) {
   }
 
     useEffect(() => {
-      if(!window.paypal){
-        addpaypalscript()
-      } else {
-        setpaypalready(true)
-      }
+      // if(!window.paypal){
+      //   addpaypalscript()
+      // } else {
+      //   setpaypalready(true)
+      // }
+      console.log(teacher)
+      
     }, [paypalready])
 
+
+    const savehoursbought = async(e) => {
+      e.preventDefault()
+      const {_id: id, rate, firstname: name, timezone} = teacher
+      const tutor = student.tutors.find(tut => tut.id === teacher._id)
+      const stu = teacher.students.find(stu => stu.id === student._id)
+      if(tutor || stu){
+          tutor.hours += selectedSize.value 
+          stu.hours += selectedSize.value
+          try{
+            const {data} = await axios.post(`${sever}/api/users/student/update`, student)
+            const {data: res} = await axios.post(`${sever}/api/users/tutor/update`, teacher)
+            alert(`successfully bought additional ${selectedSize.value} with tutor ${name}`)
+
+          } catch(error) {
+            alert(error)
+          }
+
+          localStorage.setItem('user', JSON.stringify(student))
+          return
+      }
+
+      student.tutors.push({
+        id,
+        rate,
+        hours: selectedSize.value,
+        name,
+        timezone, 
+      })
+
+     
+
+      teacher.students.push({
+        id: student._id,
+        rate,
+        name: student.firstname,
+        hours: selectedSize.value,
+        timezone: student.timezone
+      })
+
+      try{
+        const {data: res} = await axios.post(`${sever}/api/users/tutor/update`, teacher)
+        const {data} = await axios.post(`${sever}/api/users/student/update`, student)
+        alert(`successfully bought ${selectedSize.value} with tutor ${name}`)
+
+      } catch(error) {
+        alert(error)
+      }
+      localStorage.setItem('user', JSON.stringify(student))
+    }
 
 
   return (
@@ -154,43 +183,6 @@ export default function Tutorpopup({open, setOpen, teacher}) {
                       </h3>
 
                       <form>
-                        {/* Colors */}
-                        {/* <div>
-                          <h4 className="text-sm text-gray-900 font-medium">Color</h4>
-
-                          <RadioGroup value={selectedColor} onChange={setSelectedColor} className="mt-4">
-                            <RadioGroup.Label className="sr-only">Choose a color</RadioGroup.Label>
-                            <div className="flex items-center space-x-3">
-                              {product.colors.map((color) => (
-                                <RadioGroup.Option
-                                  key={color.name}
-                                  value={color}
-                                  className={({ active, checked }) =>
-                                    classNames(
-                                      color.selectedClass,
-                                      active && checked ? 'ring ring-offset-1' : '',
-                                      !active && checked ? 'ring-2' : '',
-                                      '-m-0.5 relative p-0.5 rounded-full flex items-center justify-center cursor-pointer focus:outline-none'
-                                    )
-                                  }
-                                >
-                                  <RadioGroup.Label as="p" className="sr-only">
-                                    {color.name}
-                                  </RadioGroup.Label>
-                                  <span
-                                    aria-hidden="true"
-                                    className={classNames(
-                                      color.class,
-                                      'h-8 w-8 border border-black border-opacity-10 rounded-full'
-                                    )}
-                                  />
-                                </RadioGroup.Option>
-                              ))}
-                            </div>
-                          </RadioGroup>
-                        </div> */}
-
-                        {/* Sizes */}
                         <div className="mt-10">
                           <div className="flex items-center justify-between">
                             <h4 className="text-sm text-gray-900 font-medium">packages</h4>
@@ -202,7 +194,7 @@ export default function Tutorpopup({open, setOpen, teacher}) {
                           <RadioGroup value={selectedSize} onChange={setSelectedSize} className="mt-4">
                             <RadioGroup.Label className="sr-only">Choose a package</RadioGroup.Label>
                             <div className="grid grid-cols-4 gap-4">
-                              {packages.map((size) => (
+                              {/* {packages.map((size) => (
                                 <RadioGroup.Option
                                   key={size.name}
                                   value={size}
@@ -247,19 +239,13 @@ export default function Tutorpopup({open, setOpen, teacher}) {
                                     </>
                                   )}
                                 </RadioGroup.Option>
-                              ))}
+                              ))} */}
                             </div>
                           </RadioGroup>
                         </div>
 
-                        {/* <button
-                          type="submit"
-                          className="mt-6 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                          Buy Package
-                        </button> */}
                         <div className="mt-4">
-                           { paypalready && <PayPalButton
+                           {/* { paypalready && <PayPalButton
                               amount={selectedSize.value * teacher.rate} 
                               // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
                               onSuccess={(details, data) => {
@@ -273,7 +259,14 @@ export default function Tutorpopup({open, setOpen, teacher}) {
                                   })
                                 });
                               }}
-                            />}
+                            />} */}
+                            <button
+                          type="submit"
+                          onClick={savehoursbought}
+                          className="mt-6 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        >
+                          Add to bag
+                        </button>
                         </div>
                       </form>
                     </section>

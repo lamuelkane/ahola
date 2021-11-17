@@ -3,6 +3,9 @@ import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
+import GlobalContext from '../context/Globalcontext';
+import {useContext, useEffect} from 'react'
+import {setUser} from '../actions/User'
 
 
 const Header2 = () => {
@@ -13,6 +16,13 @@ const Header2 = () => {
         { name: 'Contactus', href: '/contactus' },
         { name: 'Aboutus', href: '/aboutus' },
       ]
+
+      const {user, setuser} = useContext(GlobalContext)
+
+    useEffect(() => {
+        setuser(setUser())
+    }, [user])
+
 
     return (
         <div>

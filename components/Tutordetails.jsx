@@ -8,10 +8,11 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import styles from '../styles/Tutor.module.css'
-import {Inject, ScheduleComponent, Day, Week, WorkWeek, Month, Agenda} from '@syncfusion/ej2-react-schedule'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
+
+ 
 
   
   return (
@@ -96,6 +97,17 @@ export default function Tutordetails({teacher}) {
   ]
 
 
+  const reverseString = (str) => {
+    return str.split("").reverse().join("");
+}
+
+const tutorvideo = () => {
+  let str = reverseString(teacher.video)
+  let sub = str.substring(0, str.indexOf("="))
+  return reverseString(sub)
+}
+
+
  const getvilbleperiod = (avail, interval) => {
     for (let i = 0; i < interval.length; i++) {
       const element = interval[i];
@@ -133,7 +145,7 @@ export default function Tutordetails({teacher}) {
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
                     <iframe width="350" height="215"
-            src="https://www.youtube.com/embed/j4cuSOz6PHM">
+            src={`https://www.youtube.com/embed/${tutorvideo()}`}>
             </iframe>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
@@ -146,7 +158,7 @@ export default function Tutordetails({teacher}) {
                   {   hoursgroup.map((item, i) => (
                     <React.Fragment  key={i} >
                       {/* {dayidx === 1 && i === 2 &&  console.log(teacher.availaibility[day], day, teacher.firstname)} */}
-                      <span className={` p-1 border border-blue-800 ${dayidx !== 0 && getvilbleperiod(teacher.availaibility[day], item.interval) && 'bg-blue-400'} center text-xs`}>{dayidx === 0? item.value : ''}</span>
+                      <span className={` p-1 border border-blue-800 ${dayidx !== 0 && getvilbleperiod(teacher.availiability[0][day], item.interval) && 'bg-blue-400'} center text-xs`}>{dayidx === 0? item.value : ''}</span>
                     </React.Fragment >
                      ))}
                   </React.Fragment >

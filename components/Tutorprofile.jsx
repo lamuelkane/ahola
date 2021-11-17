@@ -3,13 +3,19 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import styles from '../styles/Tutor.module.css'
 import Tutordetails from './Tutordetails';
-import Tutorpopup from '../components/Tutorpopup';
 import Rating from '@mui/material/Rating';
+import GlobalContext from '../context/Globalcontext';
+import { useContext } from 'react';
+import { useRouter } from 'next/router';
+
 
 const Tutorprofile = ({open, setOpen, teacher, setteacher}) => {
+    const {user} = useContext(GlobalContext)
+    const router = useRouter()
+
+
     return (
         <div className={`${styles.tutor}`}>
-            {/* <Tutorpopup open={open} setOpen={setOpen} teacher={teacher} /> */}
             <Paper>
                 <div className={`flex align-cnter ${styles.tutorsmallscreen} nowrap justify-beteen padding`}>
                     <div className={`${styles.tutorabout}`}>
@@ -20,19 +26,20 @@ const Tutorprofile = ({open, setOpen, teacher, setteacher}) => {
                             <div className={`text-xs`}>144 lessons</div>
 
                             <button className={`${styles.bookbtn}  text-xs `} onClick={e => {
-                            setOpen(true)
-                            setteacher(teacher)
+                                if(user?.type !== 'student'){
+                                    router.push('/student_register')
+                                    return
+                                }else{
+                                    setOpen(true)
+                                    setteacher(teacher)
+                                    return
+                                }
+                            
                             }}>book a lesson</button>
                         </div>
                     </div>
                     <div className={`${styles.tutorinfo} padding-right`}>
-                            <div className={`text-xs mt-2`}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum ex,
-                                 voluptatibus quibusdam numquam consequatur fugiat. Facere autem quam
-                                 magnam assumenda eveniet rem sed odit dolor sit amet consectetur adipisicing elit. Dolorum ex,
-                                 voluptatibus quibusdam numquam consequatur fugiat. Facere autem quam
-                                 magnam assumenda eveniet rem sed odit dolor sit amet consectetur adipisicing elit. Dolorum ex,
-                                 voluptatibus quibusdam numquam consequatur fugiat. Facere autem quam
-                                 magnam assumenda eveniet rem sed odit 
+                            <div className={`text-xs mt-2`}>{teacher.description}
                             </div>
                             <Rating name="read-only" value={4} readOnly />
                             <div>

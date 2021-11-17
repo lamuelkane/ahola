@@ -4,7 +4,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 
 export default function Sidefilters() {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
 
   return (
     <Transition.Root show={open} as={Fragment}>
