@@ -8,7 +8,7 @@ import InsightsIcon from '@mui/icons-material/Insights';
 
 import styles from '../styles/Messages.module.css'
 
-const Messagesend = () => {
+const Messagesend = ({receiverid, setreceiverid}) => {
     return (
         <div className={`${styles.messageendwrapper}`}>
             <div className={`${styles.messageendhead} flex`}>

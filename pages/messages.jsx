@@ -1,4 +1,5 @@
-import React, {useEffect, useState, useRef} from 'react'
+import React, {useEffect, useState, useContext, useRef} from 'react'
+import { useRouter } from 'next/router';
 import {io} from 'socket.io-client'
 
 import DashBoardHeader from '../components/DashBoardHeader'
@@ -7,10 +8,52 @@ import Messagecenter from '../components/Messagecenter'
 import Messagesend from '../components/Messagesend'
 import styles from '../styles/Messages.module.css'
 import Messagesstart from '../components/Messagesstart'
+import GlobalContext from '../context/Globalcontext'
+import axios from 'axios';
 
 
 const Messages = () => {
     // const socket = io('ws://localhost:8000/')
+    const {user, sever} = useContext(GlobalContext)
+    const router = useRouter()
+
+    const [receiverid, setreceiverid] = useState('')
+    const [conversationid, setconversationid] = useState('')
+    const {rcrid, name, convid} = router.query
+
+
+    const getidfromrouter = async() => {
+        if(rcrid && user && name && convid){
+            try {
+                const {data} = await axios.get(`${sever}/api/chats/conversation/${convid}`)
+                if(data.id){
+                   setconversationid(data.id)
+                   setreceiverid(data.members.find(mem => mem !== user?._id))
+                }
+                else{
+                    try {
+                        const {data} = await axios.post(`${sever}/api/chats//conversation/save`, {
+                            members : [rcrid, user?._id],
+                            name: {
+                                sender: user?.firstname,
+                                receiver: name,
+                            },
+                            id: convid,
+                            lastmessage: {
+                                message: null
+                            }
+                        })
+                        setconversationid(convid)
+                        setreceiverid(rcrid)
+                    } catch (error) {
+                        alert(err)
+                    }
+                }
+            } catch (error) {
+                alert(error)
+            }
+        }
+    }
 
     useEffect(() => {
         // socket.on("connect", () => {
@@ -31,6 +74,13 @@ const Messages = () => {
         //   console.log(elem1, elem2, elem3);
         // });
     }, [])
+
+    useEffect(() => {
+        getidfromrouter()
+    }, [rcrid, convid, name])
+
+
+
     return (
         <div>
             <div className="border">
@@ -38,9 +88,10 @@ const Messages = () => {
             </div>
             <Dashboardsubheader />
             <div className={`flex justify-between ${styles.messagescontainer}`}>
-               <Messagesstart />
-               <Messagecenter />
-               <Messagesend />
+               <Messagesstart receiverid={receiverid} setreceiverid={setreceiverid} conversationid={conversationid} setconversationid={setconversationid} />
+               <Messagecenter receiverid={receiverid} setreceiverid={setreceiverid}  conversationid={conversationid} setconversationid={setconversationid} />
+               { user?.type === 'teacher' &&
+               <Messagesend receiverid={receiverid} setreceiverid={setreceiverid}  conversationid={conversationid} setconversationid={setconversationid} />}
             </div>
         </div>
     )

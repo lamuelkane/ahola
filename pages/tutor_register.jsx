@@ -1,7 +1,9 @@
 import Header2  from '../components/Header2'
-import {useState} from 'react'
+import {useState, useContext} from 'react'
 import styles from '../styles/Dashboard.module.css'
 import {countries, timezones} from '../components/lists'
+import axios from 'axios'
+import GlobalContext from '../context/Globalcontext'
 
 
 
@@ -14,17 +16,38 @@ export default function Example() {
   const [country, setcountry] = useState('')
   const [timezone, settimezone] = useState('')
   const [subject, setsubject] = useState('')
-  const [rate, setrate] = useState('')
+  const [rate, setrate] = useState(4)
   const [email, setemail] = useState('')
   const [photo, setphoto] = useState('')
+  const [video, setvideo] = useState('')
+  const [password, setpassword] = useState('')
+  const [comfirmpassword, setcomfirmpassword] = useState('')
+
+  const {sever} = useContext(GlobalContext)
 
     function reverseString(str) {
     return str.split("").reverse().join("");
 }
 
-const submitrequest =() => {
+const submitrequest = async(e) => {
+  e.preventDefault()
+  if(!video || descripion?.length < 300 || !photo) {
+    alert('please make sure to provide your profile cridentials')
+    return
+  }
+
+  if(!timezone || !country || !subject) {
+    alert('please check your personal info and check if you have set timezone, subject and your country')
+    return
+  }
+
+  if(password !== comfirmpassword) {
+    alert('passwords does not match, chech your entries and try again')
+    return
+  }
+
   const teacher = {
-    videolink,
+    video,
     descripion,
     firstnme,
     lastname,
@@ -33,12 +56,37 @@ const submitrequest =() => {
     rate,
     email,
     subject,
-    photo,
+    image: photo,
+    password,
+  }
+
+  try{
+      const {data} = await axios.post(`${sever}/api/users/tutor/singup`, teacher)
+      alert('everything went fine')
+  } catch(err) {
+    alert(err)
   }
 
   console.log(teacher)
 }
 
+
+let sendimage = async(e) => {
+  var bodyFormData = new FormData();
+  let i = e.target.files[0]
+  bodyFormData.append('picture', i); 
+  try {
+    const {data} = await axios({
+      method: "post",
+      url: `${sever}/api/users/upload`,
+      data: bodyFormData,
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+    setphoto(`${sever}/uploads/${data.filename}`)
+  } catch (error) {
+    alert('an error ocurred while uploading image')
+  }
+}
 
   return (
     <>
@@ -73,6 +121,7 @@ const submitrequest =() => {
                         <input
                         required
                         onChange={e => {
+                          setvideo(e.target.value)
                           clearTimeout(typing)
                           const {value} = e.target
                           let str = reverseString(value)
@@ -102,6 +151,25 @@ const submitrequest =() => {
                     </div>
                   </div>
 
+              
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">Photo</label>
+                    <div className="mt-1 flex items-center">
+                      <span className="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
+                        <svg className="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                      </span>
+                      <label
+                            htmlFor="file-upload"
+                            className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                          >
+                            <span>Upload a file</span>
+                            <input id="file-upload" accept='image/*' name="file-upload" onChange={sendimage} type="file" className="sr-only" />
+                          </label>
+                    </div>
+                  </div>
+                          
                   <div>
                     <label htmlFor="about" className="block text-sm font-medium text-gray-700">
                       Description
@@ -117,29 +185,12 @@ const submitrequest =() => {
                         className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
                         placeholder="your description"
                         defaultValue={''}
+                        minLength={300}
                       />
                     </div>
                     <p className="mt-2 text-sm text-gray-500">
-                      Brief description for yourself and your teaching methods
+                      Brief description for yourself and your teaching methods of not less than 300 characters
                     </p>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">Photo</label>
-                    <div className="mt-1 flex items-center">
-                      <span className="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
-                        <svg className="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                      </span>
-                      <label
-                            htmlFor="file-upload"
-                            className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
-                          >
-                            <span>Upload a file</span>
-                            <input id="file-upload" name="file-upload" onChange={e => setphoto(e.target.files[0])} type="file" className="sr-only" />
-                          </label>
-                    </div>
                   </div>
 
             
@@ -165,7 +216,7 @@ const submitrequest =() => {
             </div>
           </div>
           <div className="mt-5 md:mt-0 md:col-span-2">
-            <form action="#" method="POST">
+            <form action="#" method="POST" onSubmit={submitrequest}>
               <div className="shadow overflow-hidden sm:rounded-md">
                 <div className="px-4 py-5 bg-white sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
@@ -201,6 +252,40 @@ const submitrequest =() => {
                       />
                     </div>
 
+                    
+
+                    <div className="col-span-6 sm:col-span-3">
+                      <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
+                        password
+                      </label>
+                      <input
+                      required
+                      onChange={e => setpassword(e.target.value)}
+                      value={password}
+                        type="password"
+                        name="first-name"
+                        id="first-name"
+                        autoComplete="given-name"
+                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
+
+                    <div className="col-span-6 sm:col-span-3">
+                      <label htmlFor="last-name" className="block text-sm font-medium text-gray-700">
+                        comfirm password
+                      </label>
+                      <input
+                      required
+                      onChange={e => setcomfirmpassword(e.target.value)}
+                      value={comfirmpassword}
+                        type="password"
+                        name="last-name"
+                        id="last-name"
+                        autoComplete="family-name"
+                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
+
                     <div className="col-span-6 sm:col-span-4">
                       <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
                         Email address
@@ -209,13 +294,15 @@ const submitrequest =() => {
                       required
                       onChange={e => setemail(e.target.value)}
                       value={email}
-                        type="text"
+                        type="email"
                         name="email-address"
                         id="email-address"
                         autoComplete="email"
                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       />
                     </div>
+
+                    
 
                     <div className="col-span-6 sm:col-span-3">
                       <label htmlFor="country" className="block text-sm font-medium text-gray-700">
@@ -242,7 +329,10 @@ const submitrequest =() => {
                         Time Zone
                       </label>
                       <select
-                        onChange={e => settimezone(e.target.value)}
+                        onChange={e => 
+                        {
+                          settimezone(timezones.find(tz => tz.name === e.target.value))
+                        }}
                         id="country"
                         name="country"
                         autoComplete="country-name"
@@ -250,7 +340,7 @@ const submitrequest =() => {
                       >
                           {
                             timezones.map(time => (
-                              <option key={time.offset} >{time.offset}</option>
+                              <option key={time.offset} value={time.name} >{time.offset}-{time.name}</option>
 
                             ))
                           }
@@ -267,13 +357,12 @@ const submitrequest =() => {
                         </div>
                         <input
                         required
-                        onChange={e => setrate(e.target.value)}
+                        onChange={e => setrate(parseInt(e.target.value))}
                         value={rate}
-                          type="text"
+                          type="number"
                           name="price"
                           id="price"
                           className="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded-md"
-                          placeholder="0.00"
                         />
                       </div>
                   </div>
@@ -297,10 +386,11 @@ const submitrequest =() => {
                                   
                   </div>
                 </div>
+                
                 <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                   <button
                     type="submit"
-                    onClick={submitrequest}
+                    // onClick={submitrequest}
                     className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     Save

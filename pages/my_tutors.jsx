@@ -87,7 +87,7 @@ const Mytutor = () => {
                         <div className={`margin-right`}>{tut.hours} hours left</div>
                         <div className={`flex`}>
                             <div className={`margin-right`}>
-                              <Link href={`messages?receiverid=${tut.id}`} >message </Link>
+                              <Link href={`messages?convid=${tut.id + user._id}&&name=${tut.name}&&rcrid=${tut.id}`} >message </Link>
                             </div>
                             <div className={`margin-right pointer`} onClick={e => settutor(tut.id)} >lessons</div>
                         </div>

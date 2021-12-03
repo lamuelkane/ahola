@@ -33,7 +33,7 @@ const DashBoardHeader = () => {
                     <div className="styles header flex align-center padding-x margin-x">
                         <div className="margin-right  flex align-center padding-right border-right">
                             <AccountBalanceWalletIcon />
-                            <span className={`hidexs`} >{user?.currentarning.toFixed(2)} USD</span>
+                            <span className={`hidexs`} >{user?.currentearning.toFixed(2)} USD</span>
                             <KeyboardArrowDownIcon />
                         </div>
                         <div className="margin-right flex align-center padding-right border-right">

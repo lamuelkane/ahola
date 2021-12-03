@@ -1,44 +1,80 @@
 import Header2  from '../components/Header2'
-import {useState} from 'react'
+import {useState, useContext} from 'react'
 import styles from '../styles/Dashboard.module.css'
 import {countries, timezones} from '../components/lists'
-
+import axios from 'axios'
+import GlobalContext from '../context/Globalcontext'
 
 
 export default function Example() {
 
-  const [videolink, setvideolink] = useState()
-  const [descripion, setdescripion] = useState('')
   const [firstnme, setfirstnme] = useState('')
   const [lastname, setlastname] = useState('')
   const [country, setcountry] = useState('')
   const [timezone, settimezone] = useState('')
-  const [subject, setsubject] = useState('')
-  const [rate, setrate] = useState('')
   const [email, setemail] = useState('')
-  const [photo, setphoto] = useState('')
+  const [photo, setphoto] = useState(null)
+  const [password, setpassword] = useState('')
+  const [comfirmpassword, setcomfirmpassword] = useState('')
 
-    function reverseString(str) {
-    return str.split("").reverse().join("");
-}
+  const {sever} = useContext(GlobalContext)
 
-const submitrequest = () => {
-  const teacher = {
-    videolink,
-    descripion,
+const submitrequest = async(e) => {
+  e.preventDefault()
+
+  if(!photo) {
+    alert('please choose a profile image')
+    return
+  }
+
+  if(!timezone || !country) {
+    alert('please check your timezone or country')
+    return
+  }
+
+  if(password !== comfirmpassword) {
+    alert('please make sure your password matches')
+    return
+  }
+
+  const student = {
     firstnme,
     lastname,
     country,
     timezone,
-    rate,
     email,
-    subject,
-    photo,
+    image : photo,
+    password
   }
 
-  console.log(teacher)
+  try{
+    const {data} = await axios.post(`${sever}/api/users/student/singup`, student)
+    alert('everything went fine')
+} catch(err) {
+  alert(err)
 }
 
+
+  console.log(student)
+}
+
+
+let sendimage = async(e) => {
+  var bodyFormData = new FormData();
+  let i = e.target.files[0]
+  bodyFormData.append('picture', i); 
+  try {
+    const {data} = await axios({
+      method: "post",
+      url: `${sever}/api/users/upload`,
+      data: bodyFormData,
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+    setphoto(`${sever}/uploads/${data.filename}`)
+  } catch (error) {
+    alert('an error ocurred while uploading image')
+  }
+}
 
   return (
     <>
@@ -74,7 +110,7 @@ const submitrequest = () => {
                             className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                           >
                             <span>Upload a file</span>
-                            <input id="file-upload" name="file-upload" onChange={e => setphoto(e.target.files[0])} type="file" className="sr-only" />
+                            <input id="file-upload" accept="image/*" name="file-upload" onChange={sendimage} type="file" className="sr-only" />
                           </label>
                     </div>
                   </div>
@@ -102,7 +138,7 @@ const submitrequest = () => {
             </div>
           </div>
           <div className="mt-5 md:mt-0 md:col-span-2">
-            <form action="#" method="POST">
+            <form action="#" method="POST" onSubmit={submitrequest}>
               <div className="shadow overflow-hidden sm:rounded-md">
                 <div className="px-4 py-5 bg-white sm:p-6">
                   <div className="grid grid-cols-6 gap-6">
@@ -138,6 +174,38 @@ const submitrequest = () => {
                       />
                     </div>
 
+                    <div className="col-span-6 sm:col-span-3">
+                      <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
+                        password
+                      </label>
+                      <input
+                      required
+                      onChange={e => setpassword(e.target.value)}
+                      value={password}
+                        type="password"
+                        name="first-name"
+                        id="first-name"
+                        autoComplete="given-name"
+                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
+
+                    <div className="col-span-6 sm:col-span-3">
+                      <label htmlFor="last-name" className="block text-sm font-medium text-gray-700">
+                        comfirm password
+                      </label>
+                      <input
+                      required
+                      onChange={e => setcomfirmpassword(e.target.value)}
+                      value={comfirmpassword}
+                        type="password"
+                        name="last-name"
+                        id="last-name"
+                        autoComplete="family-name"
+                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      />
+                    </div>
+
                     <div className="col-span-6 sm:col-span-4">
                       <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
                         Email address
@@ -146,7 +214,7 @@ const submitrequest = () => {
                       required
                       onChange={e => setemail(e.target.value)}
                       value={email}
-                        type="text"
+                        type="email"
                         name="email-address"
                         id="email-address"
                         autoComplete="email"
@@ -179,7 +247,10 @@ const submitrequest = () => {
                         Time Zone
                       </label>
                       <select
-                        onChange={e => settimezone(e.target.value)}
+                        onChange={e => {
+                          const {value} = e.target
+                          settimezone(timezones.find(tz => tz.name === value))
+                        }}
                         id="country"
                         name="country"
                         autoComplete="country-name"
@@ -187,8 +258,7 @@ const submitrequest = () => {
                       >
                           {
                             timezones.map(time => (
-                              <option key={time.offset} >{time.offset}</option>
-
+                              <option key={time.offset} value={time.name} >{time.offset}-{time.name}</option>
                             ))
                           }
                       </select>
@@ -199,7 +269,7 @@ const submitrequest = () => {
                 <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                   <button
                     type="submit"
-                    onClick={submitrequest}
+                    
                     className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     Save

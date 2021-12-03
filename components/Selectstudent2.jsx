@@ -33,9 +33,10 @@ const names = [
 function getStyles(name, personName, theme) {
   return {
     fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
+      // personName.indexOf(name) === -1
+      //   ? theme.typography.fontWeightRegular
+      //   : 
+        theme.typography.fontWeightMedium,
   };
 }
 
@@ -48,8 +49,7 @@ export default function Selectstudent2({people}) {
       target: { value },
     } = event;
     setPersonName(
-      // On autofill we get a the stringified value.
-      typeof value.name === 'string' ? value.name.split(',') : value.name,
+      value.name
     );
 
     console.log(value)

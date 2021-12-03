@@ -41,7 +41,7 @@ export default function Example() {
             <p className="mt-2 text-center text-sm text-gray-600">
               do not have an account? {' '}
               <span className="font-medium text-indigo-600 hover:text-indigo-500">
-                <Link href={tutor? '/tutor_signup' : 'student_signup'}  > register </Link>
+                <Link href={tutor? '/tutor_register' : 'student_register'}  > register </Link>
               </span>
             </p>
           </div>
@@ -59,7 +59,7 @@ export default function Example() {
                    
                   const {data} = await axios.post(`${sever}/api/users/${tutor? 'teacher' : 'student'}/signin`, info)
                   localStorage.setItem('user', JSON.stringify(data))
-                  router.push('/messages')
+                  router.push('/calender')
                  } catch (error) {
                    alert(error)
                  }
@@ -135,7 +135,7 @@ export default function Example() {
           </form>
         </div>
       </div>
-      <Redirect item={user} page={'/messages'} />
+      <Redirect item={user} page={'/calender'} />
     </>
   )
 }

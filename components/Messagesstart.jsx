@@ -8,32 +8,24 @@ import {useState, useEffect, useContext} from 'react'
 import GlobalContext from '../context/Globalcontext'
 
 
-const Messagesstart = () => {
+const Messagesstart = ({receiverid, setreceiverid, conversationid, setconversationid}) => {
     const [conversations, setconversations] = useState([])
     const {sever, user} = useContext(GlobalContext)
 
 
     const getconverstions = async() => {
         try {
-            const {data} = await axios.get(`${sever}/api/chats/conversation/${user._id}`)
+            const {data} = await axios.get(`${sever}/api/chats/conversations/${user?._id}`)
             setconversations(data)
         } catch (error) {
             alert(error)
         }
     }
 
-    const saveconverstion = async(receiverid) => {
-        const conversation = {
-            members: [user._id, receiverid],
-            lastmessage: {}
-        }
-        try {
-            const {data} = await axios.post(`${sever}/api/chats/conversation/save`, conversation)
-            console.log(data)
-        } catch (error) {
-            alert(error)
-        }
-    }
+    useEffect(() => {
+        getconverstions()
+    }, [])
+
 
     return (
              <div className={`${styles.messagestartwrapper}`}>
@@ -58,15 +50,13 @@ const Messagesstart = () => {
                 </div>
 
                 <div className={`${styles.conversationswrapper}`}>
-                    <Conversation />
-                    <Conversation />
-                    <Conversation />
-                    <Conversation />
-                    <Conversation />
-                    <Conversation />
-                    <Conversation />
-                    <Conversation />
-                    <Conversation />
+                    {
+                        conversations.map(con => <Conversation Onclick={e => {
+                            setconversationid(con.id)
+                            setreceiverid(con.members.find(mem => mem !== user?._id))
+
+                        }} active={con.id === conversationid? 'bg-gray-300' : ''} key={con._id} con={con} />)
+                    }
                 </div>
 
 
