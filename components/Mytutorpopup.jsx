@@ -1,3 +1,4 @@
+import React from 'react'
 import { PayPalButton } from "react-paypal-button-v2";
 import { Fragment, useState, useEffect } from 'react'
 import { Dialog, RadioGroup, Transition } from '@headlessui/react'
@@ -8,99 +9,23 @@ import { useSelector, useDispatch } from 'react-redux';
 import {paypalclient} from './keys'
 
 
-const packages = [
-  { name: '4hrs', inStock: true, value:4 },
-  { name: '6hrs', inStock: true,  value:6  },
-  { name: '8hrs', inStock: true,  value:8  },
-  { name: '10hrs', inStock: true,  value:10  },
-  { name: '12hrs', inStock: true,  value:12  },
-  { name: '16hrs', inStock: true,  value:16  },
-  { name: '18hrs', inStock: true,  value:18  },
-  { name: '20hrs', inStock: true ,  value:20 },
-]
+const Mytutorpopup = () => {
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
-
-export default function Tutorpopup({open, setOpen, teacher}) {
-
-  const [selectedSize, setSelectedSize] = useState(packages[2])
-  const [paypalready, setpaypalready] = useState()
-  const {sever, user: student} = useSelector((state) => state);
-
-  const addpaypalscript = () => {
-   let script = document.createElement('script')
-   script.type = 'text/javascript'
-   script.src = `https://www.paypal.com/sdk/js?client-id=${paypalclient}`
-   script.async = true
-   script.onload = () => {
-    setpaypalready(true)
-   }
-
-   document.body.appendChild(script)
-  }
-
-    useEffect(() => {
-      if(!window.paypal){
-        addpaypalscript()
-      } else {
-        setpaypalready(true)
-      }
-      console.log(teacher)
-      
-    }, [paypalready])
+    const packages = [
+        { name: '4hrs', inStock: true, value:4 },
+        { name: '6hrs', inStock: true,  value:6  },
+        { name: '8hrs', inStock: true,  value:8  },
+        { name: '10hrs', inStock: true,  value:10  },
+        { name: '12hrs', inStock: true,  value:12  },
+        { name: '16hrs', inStock: true,  value:16  },
+        { name: '18hrs', inStock: true,  value:18  },
+        { name: '20hrs', inStock: true ,  value:20 },
+      ]
 
 
-    const savehoursbought = async(e) => {
-      // e.preventDefault()
-      const {_id: id, rate, firstname: name, timezone} = teacher
-      const tutor = student.tutors.find(tut => tut.id === teacher._id)
-      const stu = teacher.students.find(stu => stu.id === student._id)
-      if(tutor || stu){
-          tutor.hours += selectedSize.value 
-          stu.hours += selectedSize.value
-          try{
-            const {data} = await axios.post(`${sever}/api/users/student/update`, student)
-            const {data: res} = await axios.post(`${sever}/api/users/tutor/update`, teacher)
-            alert(`successfully bought additional ${selectedSize.value} with tutor ${name}`)
-
-          } catch(error) {
-            alert(error)
-          }
-          localStorage.setItem('user', JSON.stringify(student))
-          return
-      }
-
-      student.tutors.push({
-        id,
-        rate,
-        hours: selectedSize.value,
-        name,
-        timezone, 
-      })
-
-      teacher.students.push({
-        id: student._id,
-        rate,
-        name: student.firstname,
-        hours: selectedSize.value,
-        timezone: student.timezone
-      })
-      try{
-        const {data: res} = await axios.post(`${sever}/api/users/tutor/update`, teacher)
-        const {data} = await axios.post(`${sever}/api/users/student/update`, student)
-        alert(`successfully bought ${selectedSize.value} with tutor ${name}`)
-
-      } catch(error) {
-        alert(error)
-      }
-      localStorage.setItem('user', JSON.stringify(student))
-    }
-
-
-  return (
-    <Transition.Root show={open} as={Fragment}>
+    return (
+        <div>
+             <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={setOpen}>
         <div className="flex min-h-screen text-center md:block md:px-2 lg:px-4" style={{ fontSize: 0 }}>
           <Transition.Child
@@ -189,7 +114,7 @@ export default function Tutorpopup({open, setOpen, teacher}) {
                           <RadioGroup value={selectedSize} onChange={setSelectedSize} className="mt-4">
                             <RadioGroup.Label className="sr-only">Choose a package</RadioGroup.Label>
                             <div className="grid grid-cols-4 gap-4">
-                              {packages.map((size) => (
+                              {/* {packages.map((size) => (
                                 <RadioGroup.Option
                                   key={size.name}
                                   value={size}
@@ -234,30 +159,34 @@ export default function Tutorpopup({open, setOpen, teacher}) {
                                     </>
                                   )}
                                 </RadioGroup.Option>
-                              ))}
+                              ))} */}
                             </div>
                           </RadioGroup>
                         </div>
 
                         <div className="mt-4">
-                           { paypalready && <PayPalButton
+                           {/* { paypalready && <PayPalButton
                               amount={selectedSize.value * teacher.rate} 
                               // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
-                              // onSuccess={savehoursbought}
                               onSuccess={(details, data) => {
-                                // alert("Transaction completed by " + details.payer.name.given_name);
-                                savehoursbought()
+                                alert("Transaction completed by " + details.payer.name.given_name);
+
                                 // OPTIONAL: Call your server to save the transaction
-                                // return savehoursbought()
+                                return fetch("/paypal-transaction-complete", {
+                                  method: "post",
+                                  body: JSON.stringify({
+                                    orderID: data.orderID
+                                  })
+                                });
                               }}
-                            />}
-                            {/* <button
+                            />} */}
+                            <button
                           type="submit"
                           onClick={savehoursbought}
                           className="mt-6 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                           Add to bag
-                        </button> */}
+                        </button>
                         </div>
                       </form>
                     </section>
@@ -269,5 +198,8 @@ export default function Tutorpopup({open, setOpen, teacher}) {
         </div>
       </Dialog>
     </Transition.Root>
-  )
+        </div>
+    )
 }
+
+export default Mytutorpopup

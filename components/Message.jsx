@@ -17,8 +17,8 @@ const Message = ({own, message}) => {
            {!own? <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar> :
             <Avatar sx={{ bgcolor: deepPurple[500] }}>N</Avatar>}
             <div className={`${styles.messagebody} ${own? styles.ownbody : ''}`}>
-                <div>{message.message}</div>
-                <small className={styles.messagebodytime}>21:55</small>
+                <div className={`text-sm`}>{message.message}</div>
+                <small className={`${styles.messagebodytime} text-xs`}>21:55</small>
             </div>
         </div>
     )

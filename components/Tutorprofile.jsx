@@ -1,16 +1,16 @@
 
 import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
 import styles from '../styles/Tutor.module.css'
 import Tutordetails from './Tutordetails';
 import Rating from '@mui/material/Rating';
-import GlobalContext from '../context/Globalcontext';
-import { useContext } from 'react';
+import { useSelector} from 'react-redux';
 import { useRouter } from 'next/router';
+import Link from 'next/link'
+
 
 
 const Tutorprofile = ({open, setOpen, teacher, setteacher}) => {
-    const {user} = useContext(GlobalContext)
+    const {user} = useSelector((state) => state);
     const router = useRouter()
 
 
@@ -19,11 +19,11 @@ const Tutorprofile = ({open, setOpen, teacher, setteacher}) => {
             <Paper>
                 <div className={`flex align-cnter ${styles.tutorsmallscreen} nowrap justify-beteen padding`}>
                     <div className={`${styles.tutorabout}`}>
-                        <img src={teacher.image} alt="" className={`${styles.tutorimg} rounded`} />
+                        <Link href={`/tutor2?id=${teacher._id}`}><img src={teacher.image} alt="" className={`${styles.tutorimg} rounded`} /></Link>
                         <div className={` ${``} flex column justify-center align-center padding-right`}>
                             <h2 className={`font-bold text-indigo-700`}>{teacher.firstname}</h2>
                             <div className={`text-xs`}>{teacher.subject} Tutor <small className={`text-indigo-700`}>{teacher.rate}/hr</small></div>
-                            <div className={`text-xs`}>144 lessons</div>
+                            <div className={`text-xs`}>{teacher.lessons.length} lessons</div>
 
                             <button className={`${styles.bookbtn}  text-xs `} onClick={e => {
                                 if(user?.type !== 'student'){

@@ -5,14 +5,18 @@ import Sidebar from '../components/Sidebar'
 import Month from '../components/Month'
 import {getMonth} from '../components/utils'
 import DashBoardHeader from '../components/DashBoardHeader'
+import { useSelector, useDispatch } from 'react-redux';
 import Eventmodal from "../components/Eventmodal";
+import Dashboardsubheader from '../components/Dashboardsubheader'
 
 
 
 const Calender = () => {
 
     const [currentmonth, setcurrentmonth] = useState(getMonth())
-    const {monthindex, setMonthindex} = useContext(GlobalContext)
+
+    const dispatch = useDispatch()
+    const {monthindex} = useSelector((state) => state);
 
     useEffect(() => {
       setcurrentmonth(getMonth(monthindex))
@@ -24,6 +28,7 @@ const Calender = () => {
             <div className="border">
                 <DashBoardHeader />
             </div>
+            <Dashboardsubheader />
       <div className="h-screen flex flex-col">
         <CalenderHeader />
         <div className="flex flex-1">

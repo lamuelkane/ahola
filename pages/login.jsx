@@ -3,7 +3,7 @@ import { LockClosedIcon } from '@heroicons/react/solid'
 import Header2 from '../components/Header2'
 import axios from 'axios'
 import {useState, useEffect, useContext} from 'react'
-import GlobalContext from '../context/Globalcontext'
+import { useSelector, useDispatch } from 'react-redux';
 import Link from 'next/link'
 import {useRouter} from 'next/router'
 import Redirect from '../components/redirect'
@@ -16,7 +16,8 @@ export default function Example() {
 
  const router = useRouter()
 
- const {sever, user} = useContext(GlobalContext)
+ const {sever, user} = useSelector((state) => state);
+
 
  useEffect(() => {
   if(user){

@@ -384,6 +384,10 @@ tr{
     z-index: 300;
 }
 
+.ontop{
+  z-index: 5;
+}
+
 .time{
   color: grey;
   font-style: smaller;

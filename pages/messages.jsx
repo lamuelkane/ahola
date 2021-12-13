@@ -1,25 +1,25 @@
-import React, {useEffect, useState, useContext, useRef} from 'react'
+import React, {useEffect, useState, useRef} from 'react'
 import { useRouter } from 'next/router';
 import {io} from 'socket.io-client'
-
+import { useSelector } from 'react-redux';
 import DashBoardHeader from '../components/DashBoardHeader'
 import Dashboardsubheader from '../components/Dashboardsubheader'
 import Messagecenter from '../components/Messagecenter'
 import Messagesend from '../components/Messagesend'
 import styles from '../styles/Messages.module.css'
 import Messagesstart from '../components/Messagesstart'
-import GlobalContext from '../context/Globalcontext'
 import axios from 'axios';
 
 
 const Messages = () => {
-    // const socket = io('ws://localhost:8000/')
-    const {user, sever} = useContext(GlobalContext)
+    const socket = useRef()
     const router = useRouter()
 
     const [receiverid, setreceiverid] = useState('')
     const [conversationid, setconversationid] = useState('')
+    const [message, setmessage] = useState()
     const {rcrid, name, convid} = router.query
+    const {user, sever} = useSelector((state) => state);
 
 
     const getidfromrouter = async() => {
@@ -56,24 +56,29 @@ const Messages = () => {
     }
 
     useEffect(() => {
-        // socket.on("connect", () => {
-        //   // either with send()
-        //   socket.send("Hello!");
+        socket.current = io('ws://localhost:8000/')
+        // handle the event sent with socket.current.send()
+        socket.current.on("message", data => {
+            setmessage(true)
+        });
         
-        //   // or with emit() and custom event names
-        //   socket.emit("salutations", "Hello!", { "mr": "john" }, Uint8Array.from([1, 2, 3, 4]));
-        // });
-        
-        // // handle the event sent with socket.send()
-        // socket.on("message", data => {
-        //   console.log(data);
-        // });
-        
-        // // handle the event sent with socket.emit()
-        // socket.on("greetings", (elem1, elem2, elem3) => {
-        //   console.log(elem1, elem2, elem3);
-        // });
+        // handle the event sent with socket.current.emit()
+        socket.current.on("greetings", (elem1, elem2, elem3) => {
+          console.log(elem1, elem2, elem3);
+        });
     }, [])
+
+    useEffect(() => {
+       if(user) {
+        socket.current?.emit("adduser", user?._id);
+       }
+    }, [user, socket])
+
+    useEffect(() => {
+       if(message) {
+        socket.current.emit('sendmessage', receiverid)
+       }
+    }, [message])
 
     useEffect(() => {
         getidfromrouter()
@@ -89,8 +94,8 @@ const Messages = () => {
             <Dashboardsubheader />
             <div className={`flex justify-between ${styles.messagescontainer}`}>
                <Messagesstart receiverid={receiverid} setreceiverid={setreceiverid} conversationid={conversationid} setconversationid={setconversationid} />
-               <Messagecenter receiverid={receiverid} setreceiverid={setreceiverid}  conversationid={conversationid} setconversationid={setconversationid} />
-               { user?.type === 'teacher' &&
+               <Messagecenter socket={message} setsocket={setmessage} receiverid={receiverid} setreceiverid={setreceiverid}  conversationid={conversationid} setconversationid={setconversationid} />
+               { user?.type === 'teacher' && receiverid &&
                <Messagesend receiverid={receiverid} setreceiverid={setreceiverid}  conversationid={conversationid} setconversationid={setconversationid} />}
             </div>
         </div>

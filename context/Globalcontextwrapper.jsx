@@ -4,6 +4,10 @@ import {Month, week} from '../reducer/month'
 import dayjs from 'dayjs'
 import { Eventmodal, Eventreducer, EventDayreducer } from "../reducer/Event";
 import { User } from "../reducer/user";
+import {createStore, applyMiddleware, combineReducers} from 'redux'
+import {HYDRATE, createWrapper} from 'next-redux-wrapper'
+import thunkMiddleware from 'redux-thunk'
+
 
 const Globalcontextwrapper = (props) => {
     const [monthindex, setMonthindex] = useReducer(Month, dayjs().month())
@@ -13,6 +17,7 @@ const Globalcontextwrapper = (props) => {
     const [user, setuser] = useReducer(User, null)
     const [eventday, seteventday] = useReducer(EventDayreducer, null)
     
+
 
     return (
         <GlobalContext.Provider value={{
@@ -35,5 +40,45 @@ const Globalcontextwrapper = (props) => {
         </GlobalContext.Provider>
     )
 }
+
+
+const bindMiddlware = (middlware) => {
+    if (process.env.NODE_ENV !== 'production') {
+        const {composeWithDevTools} = require('redux-devtools-extension')
+        return composeWithDevTools(applyMiddleware(...middlware))
+    }
+
+    return applyMiddleware(...middlware)
+}
+
+const reducers = combineReducers({
+    showeventmodal: Eventmodal,
+    weekindex:week,
+    monthindex: Month,
+    events:Eventreducer,
+    user:User,
+    eventday:EventDayreducer,
+    sever:() => 'https://aholasever.herokuapp.com',
+})
+
+
+const reducer = (state, action) => {
+    if (action.type === HYDRATE) {
+        const nextState = {
+            ...state,
+            ...action.payload
+        }
+        return nextState
+    }
+    else{
+        return reducers(state, action)
+    }
+}
+
+const initStore = () => {
+    return createStore(reducer, bindMiddlware([thunkMiddleware]))
+}
+
+export const Wrapper = createWrapper(initStore)
 
 export default Globalcontextwrapper

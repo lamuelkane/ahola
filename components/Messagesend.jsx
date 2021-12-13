@@ -5,20 +5,40 @@ import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
 import DetailsIcon from '@mui/icons-material/Details';
 import PublicIcon from '@mui/icons-material/Public';
 import InsightsIcon from '@mui/icons-material/Insights';
-
+import axios from 'axios'
+import {useState, useEffect} from 'react'
+import { useSelector, useDispatch } from 'react-redux';
 import styles from '../styles/Messages.module.css'
 
-const Messagesend = ({receiverid, setreceiverid}) => {
+const Messagesend = ({receiverid}) => {
+    const {user, sever} = useSelector((state) => state);
+    const [receiver, setreceiver] = useState({})
+
+    const getreceiver = async( ) => {
+       try {
+        const {data} = await axios.get(`${sever}/api/users/${user.type == 'teacher' ? 'student' : 'tutor'}/${receiverid}`)
+        setreceiver(data)
+       } catch (error) {
+           alert(error)
+       }
+    }
+
+    useEffect(() => {
+        if(receiverid) {
+            getreceiver()
+        }
+    }, [receiverid])
+
+
     return (
         <div className={`${styles.messageendwrapper}`}>
             <div className={`${styles.messageendhead} flex`}>
-                <Avatar sx={{ bgcolor: deepPurple[500] }}>N</Avatar>
+                <Avatar sx={{ bgcolor: deepPurple[500] }}>{receiver?.firstname?.substring(0, 2)}</Avatar>
                 <div className={`${styles.messagendheaditem} flex column`}>
-                    <b>John Do</b>
+                    <b>{receiver.firstname}</b>
                     <small>This is your student. Below you can find details about the type of lessons and student’s contacts</small>
                 </div>
-                
-                <b>$5.00</b>
+                <b>${user?.students.find(stu => stu.id === receiver._id)?.rate.toFixed(2)}</b>
             </div>
             <div>
                 <div className={`${styles.studentdetailsitem}`}>
@@ -26,19 +46,20 @@ const Messagesend = ({receiverid, setreceiverid}) => {
                         <PublicIcon />
                         <b className={`${styles.studentinfodes}`}>students timezone</b>
                     </div>
-                    <div>America/Santo_Domingo GMT -4:00</div>
+                    <span className={`text-sm`}>{receiver.timezone?.name}</span>
+                    <span className={`text-sm`}>{receiver.timezone?.offset}</span>
                 </div>
                 <div className={`${styles.studentdetailsitem}`}>
                     <div className={`flex algin-center`}>
                         <QueryBuilderIcon /> 
                         <b className={`${styles.studentinfodes}`}>Hours left</b></div>
-                    <div>3 hours</div>
+                    <div className={`text-sm`}>{user?.students.find(stu => stu.id == receiver._id)?.hours} hours</div>
                 </div>
                 <div className={`${styles.studentdetailsitem}`}>
                     <div className={`flex algin-center`}>
                         <ImportContactsIcon />
                         <b className={`${styles.studentinfodes}`}>Subject</b></div>
-                    <div>English Language</div>
+                    <div className={`text-sm`}>English Language</div>
                 </div>
             </div>
         </div>

@@ -1,4 +1,6 @@
-export const Month = (state, action) => {
+import dayjs from 'dayjs'
+
+export const Month = (state=dayjs().month(), action) => {
     switch (action.type) {
         case 'MONTH_INCREASE':
             return ( action.payload)
@@ -11,7 +13,7 @@ export const Month = (state, action) => {
     }
 }  
 
-export const week = (state, action) => {
+export const week = (state=1, action) => {
     switch (action.type) {
         case 'WEEK_INCREASE':
             return ( action.payload)

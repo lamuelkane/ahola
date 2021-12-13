@@ -3,31 +3,35 @@ import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
-import GlobalContext from '../context/Globalcontext';
+import { useSelector, useDispatch } from 'react-redux';
 import {useContext, useEffect} from 'react'
 import {setUser} from '../actions/User'
+import Translate from './Translate';
 
 
 const Header2 = () => {
 
+  const dispatch = useDispatch()
+    const {user, sever} = useSelector((state) => state);
+
     const navigation = [
         { name: 'Tutors', href: '/tutors' },
-        { name: 'Register', href: '/register' },
-        { name: 'Contactus', href: '/contactus' },
+        { name: 'Register', href: '/tutor_register' },
+        // { name: 'Contactus', href: '/contactus' },
         { name: 'Aboutus', href: '/aboutus' },
       ]
-
-      const {user, setuser} = useContext(GlobalContext)
-
     useEffect(() => {
-        setuser(setUser())
+        dispatch(setUser(sever))
     }, [user])
 
 
     return (
-        <div>
+      <>
+      <div id="google_translate_element" className="font-medium text-indigo-600 hover:text-indigo-500">
+                  </div>
+        <div className={`bg-white`}>
             <Popover>
-            <div className="relative pt-6 px-4 sm:px-6 lg:px-8">
+            <div className="relative bg-white-500 pt-6 px-4 sm:px-6 lg:px-8">
               <nav className="relative flex items-center justify-between sm:h-10 lg:justify-start" aria-label="Global">
                 <div className="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
                   <div className="flex items-center justify-between w-full md:w-auto">
@@ -59,6 +63,7 @@ const Header2 = () => {
                   <Link href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
                     Log in
                   </Link>
+                  
                 </div>
               </nav>
             </div>
@@ -113,7 +118,9 @@ const Header2 = () => {
               </Popover.Panel>
             </Transition>
           </Popover>
+          {/* <Translate /> */}
         </div>
+        </>
     )
 }
 

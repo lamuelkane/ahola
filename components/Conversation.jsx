@@ -1,13 +1,14 @@
 import Avatar from '@mui/material/Avatar';
 import { deepOrange, deepPurple } from '@mui/material/colors';
-import GlobalContext from '../context/Globalcontext';
+import { useSelector, useDispatch } from 'react-redux';
 import { useContext } from 'react';
 
 import styles from '../styles/Messages.module.css'
 
 const Conversation = ({con, active, Onclick}) => {
 
-    const {user} = useContext(GlobalContext)
+    const {user, sever} = useSelector((state) => state);
+    
 
     return (
         <div className={`${styles.conversationwrapper} ${active}`} onClick={Onclick}>
@@ -17,7 +18,7 @@ const Conversation = ({con, active, Onclick}) => {
                     </div>
                     <div>
                         <div>{con.name.sender == user?.firstname ?  con.name.receiver : con.name.sender}</div>
-                        <div>{con.lastmessage.message? con.lastmessage.type === 'file'? 'image' : con.lastmessage.message : 'no messages yet'}</div>
+                        <div className={`text-xs`}>{con.lastmessage.message? con.lastmessage.type === 'file'? 'image' : con.lastmessage.message : 'no messages yet'}</div>
                     </div>
                 </div>
                   <small>mon</small>

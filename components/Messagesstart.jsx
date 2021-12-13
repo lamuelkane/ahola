@@ -4,13 +4,15 @@ import InputAdornment from '@mui/material/InputAdornment'
 import Conversation from '../components/Conversation'
 import styles from '../styles/Messages.module.css'
 import axios from 'axios'
-import {useState, useEffect, useContext} from 'react'
-import GlobalContext from '../context/Globalcontext'
+import {useState, useEffect} from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+
 
 
 const Messagesstart = ({receiverid, setreceiverid, conversationid, setconversationid}) => {
     const [conversations, setconversations] = useState([])
-    const {sever, user} = useContext(GlobalContext)
+    const {user, sever} = useSelector((state) => state);
+
 
 
     const getconverstions = async() => {
@@ -23,8 +25,8 @@ const Messagesstart = ({receiverid, setreceiverid, conversationid, setconversati
     }
 
     useEffect(() => {
-        getconverstions()
-    }, [])
+        if(user) getconverstions()
+    }, [user])
 
 
     return (

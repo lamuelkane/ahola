@@ -3,18 +3,33 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import SendIcon from '@mui/icons-material/Send';
 import axios from 'axios'
-import GlobalContext from '../context/Globalcontext';
 import { useContext, useState, useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
+import Emojipicker from './Emojipicker'
+import DoneAllIcon from '@mui/icons-material/DoneAll';
+import DoneIcon from '@mui/icons-material/Done';
 
 import styles from '../styles/Messages.module.css'
 
-const Messagecenter = ({conversationid, receiverid}) => {
+const Messagecenter = ({conversationid, socket, setsocket, receiverid}) => {
     
-    const {user, sever} = useContext(GlobalContext)
     const [messages, setmessages] = useState([])
     const message = useRef()
+    const {user, sever} = useSelector((state) => state);
     const [type, settype] = useState('text')
+    const [showimoji, setshowimoji] = useState(false)
+    const [chosenEmoji, setChosenEmoji] = useState(null);
+
+
+    const onEmojiClick = (event, emojiObject) => {
+        setChosenEmoji(emojiObject);
+        message.current.focus()
+        const start = message.current.value.substring(0, message.current.selectionStart)
+        const end = message.current.value.substring(message.current.selectionStart)
+        const msg = start + emojiObject.emoji + end
+        message.current.value = msg
+      };
 
     const router = useRouter()
 
@@ -47,6 +62,8 @@ const Messagecenter = ({conversationid, receiverid}) => {
             res.lastmessage = data
             await axios.post(`${sever}/api/chats/conversation/update`, res)
             message.current.value = ''
+            setshowimoji(false)
+            setsocket(mes)
             getmessages()
         } catch (error) {
             alert(error)
@@ -65,8 +82,9 @@ const Messagecenter = ({conversationid, receiverid}) => {
             data: bodyFormData,
             headers: { "Content-Type": "multipart/form-data" },
           })
-          setmessage(`${sever}/uploads/${data.filename}`)
+          message.current.value = (`${sever}/uploads/${data.filename}`)
           settype('file')
+          setshowimoji(false)
         } catch (error) {
           alert('an error ocurred while uploading image')
         }
@@ -75,7 +93,7 @@ const Messagecenter = ({conversationid, receiverid}) => {
 
     useEffect(()=> {
         getmessages()
-    }, [conversationid])
+    }, [conversationid, socket])
 
 
 
@@ -97,9 +115,10 @@ const Messagecenter = ({conversationid, receiverid}) => {
                                 </label>
                                 <input type="file" accept="image/*" onChange={sendimage} style={{display: 'none'}} name="file" id="file" />
                             </div>
-                            <div  className={`${styles.chatbottomimojiicon}`}>
+                            <div  className={`${styles.chatbottomimojiicon}`} onClick={e => setshowimoji(!showimoji)}>
                                 <AddReactionIcon />
                             </div>
+                           { showimoji && <Emojipicker chosenEmoji={chosenEmoji} onEmojiClick={onEmojiClick} />}
                             <div className={`${styles.chatbottomtextareawrapper}`}>
                                  <textarea onInput={e => {
                                      settype('text')

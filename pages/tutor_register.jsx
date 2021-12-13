@@ -4,6 +4,7 @@ import styles from '../styles/Dashboard.module.css'
 import {countries, timezones} from '../components/lists'
 import axios from 'axios'
 import GlobalContext from '../context/Globalcontext'
+import Link from 'next/link'
 
 
 
@@ -74,7 +75,7 @@ const submitrequest = async(e) => {
 let sendimage = async(e) => {
   var bodyFormData = new FormData();
   let i = e.target.files[0]
-  bodyFormData.append('picture', i); 
+  bodyFormData.append('file', i); 
   try {
     const {data} = await axios({
       method: "post",
@@ -86,14 +87,17 @@ let sendimage = async(e) => {
   } catch (error) {
     alert('an error ocurred while uploading image')
   }
-}
+} 
 
   return (
     <>
     <div className="border"><Header2 /></div>
-    <div className={`center bg-gray-400 py-10`}>
-            <h2 className={`text-2xl text-indigo-700`}>become a Tutor on Ahola</h2>
-            <p className={`text-sm`}>Create your very own tutor account with Ahola and start earning from home</p>
+        <div className={`center margin-bottom bg-gray-400 py-10`}>
+                <h2 className={`text-2xl text-indigo-700`}>become a Tutor on Ahola</h2> or
+                <div className={`text-indigo-700`}>
+                  <Link href='/student_register' > become a student</Link>
+                </div>
+                <p className={`text-sm`}>Create your very own tutor account with Ahola and start earning from home</p>
         </div>
       <div>
         <div className="md:grid md:grid-cols-3 md:gap-6">
@@ -135,7 +139,7 @@ let sendimage = async(e) => {
                           name="company-website"
                           id="company-website"
                           className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
-                          placeholder="www.example.com"
+                          placeholder="www.youtube.com/xxx"
                         />
                       </div>
                     </div>
@@ -144,7 +148,7 @@ let sendimage = async(e) => {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-3">Video preview</label>
                     <div className={`${styles.videopreview}`}>
-                    {  !videolink ? <span>paste link to view video here</span> : <iframe
+                    {  !videolink ? <span>paste link to view video here</span> : <iframe className={`${styles.videopreviewiframe}`}
                           src={`https://www.youtube.com/embed/${videolink}`}>
                           </iframe>
                             }
@@ -156,13 +160,13 @@ let sendimage = async(e) => {
                     <label className="block text-sm font-medium text-gray-700">Photo</label>
                     <div className="mt-1 flex items-center">
                       <span className="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
-                        <svg className="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                        <svg className="h-full w-full margin-right text-gray-300" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>
                       </span>
                       <label
                             htmlFor="file-upload"
-                            className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                            className="relative margin-x cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                           >
                             <span>Upload a file</span>
                             <input id="file-upload" accept='image/*' name="file-upload" onChange={sendimage} type="file" className="sr-only" />
@@ -301,9 +305,6 @@ let sendimage = async(e) => {
                         className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                       />
                     </div>
-
-                    
-
                     <div className="col-span-6 sm:col-span-3">
                       <label htmlFor="country" className="block text-sm font-medium text-gray-700">
                         Country

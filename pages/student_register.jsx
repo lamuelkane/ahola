@@ -79,7 +79,7 @@ let sendimage = async(e) => {
   return (
     <>
     <div className="border"><Header2 /></div>
-    <div className={`center bg-gray-400 py-10`}>
+    <div className={`center bg-gray-400 py-10 margin-bottom`}>
             <h2 className={`text-2xl text-indigo-700`}>become a student on Ahola</h2>
             <p className={`text-sm`}>Create your very own student account with Ahola and begin your learning process</p>
         </div>
@@ -89,7 +89,6 @@ let sendimage = async(e) => {
             <div className="px-4 sm:px-0">
               <h3 className="text-lg font-medium leading-6 text-gray-900">Profile</h3>
               <p className="mt-1 text-sm text-gray-600">
-                
               </p>
             </div>
           </div>
@@ -107,28 +106,24 @@ let sendimage = async(e) => {
                       </span>
                       <label
                             htmlFor="file-upload"
-                            className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                            className="relative margin-x cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                           >
                             <span>Upload a file</span>
                             <input id="file-upload" accept="image/*" name="file-upload" onChange={sendimage} type="file" className="sr-only" />
                           </label>
                     </div>
                   </div>
-
-            
                 </div>
               </div>
             </form>
           </div>
         </div>
       </div>
-
       <div className="hidden sm:block" aria-hidden="true">
         <div className="py-5">
           <div className="border-t border-gray-200" />
         </div>
       </div>
-
       <div className="mt-10 sm:mt-0">
         <div className="md:grid md:grid-cols-3 md:gap-6">
           <div className="md:col-span-1">

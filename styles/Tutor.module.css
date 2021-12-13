@@ -15,6 +15,7 @@
 .tutorshedule{
     height: 215px;
     width: 350px;
+    max-height: 215px;
 }
 
 .tutors{

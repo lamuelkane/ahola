@@ -2,13 +2,13 @@ import React, {useEffect, useState, useContext} from 'react'
 import Day from './Day'
 import dayjs from 'dayjs'
 import GlobalContext from '../context/Globalcontext'
+import { useSelector, useDispatch } from 'react-redux';
 import {nextmonth, prevmonth, resetmonth, prevweek, nextweek, resetweek} from '../actions/month'
 
 const Month = ({month}) => {
-const [week, setweek] = useState([])
-const {weekindex, setweekindex} = useContext(GlobalContext)
-
-
+    const [week, setweek] = useState([])
+    const dispatch = useDispatch()
+    const {weekindex} = useSelector((state) => state);
 
   let getweek = (index) => {
      return  month.find((week, idx)=> {
@@ -22,11 +22,10 @@ useEffect(() => {
     setweek(getweek(weekindex))
 }, [weekindex])
 
-
 useEffect(() => {
    month.filter((week, idx)=> {
     if(week.find(da => da.format('DD-MM-YY') === dayjs().format('DD-MM-YY'))) {
-        setweekindex(nextweek(idx))
+        dispatch(nextweek(idx))
     }
 })
 let weeks = Array.from(month[0], (wk) => (
@@ -35,7 +34,6 @@ let weeks = Array.from(month[0], (wk) => (
         date: wk.format('DD')
     }
 ))
-
 }, [])
 
     return (
@@ -51,5 +49,4 @@ let weeks = Array.from(month[0], (wk) => (
         </div>
     )
 }
-
 export default Month

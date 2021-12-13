@@ -120,11 +120,12 @@
   padding-right: 35px;
   transition: all .5s ease;
   margin-top: 30px;
+  background: #4F46E5;
   border: 1px solid #4F46E5
 }
 
 .showmoercoursesbutton:hover{
-  background: #4F46E5;
+  color: white;
 }
 
 .showcase{
@@ -158,7 +159,6 @@
 .showcaseh2{
   margin-bottom: 5px;
   text-align: center;
-  color: black;
   font-weight: 100;
 }
 
