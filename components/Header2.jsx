@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import {useContext, useEffect} from 'react'
 import {setUser} from '../actions/User'
 import ReactNotification from "react-notifications-component";
-import Translate from './Translate';
 
 
 const Header2 = () => {
