@@ -9,6 +9,7 @@ import Messagesend from '../components/Messagesend'
 import styles from '../styles/Messages.module.css'
 import Messagesstart from '../components/Messagesstart'
 import axios from 'axios';
+import Notification from '../components/Notification';
 
 
 const Messages = () => {
@@ -17,7 +18,7 @@ const Messages = () => {
 
     const [receiverid, setreceiverid] = useState('')
     const [conversationid, setconversationid] = useState('')
-    const [message, setmessage] = useState()
+    const [message, setmessage] = useState('')
     const {rcrid, name, convid} = router.query
     const {user, sever} = useSelector((state) => state);
 
@@ -46,20 +47,48 @@ const Messages = () => {
                         setconversationid(convid)
                         setreceiverid(rcrid)
                     } catch (error) {
-                        alert(err)
+                        Notification({
+                            title:"Error",
+                            message:`an error ocurred while saving conversation`,
+                            type:"danger",
+                            container:"top-right",
+                            insert:"top",
+                            animationIn:"fadeInUp",
+                            animationOut:"fadeOut",
+                            duration:10000
+                          })
                     }
                 }
             } catch (error) {
-                alert(error)
+                Notification({
+                    title:"Error",
+                    message:`an error ocurred while getting conversation`,
+                    type:"danger",
+                    container:"top-right",
+                    insert:"top",
+                    animationIn:"fadeInUp",
+                    animationOut:"fadeOut",
+                    duration:10000
+                  })
             }
         }
     }
 
     useEffect(() => {
-        socket.current = io('ws://localhost:8000/')
+        socket.current = io('ws://aholasocket.herokuapp.com/')
         // handle the event sent with socket.current.send()
         socket.current.on("message", data => {
-            setmessage(true)
+            // Notification({
+            //     title:"success",
+            //     message:`message received`,
+            //     type:"success",
+            //     container:"top-right",
+            //     insert:"top",
+            //     animationIn:"fadeInUp",
+            //     animationOut:"fadeOut",
+            //     duration:100
+            //   })
+            setmessage('notchnaged')
         });
         
         // handle the event sent with socket.current.emit()
@@ -75,9 +104,9 @@ const Messages = () => {
     }, [user, socket])
 
     useEffect(() => {
-       if(message) {
+    //    if(message) {
         socket.current.emit('sendmessage', receiverid)
-       }
+    //    }
     }, [message])
 
     useEffect(() => {
@@ -94,7 +123,15 @@ const Messages = () => {
             <Dashboardsubheader />
             <div className={`flex justify-between ${styles.messagescontainer}`}>
                <Messagesstart receiverid={receiverid} setreceiverid={setreceiverid} conversationid={conversationid} setconversationid={setconversationid} />
-               <Messagecenter socket={message} setsocket={setmessage} receiverid={receiverid} setreceiverid={setreceiverid}  conversationid={conversationid} setconversationid={setconversationid} />
+               { 
+               !receiverid?
+            <div className={`${styles.messagecenterwrapper} hides`}> 
+                <div className={`${styles.noidwrapper} flex justify-center align-center w-100`}>
+                    <span className={`${styles.noidtext} text-5xl`}>Click on a conversation to view messages</span>
+                </div>
+            </div>
+            :
+            <Messagecenter socket={message} sk={socket} setsocket={setmessage} receiverid={receiverid} setreceiverid={setreceiverid}  conversationid={conversationid} setconversationid={setconversationid} />}
                { user?.type === 'teacher' && receiverid &&
                <Messagesend receiverid={receiverid} setreceiverid={setreceiverid}  conversationid={conversationid} setconversationid={setconversationid} />}
             </div>

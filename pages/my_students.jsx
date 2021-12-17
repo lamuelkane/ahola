@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import DashBoardHeader from '../components/DashBoardHeader'
 import Dashboardsubheader from '../components/Dashboardsubheader'
 import { deepOrange, deepPurple } from '@mui/material/colors';
@@ -8,15 +8,13 @@ import styles from '../styles/Studentdashboard.module.css'
 import Link from 'next/link'
 import { useSelector, useDispatch } from 'react-redux';
 import CloseIcon from '@mui/icons-material/Close';
-import dayjs from 'dayjs'
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import {getaccuratehours2, getlessoninactualtime2, getlessonintimezone, checklessonstate} from '../components/utils'
+import {getlessonintimezone, checklessonstate} from '../components/utils'
 import axios from 'axios'
+import Footer from '../components/Footer'
 import {setUser} from '../actions/User'
+import Notification from '../components/Notification';
 
 const Mytutor = () => {
-    const dispatch = useDispatch()
     const {user, sever} = useSelector((state) => state);
     const [tutor, settutor] = useState(null)
     const router = useRouter()
@@ -35,7 +33,7 @@ const Mytutor = () => {
                 <DashBoardHeader />
             </div>
             <Dashboardsubheader />
-            <div className={`${styles.mytutorswrapper} text-sm`}>
+            <div className={`${styles.mytutorswrapper} text-sm`} style={{minHeight: '50vh'}}>
               {
                 user?.students.map(tut => (
                   <div className={`flex justify-between align-center border p-3`} key={tut.id}>
@@ -55,7 +53,16 @@ const Mytutor = () => {
                                 settutor(data)
                               }
                               catch(error) {
-                                alert(error)
+                                Notification({
+                                  title:"Error",
+                                  message:`an error ocurred`,
+                                  type:"danger",
+                                  container:"top-right",
+                                  insert:"top",
+                                  animationIn:"fadeInUp",
+                                  animationOut:"fadeOut",
+                                  duration:10000
+                                })
                               }
                             }} >lessons</div>
                         </div>
@@ -91,6 +98,7 @@ const Mytutor = () => {
                 </div>
               </div>
             }
+            <Footer />
         </div>
     )
 }

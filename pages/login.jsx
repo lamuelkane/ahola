@@ -6,7 +6,9 @@ import {useState, useEffect, useContext} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import Link from 'next/link'
 import {useRouter} from 'next/router'
+import Footer from '../components/Footer'
 import Redirect from '../components/redirect'
+import Notification from '../components/Notification';
 
 
 export default function Example() {
@@ -21,7 +23,7 @@ export default function Example() {
 
  useEffect(() => {
   if(user){
-    router.push('/messages')
+    router.push('/calender')
   }
  }, [user])
 
@@ -62,7 +64,16 @@ export default function Example() {
                   localStorage.setItem('user', JSON.stringify(data))
                   router.push('/calender')
                  } catch (error) {
-                   alert(error)
+                  Notification({
+                    title:"ERROR",
+                    message:`An error occured, please try again. if you are a student, please change the login type `,
+                    type:"danger",
+                    container:"top-right",
+                    insert:"top",
+                    animationIn:"fadeInUp",
+                    animationOut:"fadeOut",
+                    duration:10000
+                  })
                  }
               }}>
             <input type="hidden" name="remember" defaultValue="true" />
@@ -136,7 +147,7 @@ export default function Example() {
           </form>
         </div>
       </div>
-      <Redirect item={user} page={'/calender'} />
+     <Footer />
     </>
   )
 }

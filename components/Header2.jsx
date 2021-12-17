@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useSelector, useDispatch } from 'react-redux';
 import {useContext, useEffect} from 'react'
 import {setUser} from '../actions/User'
+import ReactNotification from "react-notifications-component";
 import Translate from './Translate';
 
 
@@ -21,12 +22,15 @@ const Header2 = () => {
         { name: 'Aboutus', href: '/aboutus' },
       ]
     useEffect(() => {
-        dispatch(setUser(sever))
+        if(!user) {
+          dispatch(setUser(sever))
+        }
     }, [user])
 
 
     return (
       <>
+        
       <div id="google_translate_element" className="font-medium text-indigo-600 hover:text-indigo-500">
                   </div>
         <div className={`bg-white`}>
@@ -40,7 +44,7 @@ const Header2 = () => {
                         {/* <span className="sr-only">Workflow</span> */}
                         <img
                           className="h-8 w-auto sm:h-10"
-                          src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                          src="./images/logo.png"
                         />
                       </Link>
                     </div>
@@ -120,6 +124,7 @@ const Header2 = () => {
           </Popover>
           {/* <Translate /> */}
         </div>
+        <ReactNotification />
         </>
     )
 }

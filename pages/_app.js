@@ -1,6 +1,7 @@
 import '../styles/globals.css'
-import Globalcontextwrapper , {Wrapper} from '../context/Globalcontextwrapper'
+import {Wrapper} from '../context/Globalcontextwrapper'
 import {useEffect, useContext} from 'react'
+import 'react-notifications-component/dist/theme.css'
 
 
 function MyApp({ Component, pageProps }) {

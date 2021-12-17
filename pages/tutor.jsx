@@ -1,7 +1,7 @@
 import Header from '../components/Header'
 import Rating from '@mui/material/Rating';
 import Paper from '@mui/material/Paper';
-import styles from '../styles/Tutor.module.css'
+import styles from '../styles/Tutor2.module.css'
 import Reviewprogress from '../components/Reviewprogress';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import {useRouter} from 'next/router'
@@ -10,6 +10,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import React, {useEffect, useState} from 'react'
 import {setUser} from '../actions/User'
 import Tutorpopup from '../components/Tutorpopup';
+import Footer from '../components/Footer'
+import Header2 from '../components/Header2';
+import Notification from '../components/Notification';
 
 const Tutor = () => {
     const router = useRouter()
@@ -31,7 +34,16 @@ const Tutor = () => {
             const {data} = await axios.get(`${sever}/api/users/tutor/${id}`)
             settutor(data)
          } catch (error) {
-             alert(error)
+             Notification({
+                title:"Error",
+                message:`an error ocurred while getting tutor information`,
+                type:"danger",
+                container:"top-right",
+                insert:"top",
+                animationIn:"fadeInUp",
+                animationOut:"fadeOut",
+                duration:10000
+              })
          }
      }
 
@@ -96,61 +108,32 @@ const Tutor = () => {
         <div>
             <Tutorpopup open={open} setOpen={setOpen} teacher={tutor} />
             <div className="border">
-                <Header />
+                <Header2 />
             </div>
             { 
-            
-            tutor.firstname && <div className={`${styles.tutorpaewrapper}`}>
-            <div className={`${styles.tutoridentitywrapperparent} flex justify-center w-80 margin-auto`}>
-                    <div className={`${styles.tutoridentitywrapper}`}>
-                    <Paper>
-                        <div className={`flex  ${styles.tutoridentity} column w-100`}>
-                            {
-                                tutor.video && <iframe className={`${styles.tutoridentityvideo}`} src={`https://www.youtube.com/embed/${tutorvideo()}`}></iframe>
-                            }
-                            <div className={`flex wrap justify-between ${styles.tutoridentityinfo}`}>
-                                <div className={`flex  ${styles.tutorinfoaboutwrapper}`}>
-                                    <div  className={`${styles.tutoridentityinfoimgholder}`}>
-                                        <img className={`${styles.tutoridentityinfoimg} round`} src={tutor.image} alt="" width="100" height="100"/>
-                                        {/* <div className={`${styles.tutoridentityinfoonline}`}>online</div> */}
-                                    </div>
-                                    <div className={`${styles.tutoridentityinfoabout}`}>
-                                        <b>Tutor {tutor.firstname} {' '} {tutor.lastname}</b>
-                                        <div className={`text-xs`}>{tutor.subject} Tutor</div>
-                                        <div className={`text-xs`}>from {tutor.country}</div>
-                                    </div>
-                                </div>
+            tutor.firstname  && <div>
+                <div className={`${styles.tutoriframeholdeer}`}>
+                    <iframe className={`${styles.tutoriframe}`} src={`https://www.youtube.com/embed/${tutorvideo()}`} frameborder="0"></iframe>
+                </div>
+                <div>
+                    <div className={`${styles.tutorsubjumb} flex wrap justify-between`}>
+                        <div className={`flex column align-center ${styles.tutorimgholder}`}>
+                            <img className={`${styles.tutorimg}`}  src={tutor.image} alt="profileimage" />
+                            <div className={`flex column align-center`} >
                                 <div>
-                                    <div>
-                                        <Rating name="read-only" value={5} readOnly />
-                                        <span>{tutor.rate?.toFixed(2)}</span>
-                                    </div>
-                                    {
-                                        tutor.lessons[1] && <div>{tutor.lessons.length} Lessons</div>
-                                    }
-                                    {tutor.students[0] && <div>{tutor.students.length} active students</div>}
+                                    <span>{tutor.firstname}</span> {' '}
+                                    <span>{tutor.lastname}</span>
                                 </div>
+                                <div>Teaches {tutor.subject}  </div>
+                                <div>From {tutor.country}</div>
+                                <div className={`text-xs`} >Teaches at ${tutor.rate} per lesson</div>
                             </div>
-                        <div>
-                                <hr />
-                                    <div className={`${styles.tutordesciptiontext} text-sm`}>
-                                        {tutor.description}
-                                    </div>
-                                <hr />
-                                    </div>   
-                            </div>
-                        </Paper>
-                    </div>
-                    <div className={`${styles.tutoractionwrapper}`}>
-                        <Paper >
-                        <div className={`flex column ${styles.tutoraction}`}>
-                            <div className={`flex justify-between ${styles.tutorrate}`}>
-                                <div>Hourly Rate</div>
-                                <div>USD {tutor.rate?.toFixed(2)}</div>
-                            </div>
-                            { 
-                                user?.type == 'student' && <>
-                                <button className={`${styles.tutoractionbtn}`} onClick={e => {
+                        </div>
+                        <div className={`flex column`}>
+                            <button className={`${styles.actionbtn}`}  onClick={e => {
+                                router.push(`messages?convid=${tutor._id + user._id}&&name=${tutor.firstname}&&rcrid=${tutor._id}`)
+                            }} >Message {tutor.firstname}</button>
+                            <button className={`${styles.actionbtn}`}  onClick={e => {
                                     const tuto = user.tutors.find(tut => tut.id === tutor._id)
                                     if(tuto){
                                         tuto.hours > 0 ? router.push('/calender') : setOpen(true)
@@ -160,54 +143,42 @@ const Tutor = () => {
                                         setOpen(true)
                                         return
                                     }
-                                }}>Book A Lesson </button>
-                            <button className={`${styles.tutoractionbtn}`} onClick={e => {
-                                router.push(`messages?convid=${tutor._id + user._id}&&name=${tutor.firstname}&&rcrid=${tutor._id}`)
-                            }}>Message {tutor.firstname}</button>
-                            {/* <button className={`${styles.tutoractionbtn}`}>Add to Favorites</button> */}
-                                </>
-                            }
+                                }} >Book a lesson</button>
                         </div>
-                        </Paper>
                     </div>
-            </div>
-            <div className={`${styles.tutorschedulewrapper}`}>
-                <div className={`${styles.tutorshedule} border-green-400`}>
-            <div className={`grid grid-cols-7 border border-green-400`}>
-                 {
-                   week.map((day, dayidx) => (
-                  <React.Fragment  key={day} >
-                      <span key={day} className={` p-3 border border-blue-800  center text-xs`}>{day}</span>
-                  {   hoursgroup.map((item, i) => (
-                    <React.Fragment  key={i} >
-                      {/* {dayidx === 1 && i === 2 &&  console.log(teacher.availaibility[day], day, teacher.firstname)} */}
-                      <span className={` p-3 border border-blue-800 ${dayidx !== 0 && getvilbleperiod(tutor.availiability[0][day], item.interval) && 'bg-blue-400'} center text-xs`}>{dayidx === 0? item.value : ''}</span>
-                    </React.Fragment >
-                     ))}
-                  </React.Fragment >
-                   ))
-                 }
-            </div>
-          </div>
-                <div className={`${styles.tutorreviewswrapper}`}>
-                    <Paper>
-                        <div className={`${styles.tutorreviews}`}>
-                            <h2 className={`center`}>what students think about Lemuel</h2>
-                            <div>
-                            <div className='flex justify-between'>
-                                <div className={`${styles.tutorreviewoverlay}`}>
-                                    <div>5.00</div>
-                                    <div> <Rating name="read-only" value={5} readOnly /></div>
-                                    <div>37 Reviews</div>
-                                </div>
-                                <div>
-                                    <div className={`flex justify-between`}>
-                                        <div>5 <StarRateIcon /> </div>
-                                        <div><Reviewprogress /></div>
-                                        <div>(5)</div>
-                                    </div>
-                                </div>
+                    <div className={`${styles.tutormainwrapper}`}>
+                        <div>
+                        <h3 className={`margin-y`}> See when {tutor.firstname} is available for lessons</h3>
+                        <div className={`grid grid-cols-7 border border-green-400`}>
+                                {
+                                week.map((day, dayidx) => (
+                                <React.Fragment  key={day} >
+                                    <span key={day} className={` p-3 border border-blue-800  center text-xs`}>{day}</span>
+                                {   hoursgroup.map((item, i) => (
+                                    <React.Fragment  key={i} >
+                                    {/* {dayidx === 1 && i === 2 &&  console.log(teacher.availaibility[day], day, teacher.firstname)} */}
+                                    <span className={` p-3 border border-blue-800 ${dayidx !== 0 && getvilbleperiod(tutor.availiability[0][day], item.interval) && 'bg-blue-400'} center text-xs`}>{dayidx === 0? item.value : ''}</span>
+                                    </React.Fragment >
+                                    ))}
+                                </React.Fragment >
+                                ))
+                                }
                             </div>
+                            <h3 className={`margin-top`}> Get to know  {tutor.firstname}</h3>
+                            <div className={`text-sm ${styles.tutordes}`}>
+                                {tutor.description}
+                            </div>
+                            <h3 className={`margin-top`}> What students think about  {tutor.firstname}</h3>
+                            <div className={`flex justify-between ${styles.tutorreview}`}>
+                                    <img src="./images/femaleteacher.jpg" className={` ${styles.tutorreviewimg}`} alt="" width="100" height="100"/>
+                                    <div className={`${styles.tutorreviewtext}`}>
+                                        <b>Lemuel 5 <StarRateIcon /></b>
+                                        <div className={`text-sm`}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit ad aliquam soluta laborum omnis? Necessitatibus similique,
+                                            dignissimos aliquam rerum nihil iure eos obcaecati asperiores 
+                                            , voluptas est. Libero, fugiat aspernatur?
+                                        </div>
+                                    </div>                                                                                                      
+                                </div>
                                 <div className={`flex justify-between ${styles.tutorreview}`}>
                                     <img src="./images/femaleteacher.jpg" className={` ${styles.tutorreviewimg}`} alt="" width="100" height="100"/>
                                     <div className={`${styles.tutorreviewtext}`}>
@@ -222,42 +193,20 @@ const Tutor = () => {
                                     <img src="./images/femaleteacher.jpg" className={` ${styles.tutorreviewimg}`} alt="" width="100" height="100"/>
                                     <div className={`${styles.tutorreviewtext}`}>
                                         <b>Lemuel 5 <StarRateIcon /></b>
-                                        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit ad aliquam soluta laborum omnis? Necessitatibus similique,
+                                        <div className={`text-sm`}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit ad aliquam soluta laborum omnis? Necessitatibus similique,
                                             dignissimos aliquam rerum nihil iure eos obcaecati asperiores 
                                             , voluptas est. Libero, fugiat aspernatur?
                                         </div>
                                     </div>                                                                                                      
                                 </div>
-                                <div className={`flex justify-between ${styles.tutorreview}`}>
-                                    <img src="./images/femaleteacher.jpg" className={` ${styles.tutorreviewimg}`} alt="" width="100" height="100"/>
-                                    <div className={`${styles.tutorreviewtext}`}>
-                                        <b>Lemuel 5 <StarRateIcon /></b>
-                                        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit ad aliquam soluta laborum omnis? Necessitatibus similique,
-                                            dignissimos aliquam rerum nihil iure eos obcaecati asperiores 
-                                            , voluptas est. Libero, fugiat aspernatur?
-                                        </div>
-                                    </div>                                                                                                      
-                                </div>
-                                <div className={`flex justify-between ${styles.tutorreview}`}>
-                                    <img src="./images/femaleteacher.jpg" className={` ${styles.tutorreviewimg}`} alt="" width="100" height="100"/>
-                                    <div className={`${styles.tutorreviewtext}`}>
-                                        <b>Lemuel 5 <StarRateIcon /></b>
-                                        <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit ad aliquam soluta laborum omnis? Necessitatibus similique,
-                                            dignissimos aliquam rerum nihil iure eos obcaecati asperiores 
-                                            , voluptas est. Libero, fugiat aspernatur?
-                                        </div>
-                                    </div>                                                                                                      
-                                </div>
-                            </div>
                         </div>
-                    </Paper>
+                        <div></div>
+                    </div>
                 </div>
-            </div>
+            </div>    
             
-            <div>
-                
-            </div>
-        </div>}
+        }
+        <Footer />
         </div>
     )
 }

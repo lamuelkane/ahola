@@ -6,6 +6,7 @@ import Rating from '@mui/material/Rating';
 import { useSelector} from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link'
+import { troncate } from './Troncate';
 
 
 
@@ -19,7 +20,7 @@ const Tutorprofile = ({open, setOpen, teacher, setteacher}) => {
             <Paper>
                 <div className={`flex align-cnter ${styles.tutorsmallscreen} nowrap justify-beteen padding`}>
                     <div className={`${styles.tutorabout}`}>
-                        <Link href={`/tutor2?id=${teacher._id}`}><img src={teacher.image} alt="" className={`${styles.tutorimg} rounded`} /></Link>
+                        <Link href={`/tutor?id=${teacher._id}`}><img src={teacher.image} alt="" className={`${styles.tutorimg} rounded`} /></Link>
                         <div className={` ${``} flex column justify-center align-center padding-right`}>
                             <h2 className={`font-bold text-indigo-700`}>{teacher.firstname}</h2>
                             <div className={`text-xs`}>{teacher.subject} Tutor <small className={`text-indigo-700`}>{teacher.rate}/hr</small></div>
@@ -39,7 +40,7 @@ const Tutorprofile = ({open, setOpen, teacher, setteacher}) => {
                         </div>
                     </div>
                     <div className={`${styles.tutorinfo} padding-right`}>
-                            <div className={`text-xs mt-2`}>{teacher.description}
+                            <div className={`text-xs mt-2`}>{troncate(teacher.description, 500)}
                             </div>
                             <Rating name="read-only" value={4} readOnly />
                             <div>

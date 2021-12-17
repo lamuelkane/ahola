@@ -41,7 +41,7 @@ let weeks = Array.from(month[0], (wk) => (
             {week[0] ? week.map((row, i) => (
                 <React.Fragment key={i}>
                     {i === 0 && week[0] && week.map(d => (
-                            <p key={d} className="text-sm ml-1">{d.format('dd')}-{d.format('DD')}</p>
+                            <p key={d} className="text-sm ml-1  text-indigo-500">{d.format('dd')}-{d.format('DD')}</p>
                     ))}
                         <Day day={row} key={i} rowindx={i} row={row} hours={Array.from(Array(24), (_, i) => i.toString().length > 1 ?  i + ':00' : '0' + i + ':00' )} />
                 </React.Fragment>

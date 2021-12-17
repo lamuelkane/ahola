@@ -14,7 +14,7 @@ const Sidebar = () => {
     // console.log(dayjs().year(), dayjs().month(), dayjs(new Date(dayjs().year(), dayjs().month(), -1)));
 
     return (
-        <div className={`border p-5 w-64`}>
+        <div className={`border p-5 w-64 hides`}>
           <h2>Color Assignments</h2>
           <div className="text-yellow-400">unconfirmed lessons</div>
           <div className="text-green-600">future lessons</div>

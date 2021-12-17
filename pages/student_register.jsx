@@ -1,14 +1,17 @@
 import Header2  from '../components/Header2'
-import {useState, useContext} from 'react'
+import {useState, useContext, useEffect} from 'react'
 import styles from '../styles/Dashboard.module.css'
 import {countries, timezones} from '../components/lists'
 import axios from 'axios'
-import GlobalContext from '../context/Globalcontext'
+import { useSelector, useDispatch } from 'react-redux';
+import {useRouter} from 'next/router'
+import {newstudentaccount} from '../Templates/student'
+import Footer from '../components/Footer'
 
 
 export default function Example() {
-
-  const [firstnme, setfirstnme] = useState('')
+  const router = useRouter()
+  const [firstname, setfirstname] = useState('')
   const [lastname, setlastname] = useState('')
   const [country, setcountry] = useState('')
   const [timezone, settimezone] = useState('')
@@ -16,8 +19,15 @@ export default function Example() {
   const [photo, setphoto] = useState(null)
   const [password, setpassword] = useState('')
   const [comfirmpassword, setcomfirmpassword] = useState('')
+  const {sever, sever2, user} = useSelector((state) => state);
 
-  const {sever} = useContext(GlobalContext)
+    // useEffect(() => {
+    //   if (user) {
+    //     if (user.type === 'student') {
+    //       router.push('/calender')
+    //     }
+    //   }
+    // }, [user])
 
 const submitrequest = async(e) => {
   e.preventDefault()
@@ -38,7 +48,7 @@ const submitrequest = async(e) => {
   }
 
   const student = {
-    firstnme,
+    firstname,
     lastname,
     country,
     timezone,
@@ -47,32 +57,40 @@ const submitrequest = async(e) => {
     password
   }
 
+  const body = {
+    student,
+    template: newstudentaccount(firstname)
+  }
+
+
   try{
-    const {data} = await axios.post(`${sever}/api/users/student/singup`, student)
+    const {data} = await axios.post(`${sever}/api/users/student/singup`, body)
+    localStorage.setItem('user', JSON.stringify(data))
     alert('everything went fine')
+    router.push('/calender')
 } catch(err) {
   alert(err)
+  console.log(err.response.message)
 }
 
-
-  console.log(student)
+  console.log(body)
 }
-
 
 let sendimage = async(e) => {
   var bodyFormData = new FormData();
   let i = e.target.files[0]
-  bodyFormData.append('picture', i); 
+  bodyFormData.append('file', i); 
   try {
     const {data} = await axios({
       method: "post",
-      url: `${sever}/api/users/upload`,
+      url: `${sever2}/upload`,
       data: bodyFormData,
       headers: { "Content-Type": "multipart/form-data" },
     })
-    setphoto(`${sever}/uploads/${data.filename}`)
+    setphoto(`image/${data.filename}`)
+    console.log(data, data.filename)
   } catch (error) {
-    alert('an error ocurred while uploading image')
+    alert( error)
   }
 }
 
@@ -100,9 +118,11 @@ let sendimage = async(e) => {
                     <label className="block text-sm font-medium text-gray-700">Photo</label>
                     <div className="mt-1 flex items-center">
                       <span className="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
-                        <svg className="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                        {photo ?
+                        <img src={`${sever2}/${photo}`} alt="" height='50' width='50' className={`rounded`} />
+                        : <svg className="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
+                        </svg>}
                       </span>
                       <label
                             htmlFor="file-upload"
@@ -143,8 +163,10 @@ let sendimage = async(e) => {
                       </label>
                       <input
                       required
-                      onChange={e => setfirstnme(e.target.value)}
-                      value={firstnme}
+                      onInput={e => {
+                        setfirstname(e.target.value)
+                      }}
+                      value={firstname}
                         type="text"
                         name="first-name"
                         id="first-name"
@@ -230,8 +252,8 @@ let sendimage = async(e) => {
                       >
                       
                         {
-                          countries.map(country => (
-                            <option key={country.phone} >{country.label}</option>
+                          countries.map((country , i)=> (
+                            <option key={i} >{country.label}</option>
                           ))
                         }
                       </select>
@@ -252,8 +274,8 @@ let sendimage = async(e) => {
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       >
                           {
-                            timezones.map(time => (
-                              <option key={time.offset} value={time.name} >{time.offset}-{time.name}</option>
+                            timezones.map((time, i) => (
+                              <option key={i} value={time.name} >{time.offset}-{time.name}</option>
                             ))
                           }
                       </select>
@@ -281,7 +303,7 @@ let sendimage = async(e) => {
           <div className="border-t border-gray-200" />
         </div>
       </div>
-
+        <Footer />
     </>
   )
 }

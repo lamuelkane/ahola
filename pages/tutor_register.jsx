@@ -1,18 +1,24 @@
 import Header2  from '../components/Header2'
-import {useState, useContext} from 'react'
+import {useEffect, useState,} from 'react'
 import styles from '../styles/Dashboard.module.css'
 import {countries, timezones} from '../components/lists'
 import axios from 'axios'
-import GlobalContext from '../context/Globalcontext'
 import Link from 'next/link'
+import { useSelector, useDispatch } from 'react-redux';
+import {newtutorregistered} from '../Templates/tutor'
+import Footer from '../components/Footer'
+import {useRouter} from 'next/router'
+import Notification from '../components/Notification'
+
 
 
 
 export default function Example() {
-
+  const router = useRouter()
   const [videolink, setvideolink] = useState()
-  const [descripion, setdescripion] = useState('')
-  const [firstnme, setfirstnme] = useState('')
+  const [subjects, setsubjects] = useState([])
+  const [description, setdescripion] = useState('')
+  const [firstname, setfirstname] = useState('')
   const [lastname, setlastname] = useState('')
   const [country, setcountry] = useState('')
   const [timezone, settimezone] = useState('')
@@ -24,7 +30,20 @@ export default function Example() {
   const [password, setpassword] = useState('')
   const [comfirmpassword, setcomfirmpassword] = useState('')
 
-  const {sever} = useContext(GlobalContext)
+  const {sever, sever2, user} = useSelector((state) => state);
+
+  const getsubjects = async() => {
+    try {
+      const {data} = await axios.get(`${sever}/api/users/subjects`)
+      setsubjects(data)
+    } catch (error) {
+      alert(error)
+    }
+  }
+
+  useEffect(() => {
+    getsubjects()
+  }, [axios])
 
     function reverseString(str) {
     return str.split("").reverse().join("");
@@ -32,25 +51,52 @@ export default function Example() {
 
 const submitrequest = async(e) => {
   e.preventDefault()
-  if(!video || descripion?.length < 300 || !photo) {
-    alert('please make sure to provide your profile cridentials')
+  if(!video || description?.length < 300 || !photo) {
+    Notification({
+      title:"Error",
+      message:`Please make sure to provide your profile credentials`,
+      type:"danger",
+      container:"top-right",
+      insert:"top",
+      animationIn:"fadeInUp",
+      animationOut:"fadeOut",
+      duration:10000
+    })
     return
   }
 
   if(!timezone || !country || !subject) {
-    alert('please check your personal info and check if you have set timezone, subject and your country')
+    Notification({
+      title:"Error",
+      message:`please check your personal info and check if you have set timezone, subject and your country`,
+      type:"danger",
+      container:"top-right",
+      insert:"top",
+      animationIn:"fadeInUp",
+      animationOut:"fadeOut",
+      duration:10000
+    })
     return
   }
 
   if(password !== comfirmpassword) {
-    alert('passwords does not match, chech your entries and try again')
+    Notification({
+      title:"Error",
+      message:`passwords does not match, chech your entries and try again`,
+      type:"danger",
+      container:"top-right",
+      insert:"top",
+      animationIn:"fadeInUp",
+      animationOut:"fadeOut",
+      duration:10000
+    })
     return
   }
 
-  const teacher = {
+  const tutor = {
     video,
-    descripion,
-    firstnme,
+    description,
+    firstname,
     lastname,
     country,
     timezone,
@@ -61,14 +107,36 @@ const submitrequest = async(e) => {
     password,
   }
 
-  try{
-      const {data} = await axios.post(`${sever}/api/users/tutor/singup`, teacher)
-      alert('everything went fine')
-  } catch(err) {
-    alert(err)
+  const body = {
+    tutor,
+    template: newtutorregistered(firstname)
   }
 
-  console.log(teacher)
+  try{
+      const {data} = await axios.post(`${sever}/api/users/tutor/singup`, body)
+      Notification({
+        title:"Register Success",
+        message:`Tutor register success. please check your email for more information about your account`,
+        type:"success",
+        container:"top-right",
+        insert:"top",
+        animationIn:"fadeInUp",
+        animationOut:"fadeOut",
+        duration:10000
+      })
+  } catch(err) {
+    Notification({
+      title:"ERROR",
+      message:`An error occured while saving tutor, please try again`,
+      type:"danger",
+      container:"top-right",
+      insert:"top",
+      animationIn:"fadeInUp",
+      animationOut:"fadeOut",
+      duration:10000
+    })
+  }
+  console.log(body)
 }
 
 
@@ -79,15 +147,15 @@ let sendimage = async(e) => {
   try {
     const {data} = await axios({
       method: "post",
-      url: `${sever}/api/users/upload`,
+      url: `${sever2}/upload`,
       data: bodyFormData,
       headers: { "Content-Type": "multipart/form-data" },
     })
-    setphoto(`${sever}/uploads/${data.filename}`)
+    setphoto(`${sever2}/image/${data.filename}`)
   } catch (error) {
-    alert('an error ocurred while uploading image')
+    alert( error)
   }
-} 
+}
 
   return (
     <>
@@ -160,9 +228,11 @@ let sendimage = async(e) => {
                     <label className="block text-sm font-medium text-gray-700">Photo</label>
                     <div className="mt-1 flex items-center">
                       <span className="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
-                        <svg className="h-full w-full margin-right text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                      {photo ?
+                        <img src={`${photo}`} alt="" height='50' width='50' className={`rounded`} />
+                        : <svg className="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
+                        </svg>}
                       </span>
                       <label
                             htmlFor="file-upload"
@@ -182,7 +252,7 @@ let sendimage = async(e) => {
                       <textarea
                       required
                       onChange={e => setdescripion(e.target.value)}
-                      value={descripion}
+                      value={description}
                         id="about"
                         name="about"
                         rows={3}
@@ -230,8 +300,8 @@ let sendimage = async(e) => {
                       </label>
                       <input
                       required
-                      onChange={e => setfirstnme(e.target.value)}
-                      value={firstnme}
+                      onChange={e => setfirstname(e.target.value)}
+                      value={firstname}
                         type="text"
                         name="first-name"
                         id="first-name"
@@ -318,8 +388,8 @@ let sendimage = async(e) => {
                       >
                       
                         {
-                          countries.map(country => (
-                            <option key={country.phone} >{country.label}</option>
+                          countries.map((country, i) => (
+                            <option key={i} >{country.label}</option>
                           ))
                         }
                       </select>
@@ -339,9 +409,9 @@ let sendimage = async(e) => {
                         autoComplete="country-name"
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       >
-                          {
-                            timezones.map(time => (
-                              <option key={time.offset} value={time.name} >{time.offset}-{time.name}</option>
+                          { 
+                            timezones.map((time, i) => (
+                              <option key={i} value={time.name} >{time.offset}-{time.name}</option>
 
                             ))
                           }
@@ -379,8 +449,10 @@ let sendimage = async(e) => {
                         autoComplete="country-name"
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       >
-                        <option>English</option>
-                        <option>French</option>
+                        <option></option>
+                        { 
+                          subjects.map(sub => <option key={sub._id}>{sub.subject}</option>)
+                        }
                         <option>Arabic</option>
                       </select>
                     </div>
@@ -408,7 +480,7 @@ let sendimage = async(e) => {
           <div className="border-t border-gray-200" />
         </div>
       </div>
-
+      <Footer />
     </>
   )
 }

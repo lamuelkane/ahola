@@ -6,10 +6,12 @@ import { StarIcon } from '@heroicons/react/solid'
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux';
 import {paypalclient} from './keys'
+import {boughthours} from '../Templates/tutor'
+import Notification from "./Notification";
 
 
 const packages = [
-  { name: '4hrs', inStock: true, value:4 },
+  { name: 'Trial', inStock: true, value:1 },
   { name: '6hrs', inStock: true,  value:6  },
   { name: '8hrs', inStock: true,  value:8  },
   { name: '10hrs', inStock: true,  value:10  },
@@ -63,10 +65,28 @@ export default function Tutorpopup({open, setOpen, teacher}) {
           try{
             const {data} = await axios.post(`${sever}/api/users/student/update`, student)
             const {data: res} = await axios.post(`${sever}/api/users/tutor/update`, teacher)
-            alert(`successfully bought additional ${selectedSize.value} with tutor ${name}`)
+            Notification({
+              title:"Hours Bought",
+              message:`successfully bought additional ${selectedSize.value} with tutor ${name}`,
+              type:"success",
+              container:"top-right",
+              insert:"top",
+              animationIn:"fadeInUp",
+              animationOut:"fadeOut",
+              duration:10000
+            })
 
           } catch(error) {
-            alert(error)
+            Notification({
+              title:"ERROR",
+              message:`An error occured`,
+              type:"danger",
+              container:"top-right",
+              insert:"top",
+              animationIn:"fadeInUp",
+              animationOut:"fadeOut",
+              duration:10000
+            })
           }
           localStorage.setItem('user', JSON.stringify(student))
           return
@@ -90,10 +110,32 @@ export default function Tutorpopup({open, setOpen, teacher}) {
       try{
         const {data: res} = await axios.post(`${sever}/api/users/tutor/update`, teacher)
         const {data} = await axios.post(`${sever}/api/users/student/update`, student)
-        alert(`successfully bought ${selectedSize.value} with tutor ${name}`)
+       const sample = await axios.post(`${sever}/api/users/tutor/hoursbought`, {
+          template: boughthours(teacher.firstname, student.firstname, selectedSize.value),
+          email: teacher.email
+        })
+        Notification({
+          title:"Hours Bought",
+          message:`successfully bought additional ${selectedSize.value} with tutor ${name}`,
+          type:"success",
+          container:"top-right",
+          insert:"top",
+          animationIn:"fadeInUp",
+          animationOut:"fadeOut",
+          duration:10000
+        })
 
       } catch(error) {
-        alert(error)
+        Notification({
+          title:"ERROR",
+          message:`An error occured`,
+          type:"danger",
+          container:"top-right",
+          insert:"top",
+          animationIn:"fadeInUp",
+          animationOut:"fadeOut",
+          duration:10000
+        })
       }
       localStorage.setItem('user', JSON.stringify(student))
     }

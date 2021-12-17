@@ -9,18 +9,18 @@ import { useRouter } from 'next/router';
 import Emojipicker from './Emojipicker'
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import DoneIcon from '@mui/icons-material/Done';
-
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import styles from '../styles/Messages.module.css'
+import Notification from './Notification';
 
-const Messagecenter = ({conversationid, socket, setsocket, receiverid}) => {
-    
+const Messagecenter = ({conversationid, socket, sk, setsocket, receiverid, setreceiverid}) => {
     const [messages, setmessages] = useState([])
     const message = useRef()
-    const {user, sever} = useSelector((state) => state);
+    const {user, sever, sever2} = useSelector((state) => state);
     const [type, settype] = useState('text')
     const [showimoji, setshowimoji] = useState(false)
+    const [file, setfile] = useState(false)
     const [chosenEmoji, setChosenEmoji] = useState(null);
-
 
     const onEmojiClick = (event, emojiObject) => {
         setChosenEmoji(emojiObject);
@@ -40,16 +40,25 @@ const Messagecenter = ({conversationid, socket, setsocket, receiverid}) => {
                 const {data} = await axios.get(`${sever}/api/chats/messages/${conversationid}`)
                 setmessages(data)
             } catch (error) {
-                alert(error)
+                Notification({
+                    title:"Error",
+                    message:`an error ocurred while getting messages`,
+                    type:"danger",
+                    container:"top-right",
+                    insert:"top",
+                    animationIn:"fadeInUp",
+                    animationOut:"fadeOut",
+                    duration:10000
+                  })
             }
         }
     }
 
-    const sendmessage = async(e) => {
-        e.preventDefault()
+    const sendmessage = async(e, file) => {
+        e?.preventDefault()
         const mes = {
             conversationid,
-            type,
+            type: file || type,
             message : message.current.value,
             receiverid,
             senderid: user?._id,
@@ -63,44 +72,117 @@ const Messagecenter = ({conversationid, socket, setsocket, receiverid}) => {
             await axios.post(`${sever}/api/chats/conversation/update`, res)
             message.current.value = ''
             setshowimoji(false)
-            setsocket(mes)
+            // setsocket('changed')
+            sk.current.emit('sendmessage', receiverid)
             getmessages()
         } catch (error) {
-            alert(error)
+            Notification({
+                title:"Error",
+                message:`an error ocurred while sending message`,
+                type:"danger",
+                container:"top-right",
+                insert:"top",
+                animationIn:"fadeInUp",
+                animationOut:"fadeOut",
+                duration:10000
+              })
         }
         
     }
 
     let sendimage = async(e) => {
+        e?.preventDefault()
         var bodyFormData = new FormData();
-        let i = e.target.files[0]
-        bodyFormData.append('picture', i); 
+        bodyFormData.append('file', file); 
         try {
           const {data} = await axios({
             method: "post",
-            url: `${sever}/api/users/upload`,
+            url: `${sever2}/upload`,
             data: bodyFormData,
             headers: { "Content-Type": "multipart/form-data" },
           })
-          message.current.value = (`${sever}/uploads/${data.filename}`)
+          message.current.value = (`${sever2}/image/${data.filename}`)
           settype('file')
           setshowimoji(false)
+          sendmessage(e, 'file')
+          setfile(false)
         } catch (error) {
-          alert('an error ocurred while uploading image')
+            Notification({
+                title:"Error",
+                message:`an error ocurred while sending image`,
+                type:"danger",
+                container:"top-right",
+                insert:"top",
+                animationIn:"fadeInUp",
+                animationOut:"fadeOut",
+                duration:10000
+              })
         }
 }
-
 
     useEffect(()=> {
         getmessages()
     }, [conversationid, socket])
 
+    useEffect(() => {
+        sk.current.on("message", data => {
+            // Notification({
+            //     title:"success",
+            //     message:`message received`,
+            //     type:"info",
+            //     container:"top-right",
+            //     insert:"top",
+            //     animationIn:"fadeInUp",
+            //     animationOut:"fadeOut",
+            //     duration:100
+            //   })
 
+              getmessages()
+            // setmessage('notchnaged')
+        });
+    }, [])
+
+    
+    // useEffect(()=> {
+    //     Notification({
+    //         title:"changed",
+    //         message:`socket just changed`,
+    //         type:"danger",
+    //         container:"top-right",
+    //         insert:"top",
+    //         animationIn:"fadeInUp",
+    //         animationOut:"fadeOut",
+    //         duration:100
+    //       })
+    // }, [socket])
+
+    useEffect(() => {
+        let prevkey = ''
+        let third = ''
+        const listener = event => {
+            if (prevkey  === "ShiftLeft" || prevkey  === "ShiftRight") {
+                prevkey = event.code
+                return
+              }
+          if (event.code === "Enter" || event.code === "NumpadEnter") {
+            event.preventDefault();
+            sendmessage();
+          }
+          prevkey = event.code
+        };
+        document.addEventListener("keydown", listener);
+        return () => {
+          document.removeEventListener("keydown", listener);
+        };
+      }, []);
 
     return (
-            <div className={`${styles.messagecenterwrapper}`}>
-                    <div className={`${styles.chatheader}`}>
-                        <h3 className='margin-left'>John do</h3>
+            <div className={`${styles.messagecenterwrapper}  ${receiverid? 'right' : 'left'}`}>
+                    <div className={`${styles.chatheader}`} onClick={e => setreceiverid('')}>
+                        <div className="margin-left flex">
+                        <ArrowBackIosIcon />
+                        <h3 className=''>Back</h3>
+                        </div>
                     </div>
                     <div className={styles.messagewrapper}>
                         {
@@ -113,20 +195,27 @@ const Messagecenter = ({conversationid, socket, setsocket, receiverid}) => {
                                 <label htmlFor="file" style={{cursor: 'pointer'}}>
                                      <AttachFileIcon />
                                 </label>
-                                <input type="file" accept="image/*" onChange={sendimage} style={{display: 'none'}} name="file" id="file" />
+                                <input type="file" accept="image/*" onChange={e => {
+                                    setfile(e.target.files[0])
+                                }} style={{display: 'none'}} name="file" id="file" />
                             </div>
                             <div  className={`${styles.chatbottomimojiicon}`} onClick={e => setshowimoji(!showimoji)}>
                                 <AddReactionIcon />
                             </div>
                            { showimoji && <Emojipicker chosenEmoji={chosenEmoji} onEmojiClick={onEmojiClick} />}
-                            <div className={`${styles.chatbottomtextareawrapper}`}>
+                                <div className={`${styles.chatbottomtextareawrapper} ${file ? 'show' : 'hide'}`}>
+                                   {file && <img src={URL.createObjectURL(file)} alt="" className={`${styles.chatbottomimgareawrapper}`} />}
+                                </div>
+                            <div className={`${styles.chatbottomtextareawrapper}  ${file ? 'hide' : 'show'} `}>
                                  <textarea onInput={e => {
                                      settype('text')
-                                 }} ref={message}  placeholder='enter text' rows='1' className={`${styles.chatbottomtextarea}`} name="" id="" max-rows='10'></textarea>
+                                 }} ref={message}  placeholder='enter text' rows='1' className={`${styles.chatbottomtextarea} focus:ring-transparent`} name="" id="" max-rows='10'></textarea>
                             </div>
-                            <button onClick={sendmessage}  className={`${styles.chatbottomsendbtn}`}>
+                            {file ? <button onClick={sendimage}  className={`${styles.chatbottomsendbtn}`}>
                                  <SendIcon />
-                            </button>
+                            </button> : <button onClick={sendmessage}  className={`${styles.chatbottomsendbtn}`}>
+                                 <SendIcon />
+                            </button>}
                         </div>
                     </form>
                 </div>

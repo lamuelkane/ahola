@@ -7,6 +7,7 @@ import {getMonth} from '../components/utils'
 import DashBoardHeader from '../components/DashBoardHeader'
 import { useSelector, useDispatch } from 'react-redux';
 import Eventmodal from "../components/Eventmodal";
+import Footer from '../components/Footer'
 import Dashboardsubheader from '../components/Dashboardsubheader'
 
 
@@ -36,6 +37,7 @@ const Calender = () => {
           <Month month={currentmonth} />
         </div>
       </div>
+      {/* <Footer /> */}
     </>
   )
 }

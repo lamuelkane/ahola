@@ -11,10 +11,12 @@ import CloseIcon from '@mui/icons-material/Close';
 import dayjs from 'dayjs'
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import {getaccuratehours2, checklessonstate, getlessoninactualtime2} from '../components/utils'
+import {getaccuratehours2, checklessonstate, getlessonintimezone, getlessoninactualtime2} from '../components/utils'
 import axios from 'axios'
 import {setUser} from '../actions/User'
+import Footer from '../components/Footer'
 import Tutorpopup from '../components/Tutorpopup';
+import Notification from '../components/Notification';
 
 const Mytutor = () => {
     const dispatch = useDispatch()
@@ -35,20 +37,36 @@ const Mytutor = () => {
         const {data} = await axios.post(`${sever}/api/users/student/update`, user)
         const {data: res} = await axios.post(`${sever}/api/users/tutor/update`, tu)
         dispatch(setUser(sever, user))
-        alert('everything went fine')
       }
       catch(error) {
-        alert(error)
+        Notification({
+          title:"ERROR",
+          message:`An error occured`,
+          type:"danger",
+          container:"top-right",
+          insert:"top",
+          animationIn:"fadeInUp",
+          animationOut:"fadeOut",
+          duration:10000
+        })
       }
     }
 
     const confirmlesson2 = (tut, lessons) => {
       lessons.map(l => {
         l.confirmed = true
-        tut.currentearning += l.rate
+        tut.currentearning += l.rate * 0.8
+        tut.totalearnings += l.rate * 0.8
       })
-     
+
     }
+    
+    const filterlessons = (user, lessons) => {
+      lessons.map(les => {
+        user.lessons = user.lessons.filter(le => le.id !== les.id)
+      })
+    }
+
 
     useEffect(() => {
         if(user){
@@ -85,7 +103,16 @@ const Mytutor = () => {
                                 settutor(data)
                               }
                               catch(error) {
-                                alert(error)
+                                Notification({
+                                  title:"ERROR",
+                                  message:`An error occured`,
+                                  type:"danger",
+                                  container:"top-right",
+                                  insert:"top",
+                                  animationIn:"fadeInUp",
+                                  animationOut:"fadeOut",
+                                  duration:10000
+                                })
                               }
                             }} >lessons</div>
                             <div className={`margin-right pointer`} onClick={async(e) => {
@@ -95,7 +122,16 @@ const Mytutor = () => {
                                 setOpen(true)
                               }
                               catch(error) {
-                                alert(error)
+                                Notification({
+                                  title:"ERROR",
+                                  message:`An error occured`,
+                                  type:"danger",
+                                  container:"top-right",
+                                  insert:"top",
+                                  animationIn:"fadeInUp",
+                                  animationOut:"fadeOut",
+                                  duration:10000
+                                })
                               }
                             }} >get more hours</div>
                             <div className={`margin-right pointer`} onClick={async(e) => {
@@ -105,24 +141,42 @@ const Mytutor = () => {
                                 user.lessons.filter(le => le.tutor.id == data._id && !le.confirmed && checklessonstate(le)).map(l => {
                                   l.confirmed = true
                                 })
-
+                                
                                 user.lessons.filter(le => le.tutor.id == data._id  && !checklessonstate(le)).map(l => {
                                   user.currentearning += l.rate
                                 })
                                 
-                                user.lessons = user.lessons.filter(le => le.tutor.id !== data._id  && !checklessonstate(le))
-                                data.lessons = data.lessons.filter(le => le.student.id !== user._id  && !checklessonstate(le))
-
+                                filterlessons(user, user.lessons.filter(le => le.tutor.id === data._id  && !checklessonstate(le)))
+                                filterlessons(data, data.lessons.filter(le => le.student.id === user._id  && !checklessonstate(le)))
+                                
                                 user.tutors = user.tutors.filter(t => t.id !== tut.id)
                                 data.students = data.students.filter(st => st.id !== user._id)
-
-                               await axios.post(`${sever}/api/users/student/update`,  user)
-                                await axios.post(`${sever}/api/users/tutor/update`, data)
-                                alert('everything went fine')
                                 
+
+                                await axios.post(`${sever}/api/users/student/update`,  user)
+                                await axios.post(`${sever}/api/users/tutor/update`, data)
+                                Notification({
+                                  title:"Success",
+                                  message:`Successfully ended lessons with tutor ${data.firstname}`,
+                                  type:"success",
+                                  container:"top-right",
+                                  insert:"top",
+                                  animationIn:"fadeInUp",
+                                  animationOut:"fadeOut",
+                                  duration:10000
+                                })
                               }
                               catch(error) {
-                                alert(error)
+                                Notification({
+                                  title:"ERROR",
+                                  message:`An error occured`,
+                                  type:"danger",
+                                  container:"top-right",
+                                  insert:"top",
+                                  animationIn:"fadeInUp",
+                                  animationOut:"fadeOut",
+                                  duration:10000
+                                })
                               }
                             }} >stop lessons</div>
                         </div>
@@ -142,14 +196,14 @@ const Mytutor = () => {
                       user?.lessons.filter(les => les.tutor.id === tutor._id).map(tut => (
                         <div className={`flex justify-between align-center border p-3`} key={tut.id}>
                               <div className={`flex align-center`}>
-                                  <div className={`margin-right`}>{dayjs(tut.day.day).format('MMM')} {' '} {dayjs(tut.day.day).format('D')} {' '} {dayjs(tut.day.day).format('YYYY')} {' '} at {getaccuratehours2(tut.day.hour)}:00 for $ {tut.rate} </div>
+                                  <div className={`margin-right`}>{getlessonintimezone(tut)} for $ {tut.rate.toFixed(2)} </div>
                               </div>
                               <div className={`flex`}>
                                   <div className={`margin-right`}>
                                   <FormControlLabel  control={<input type='checkbox' 
                                   className={`margin-right`}
                                   checked={tut.confirmed? true : false} 
-                                  disabled={new Date(getlessoninactualtime2(tut)).getTime() > new Date().getTime() ? true : false || tut.confirmed? true : false}
+                                  disabled={new Date(getlessonintimezone(tut)).getTime() > new Date().getTime() ? true : false || tut.confirmed? true : false}
                                    onClick={e => confirmlesson(tutor, tut)}/>} label="Confirmed" />
                                   </div>
                               </div>
@@ -160,6 +214,7 @@ const Mytutor = () => {
                 </div>
               </div>
             }
+            <Footer />
         </div>
     )
 }

@@ -9,7 +9,6 @@ import Chip from '@mui/material/Chip';
 import SearchIcon from '@mui/icons-material/Search';
 import Stack from '@mui/material/Stack';
 import Filters from '../components/Filters'
-import GlobalContext from '../context/Globalcontext'
 import { Fragment, useState, useEffect, useContext } from 'react'
 import React, { useMemo } from 'react'
 import Select from 'react-select'
@@ -18,7 +17,10 @@ import Sidefilters from '../components/Sidefilters'
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios'
 import Tutorpopup from '../components/Tutorpopup';
+import Footer from '../components/Footer'
 import Head from 'next/head'
+import Notification from '../components/Notification';
+
 
 const sortOptions = [
   { name: 'Most Popular', href: '#', current: true },
@@ -50,11 +52,22 @@ const Tutors = () => {
       }
 
       const gettutors = async() => {
+        
         try {
           const {data} = await axios.get(`${sever}/api/users/tutors`)
           settutors(data)
+          
         } catch (error) {
-          alert(error)
+          Notification({
+            title:"Error",
+            message:`An error occured while getting tutors`,
+            type:"danger",
+            container:"top-right",
+            insert:"top",
+            animationIn:"fadeInUp",
+            animationOut:"fadeOut",
+            duration:10000
+          })
         }
       }
 
@@ -76,7 +89,7 @@ const Tutors = () => {
           <div className="border">
             <Header2 />
           </div>
-          <div className={`bg-gray-300 hides`}>
+          {/* <div className={`bg-gray-300 hides`}>
             <div className="flex nowrap align-center justify-between  py-1.5 w-80 margin-auto">
               <div className={`${styles.autoselect}`}><Autoselect /></div>
               <div className={`flex align-center`}><input type="number" placeholder='start price' className={`${styles.priceinput}`} /> <span>to</span> <input placeholder='end price' type="number" className={`${styles.priceinput}`} /></div>
@@ -93,7 +106,7 @@ const Tutors = () => {
               <Sidefilters />
               <Chip label="Native speaker" size='medium' variant="outlined" color="primary" />
               <Chip label="Filters" icon={<FilterListIcon />} size='medium' variant="outlined" color="primary" />
-          </div>
+          </div> */}
           <div className={`bg-gray-100`}>
           <div className={`center bg-indigo-400 py-10`}>
             <h2 className={`text-2xl text-indigo-700`}>Find the best tutor for you</h2>
@@ -110,6 +123,7 @@ const Tutors = () => {
            
           </div>
           </div>
+          <Footer />
         </div>
     )
 }

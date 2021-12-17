@@ -21,27 +21,27 @@ const CalenderHeader = () => {
         return lesson ? lesson[0] : ''
     }
     return (
-        <header className={`px-4 py-2 flex items-center`}>
-            <img src="./images/calenderlogo.png" className={`mr-2 w-12 h-12`} alt="" />
-            <h1 className="mr-10 text-xl text-grey-500 font-bold">Calender</h1>
-            <h2 className={`ml-4 text-xl text-grey-500 -font-bold`}>
+        <header className={`px-4 py-2 flex items-center border`}>
+            <img src="./images/calenderlogo.png" className={`mr-2 w-12 h-12 hidexs`} alt="" />
+            <h1 className="mr-10 text-xl text-grey-500 font-bold hidexs">Calender</h1>
+            <h2 className={`ml-4 text-xs text-grey-500 -font-bold`}>
                 {dayjs(new Date(dayjs().year(), monthindex)).format('MMMM YYYY')}
             </h2>
-            <button className="text-grey-600 mx-2" onClick={e => dispatch(prevweek(weekindex  - 1))}>
+            <button className="text-grey-600 text-xs mx-2" onClick={e => dispatch(prevweek(weekindex  - 1))}>
                 <ArrowBackIosIcon />
             </button>
             <button className="text-grey-600 mx-2" onClick={e => dispatch(nextweek(weekindex + 1))}>
                 <ArrowForwardIosIcon />
             </button>
             <div>
-                 { getnextlesson()?<div className={`flex align-center`}>  <h3 className={`margin-right`}>Next lesson </h3>
-                    <div className="margin-right text-indigo-500">{getlessonintimezone(getnextlesson())}</div>
+                 { getnextlesson()?<div className={`flex text-xs align-center`}>  <h3 className={`margin-right`}>Next lesson </h3>
+                    <div className="margin-right text-xs text-indigo-500">{getlessonintimezone(getnextlesson())}</div>
                      { new Date(getlessonintimezone(getnextlesson())).getTime() - new Date().getTime() < 300000 && <button onClick={e => {
                          console.log(new Date(getlessonintimezone(getnextlesson())).getTime() - new Date().getTime())
                      }} className="border rounded py-2 px-4 mr-5">
-                         <a href={`http://127.0.0.1:5500/test/video.html?id=${getnextlesson().id}&&user=${user?.firstname}`} target="_blank" >Join lesson </a>
+                         <a href={`https://aholalessons.netlify.app?id=${getnextlesson().id}&&user=${user?.firstname}`} rel='noreferrer' target="_blank" >Join lesson </a>
                     </button> } </div> 
-            : <div className="margin-right">No Upcomming Lesson</div> }
+            : <div className="margin-right text-xs">No Upcomming Lesson</div> }
             </div>
         </header>
     )

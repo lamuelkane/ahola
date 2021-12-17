@@ -5,8 +5,10 @@ import dayjs from 'dayjs';
 import {setUser} from '../actions/User'
 import {hideeventmodal} from '../actions/Event'
 import CloseIcon from '@mui/icons-material/Close';
-import {getlessoninactualtime, getlessonintimezone,} from './utils'
+import {getlessoninactualtime, getlessoninactualtime2, getlessoninactualtime3, getlessonintimezone,} from './utils'
 import axios from 'axios'
+import Notification from '../components/Notification';
+import {newlessonbooked, lessonrescheduled, lessoncancelled} from '../Templates/tutor'
 
 const Studentschedule = ({weeks}) => {
     const [rate, setrate] = useState(0)
@@ -28,7 +30,7 @@ const Studentschedule = ({weeks}) => {
     }
 
 
-    return !day?.exist ? ( <form className={`bg-white ontop rounded-lg shadow-2xl w-1/4`}>
+    return !day?.exist ? ( <form className={`bg-white ontop rounded-lg shadow-2xl w-1/4 minw`}>
     <header className={`bg-gray-50 px-4 py-2 flex justify-between items-center`}>
         <span className={`text-gray-400`}>lesson</span>
         <button className={` text-gray-400`}  onClick={e => {
@@ -56,18 +58,30 @@ const Studentschedule = ({weeks}) => {
                 }
             </select>
         <div className="bg-blue-50 text-xs margin padding items-center flex justify-between p-3">
-           Schedule new lesson for {getlessoninactualtime(lesson)}
+           Schedule new lesson for {day.day}
+           {/* Schedule new lesson for {getlessoninactualtime2(lesson)} */}
         </div>
         <button onClick={async(e) => 
             {
                 e.preventDefault()
                 if(!tutor) {
-                    alert('please select a tutor')
+                    Notification({
+                        title:"Tutor Not Selected",
+                        message:`Please Select A Tutor`,
+                        type:"info",
+                        container:"top-right",
+                        insert:"top",
+                        animationIn:"fadeInUp",
+                        animationOut:"fadeOut",
+                        duration:10000
+                      })
                     return
                 }
             try{
+                // console.log(day)
+                // return
                 const {data} = await axios.get(`${sever}/api/users/tutor/${tutor}`)
-                const exist = data.availiability[0][day.day.format('dd').toLowerCase()].find(h => h == day.hour)
+                const exist = data.availiability[0][dayjs(day.day).format('dd').toLowerCase()].find(h => h == day.hour)
                 if(exist || exist == 0){
                     settutor({
                         id: data._id,
@@ -81,16 +95,47 @@ const Studentschedule = ({weeks}) => {
                     data.lessons.push(lesson)
                     const {data: res} = await axios.post(`${sever}/api/users/student/update`, student)
                     const {data: dat} = await axios.post(`${sever}/api/users/tutor/update`, data)
+                    const sample =  await axios.post(`${sever}/api/users/lessonbooked`, {
+                        template: newlessonbooked(data.firstname, student.firstname, data.rate, data.lessons.length),
+                        email: data.email
+                    })
+                    console.log(lesson, student.lessons)
                     localStorage.setItem('user', JSON.stringify(student))
-                    dispatch(setUser(sever, student))
-                    // dispatch(hideeventmodal())
-                    alert('everything went fine')
+                    dispatch(setUser(sever))
+                    Notification({
+                        title:"Lesson Booked",
+                        message:`successfully booked lesson with Tutor ${data.firstname}`,
+                        type:"success",
+                        container:"top-right",
+                        insert:"top",
+                        animationIn:"fadeInUp",
+                        animationOut:"fadeOut",
+                        duration:10000
+                      })
                 }
                 else{
-                    alert('sorry, tutor is not available at that time')
+                    Notification({
+                        title:"Tutor Unavailable",
+                        message:`sorry, tutor is not available at that time`,
+                        type:"info",
+                        container:"top-right",
+                        insert:"top",
+                        animationIn:"fadeInUp",
+                        animationOut:"fadeOut",
+                        duration:10000
+                      })
                 }
             } catch(err) {
-              alert(err)
+                Notification({
+                    title:"Error",
+                    message:`An error occured`,
+                    type:"info",
+                    container:"top-right",
+                    insert:"top",
+                    animationIn:"fadeInUp",
+                    animationOut:"fadeOut",
+                    duration:10000
+                  })
             }
         }
         } className="rounded px-3 mt-3 bg-blue-500 hover:bg-blue-200 w-full py-2 border-blue-100">
@@ -99,7 +144,7 @@ const Studentschedule = ({weeks}) => {
     </div>
 </form>)
  : 
-    ( <form className={`bg-white ontop rounded-lg shadow-2xl w-1/4`}>
+    ( <form className={`bg-white ontop rounded-lg shadow-2xl w-1/4 minw`}>
     <header className={`bg-gray-50 px-4 py-2 flex justify-between items-center`}>
         <span className={`text-gray-400`}>lesson</span>
         <button className={` text-gray-400`}  onClick={e => {
@@ -113,7 +158,8 @@ const Studentschedule = ({weeks}) => {
         </div>
         <div className="bg-blue-50 items-center flex justify-between p-3">
         <select name="" id="" className={`text-sm`} onChange={e => {
-                day.day = e.target.value
+                // day.day = e.target.value
+                day.day = getlessoninactualtime3(dayjs(e.target.value), day.hour)
             }}>
                 {weeks.map((d, i) => (
                     <option key={i} value={d}>{dayjs(d).format('dd')}-{dayjs(d).format('DD')}</option>
@@ -137,11 +183,33 @@ const Studentschedule = ({weeks}) => {
                 data.lessons.find(l => l.id == les.id).day = day
                 const {data: res} = await axios.post(`${sever}/api/users/student/update`, student)
                 const {data: dat} = await axios.post(`${sever}/api/users/tutor/update`, data)
+                await axios.post(`${sever}/api/users/lessonrescheduled`, {
+                    template: lessonrescheduled(data.firstname, student.firstname),
+                    email: data.email
+                  })
                 localStorage.setItem('user', JSON.stringify(student))
-                dispatch(setUser(sever, student))
-                alert('everything went fine')
+                dispatch(setUser(sever))
+                Notification({
+                    title:"Lesson Rescheduled",
+                    message:`successfully rescheduled lesson `,
+                    type:"success",
+                    container:"top-right",
+                    insert:"top",
+                    animationIn:"fadeInUp",
+                    animationOut:"fadeOut",
+                    duration:10000
+                  })
             } catch(err) {
-              alert(err)
+                Notification({
+                    title:"Error",
+                    message:`An error Occured`,
+                    type:"danger",
+                    container:"top-right",
+                    insert:"top",
+                    animationIn:"fadeInUp",
+                    animationOut:"fadeOut",
+                    duration:10000
+                  })
             }
         }
         } className="rounded px-3 mt-3 bg-blue-500 hover:bg-blue-200 w-full py-2 border-blue-100">
@@ -158,14 +226,45 @@ const Studentschedule = ({weeks}) => {
                 student.lessons = student.lessons.filter(l => l.id !== les.id)
                 const {data: res} = await axios.post(`${sever}/api/users/student/update`, student)
                 const {data: dat} = await axios.post(`${sever}/api/users/tutor/update`, data)
+                await axios.post(`${sever}/api/users/lessoncancelled`, {
+                    template: lessoncancelled(data.firstname, student.firstname),
+                    email: data.email
+                  })
                 localStorage.setItem('user', JSON.stringify(student))
-                alert('everything went fine')
+                Notification({
+                    title:"Lesson Cancelled",
+                    message:`Lesson cancelled successfully`,
+                    type:"success",
+                    container:"top-right",
+                    insert:"top",
+                    animationIn:"fadeInUp",
+                    animationOut:"fadeOut",
+                    duration:10000
+                  })
                }
                else{
-                   console.log('lesson not found')
+                Notification({
+                    title:"Error",
+                    message:`Lesson not found`,
+                    type:"danger",
+                    container:"top-right",
+                    insert:"top",
+                    animationIn:"fadeInUp",
+                    animationOut:"fadeOut",
+                    duration:10000
+                  })
                }
             } catch(err) {
-              alert(err)
+                Notification({
+                    title:"Error",
+                    message:`An error occured`,
+                    type:"danger",
+                    container:"top-right",
+                    insert:"top",
+                    animationIn:"fadeInUp",
+                    animationOut:"fadeOut",
+                    duration:10000
+                  })
             }
         }
         }  className="rounded px-3 mt-3 bg-red-500 hover:bg-red-200 w-full py-2 border-red-100">

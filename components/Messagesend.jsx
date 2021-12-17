@@ -9,6 +9,7 @@ import axios from 'axios'
 import {useState, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import styles from '../styles/Messages.module.css'
+import Notification from './Notification';
 
 const Messagesend = ({receiverid}) => {
     const {user, sever} = useSelector((state) => state);
@@ -19,7 +20,16 @@ const Messagesend = ({receiverid}) => {
         const {data} = await axios.get(`${sever}/api/users/${user.type == 'teacher' ? 'student' : 'tutor'}/${receiverid}`)
         setreceiver(data)
        } catch (error) {
-           alert(error)
+        Notification({
+            title:"Error",
+            message:`an error ocurred while student information`,
+            type:"danger",
+            container:"top-right",
+            insert:"top",
+            animationIn:"fadeInUp",
+            animationOut:"fadeOut",
+            duration:10000
+          })
        }
     }
 

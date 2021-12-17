@@ -6,6 +6,8 @@ import styles from '../styles/Messages.module.css'
 import axios from 'axios'
 import {useState, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
+import Notification from './Notification';
+import { alpha } from '@mui/material';
 
 
 
@@ -20,7 +22,16 @@ const Messagesstart = ({receiverid, setreceiverid, conversationid, setconversati
             const {data} = await axios.get(`${sever}/api/chats/conversations/${user?._id}`)
             setconversations(data)
         } catch (error) {
-            alert(error)
+            Notification({
+                title:"Error",
+                message:`an error ocurred while getting conversations`,
+                type:"danger",
+                container:"top-right",
+                insert:"top",
+                animationIn:"fadeInUp",
+                animationOut:"fadeOut",
+                duration:10000
+              })
         }
     }
 
@@ -30,8 +41,8 @@ const Messagesstart = ({receiverid, setreceiverid, conversationid, setconversati
 
 
     return (
-             <div className={`${styles.messagestartwrapper}`}>
-                <div className={`${styles.conversationsearchinput}`}>
+             <div className={`${styles.messagestartwrapper} ${receiverid? 'left' : 'right'} `}>
+                {/* <div className={`${styles.conversationsearchinput}`}>
                 <TextField
                     id="input-with-icon-textfield"
                     label="Search Conversation"
@@ -45,7 +56,7 @@ const Messagesstart = ({receiverid, setreceiverid, conversationid, setconversati
                     }}
                     variant="standard"
                 />
-                </div>
+                </div> */}
                 <div className={`flex justify-between ${styles.messagedisplay} border`}>
                     <span className={`${styles.display}`}>all</span>
                     <span className={`${styles.display}`}>unread</span>
@@ -53,7 +64,7 @@ const Messagesstart = ({receiverid, setreceiverid, conversationid, setconversati
 
                 <div className={`${styles.conversationswrapper}`}>
                     {
-                        conversations.map(con => <Conversation Onclick={e => {
+                        conversations.sort((a, b) => a.lastmessage?.createdAt - b.lastmessage?.createdAt).map(con => <Conversation Onclick={e => {
                             setconversationid(con.id)
                             setreceiverid(con.members.find(mem => mem !== user?._id))
 

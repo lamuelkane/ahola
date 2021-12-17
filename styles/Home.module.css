@@ -62,6 +62,15 @@
   font-weight: bolder;
 }
 
+.footerimg{
+  height: 30px;
+  width: 30px;
+}
+
+.about{
+  max-width: 200px;
+}
+
 .homeherobutton{
   padding: 15px;
   padding-left: 30px;
@@ -71,6 +80,13 @@
   color: black;
   transition: all .5s ease;
   border: none;
+}
+
+
+.Footer{
+  padding: 30px;
+  margin-top: 30px;
+  background: grey;
 }
 
 .homeherobutton:hover{

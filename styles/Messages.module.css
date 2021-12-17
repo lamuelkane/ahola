@@ -1,7 +1,7 @@
 .messagestartwrapper{
     flex: 2.5;
     padding: 10px;
-    transition: all .5s ease;
+    /* transition: all .1s ease; */
     height: calc(100vh - 117px);
 }
 /* 
@@ -56,7 +56,20 @@
     border: .5px solid rgb(212, 212, 212);
     height: calc(100vh - 117px);
     position: relative;
-    transition: all 0.5s ease;
+    /* transition: all 0.1s ease; */
+}
+
+.noidwrapper{
+    height: calc(100vh - 117px);
+    padding: 100px;
+}
+
+.noidtext{
+    color: rgba(75, 0, 130, .8);
+    font-weight: lighter;
+    text-align: center;
+    /* font-size: 900; */
+    /* line-height: 50px; */
 }
 
 .chatheader{
@@ -143,6 +156,20 @@
 
 }
 
+.messagetext{
+    white-space: wrap; 
+    /* width: 50px;  */
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
+
+.chatbottomimgareawrapper{
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
 .messagewrapper{
     overflow-y: scroll;
     max-height: 80%;
@@ -189,12 +216,37 @@
 }
 
 @media screen and (max-width: 700px) {
-    .messagestartwrapper{
+    .right{
         width: 100vw;
         flex: 7;
+        transition: all .5s ease;
+        animation: scrollright 1s  linear ;
     }
 
-    .messagecenterwrapper{
+    .left{
        display: none;
+       transition: all .5s ease;
+       animation: scrollleft 1s  linear ;
     }
 }
+
+
+
+@keyframes scrollleft {
+    from { 
+        transform: translateX(90%);
+    }
+    to {
+        transform: translateX(0);
+    }
+  }
+
+
+@keyframes scrollright {
+    from { 
+        transform: translateX(-90%);
+    }
+    to {
+        transform: translateX(0);
+    }
+  }
