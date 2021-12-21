@@ -5,9 +5,10 @@ import styles from '../styles/Dashboard.module.css'
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios'
 import {newtutoraccount} from '../Templates/tutor'
+import Notification from './Notification';
 
 
-export default function RegisteredTutor({tutor}) {
+export default function RegisteredTutor({tutor, hide}) {
     const {sever} = useSelector((state) => state);
     const [videolink, setvideolink] = useState()
 
@@ -48,50 +49,88 @@ useEffect(() => {
 <div className="px-4 py-5 sm:px-6">
     <div className="flex justify-between">
          <h3 className="text-lg leading-6 font-medium text-gray-900">Tutor Profile Information</h3>
-         <div>
-                        <span className="px-2 pointer inline-flex text-xs margin-right leading-5 font-semibold rounded-full bg-green-100 text-green-800"
-                        onClick={async(e) => {
-                          try {
-                            await axios.post(`${sever}/api/users/tutor/save`,  
-                            { 
-                              tutor : {country,
-                                description,
-                                email,
-                                firstname,
-                                image,
-                                lastname,
-                                password,
-                                rate,
-                                subject,
-                                timezone,
-                                video,
-                                } ,
-                                template: newtutoraccount(firstname)
-                            }
-                            )
-                              await axios.get(`${sever}/api/users/registeredtutor/delete/${tutor._id}`)
-                            console.log(tutor)
-                            alert('everything went fine')
-                          } catch (error) {
-                            alert(error)
-                          }
-                        }}
-                        >
-                          APPROVE
-                        </span>
-                        <span className="px-2 pointer inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-green-800"
-                        onClick={async(e) => {
-                          try {
-                            await axios.get(`${sever}/api/users/registeredtutor/delete/${tutor._id}`)
-                            alert('everything went fine')
-                          } catch (error) {
-                            alert(error)
-                          }
-                        }}
-                        >
-                          DELETE
-                        </span>
-         </div>
+         {
+           !hide ? <div>
+           <span className="px-2 pointer inline-flex text-xs margin-right leading-5 font-semibold rounded-full bg-green-100 text-green-800"
+           onClick={async(e) => {
+             try {
+               await axios.post(`${sever}/api/users/tutor/save`,  
+               { 
+                 tutor : {country,
+                   description,
+                   email,
+                   firstname,
+                   image,
+                   lastname,
+                   password,
+                   rate,
+                   subject,
+                   timezone,
+                   video,
+                   } ,
+                   template: newtutoraccount(firstname)
+               }
+               )
+                 await axios.get(`${sever}/api/users/registeredtutor/delete/${tutor._id}`)
+               console.log(tutor)
+               Notification({
+                 title:"SUCCESS",
+                 message:`everything went fine`,
+                 type:"success",
+                 container:"top-right",
+                 insert:"top",
+                 animationIn:"fadeInUp",
+                 animationOut:"fadeOut",
+                 duration:10000
+               })
+             } catch (error) {
+               Notification({
+                 title:"Error",
+                 message:`an error ocurred`,
+                 type:"danger",
+                 container:"top-right",
+                 insert:"top",
+                 animationIn:"fadeInUp",
+                 animationOut:"fadeOut",
+                 duration:10000
+               })
+             }
+           }}
+           >
+             APPROVE
+           </span>
+           <span className="px-2 pointer inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-green-800"
+           onClick={async(e) => {
+             try {
+               await axios.get(`${sever}/api/users/registeredtutor/delete/${tutor._id}`)
+               Notification({
+                 title:"SUCCESS",
+                 message:`everything went fine`,
+                 type:"success",
+                 container:"top-right",
+                 insert:"top",
+                 animationIn:"fadeInUp",
+                 animationOut:"fadeOut",
+                 duration:10000
+               })
+             } catch (error) {
+               Notification({
+                 title:"Error",
+                 message:`an error ocurred`,
+                 type:"danger",
+                 container:"top-right",
+                 insert:"top",
+                 animationIn:"fadeInUp",
+                 animationOut:"fadeOut",
+                 duration:10000
+               })
+             }
+           }}
+           >
+             DELETE
+           </span>
+</div> : ''
+         }
     </div>
 </div>
 <div className="border-t border-gray-200">

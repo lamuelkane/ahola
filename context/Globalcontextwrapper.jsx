@@ -6,6 +6,7 @@ import { Eventmodal, Eventreducer, EventDayreducer } from "../reducer/Event";
 import { User } from "../reducer/user";
 import {createStore, applyMiddleware, combineReducers} from 'redux'
 import {HYDRATE, createWrapper} from 'next-redux-wrapper'
+import {io} from 'socket.io-client'
 import thunkMiddleware from 'redux-thunk'
 
 
@@ -61,8 +62,12 @@ const reducers = combineReducers({
     sever:() => 'https://aholasever.herokuapp.com',
     // sever : () => 'http://localhost:5000',
     // sever2:() => 'http://localhost:5001',
-    sever2: () => 'https://aholaimageupload.herokuapp.com'
+    sever2: () => 'https://aholaimageupload.herokuapp.com',
+    socket: () => io('ws://aholasocket.herokuapp.com')
+    // socket: () => io('ws://localhost:8000')
 })
+
+
 
 
 const reducer = (state, action) => {

@@ -6,6 +6,7 @@ import Rating from '@mui/material/Rating';
 import { useSelector} from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link'
+import {countries, timezones} from '../components/lists'
 import { troncate } from './Troncate';
 
 
@@ -20,7 +21,19 @@ const Tutorprofile = ({open, setOpen, teacher, setteacher}) => {
             <Paper>
                 <div className={`flex align-cnter ${styles.tutorsmallscreen} nowrap justify-beteen padding`}>
                     <div className={`${styles.tutorabout}`}>
-                        <Link href={`/tutor?id=${teacher._id}`}><img src={teacher.image} alt="" className={`${styles.tutorimg} rounded`} /></Link>
+                        <Link href={`/tutor?id=${teacher._id}`}>
+                            <div className={`${styles.tutorimgholder}`}>
+                                <img
+                                    loading="lazy"
+                                    width="30"
+                                    src={`https://flagcdn.com/w20/${countries.find(c => c.label.toLowerCase() === teacher.country.toLowerCase()).code.toLowerCase()}.png`}
+                                    srcSet={`https://flagcdn.com/w40/${countries.find(c => c.label.toLowerCase() === teacher.country.toLowerCase()).code.toLowerCase()}.png 2x`}
+                                    alt=""
+                                    className={`${styles.countyicon}`}
+                                />
+                                <img src={teacher.image} alt="" className={`${styles.tutorimg} rounded`} />
+                            </div>
+                        </Link>
                         <div className={` ${``} flex column justify-center align-center padding-right`}>
                             <h2 className={`font-bold text-indigo-700`}>{teacher.firstname}</h2>
                             <div className={`text-xs`}>{teacher.subject} Tutor <small className={`text-indigo-700`}>{teacher.rate}/hr</small></div>
@@ -44,10 +57,8 @@ const Tutorprofile = ({open, setOpen, teacher, setteacher}) => {
                             </div>
                             <Rating name="read-only" value={4} readOnly />
                             <div>
-                                <span>Also speaks :</span>
-                                <span className={`text-xs text-indigo-700`}> French</span>
-                                <span className={`text-xs text-indigo-700`}> German</span>
-                                <span className={`text-xs text-indigo-700`}> Spanish</span>
+                                <span>Tutor is from :</span>
+                                <span className={`text-sm margin-left text-indigo-700`}>{teacher.country}</span>
                             </div>
                         </div>
                             <Tutordetails teacher={teacher} />

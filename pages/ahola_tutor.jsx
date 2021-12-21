@@ -7,6 +7,7 @@ import Footer from '../components/Footer'
 import axios from 'axios'
 import styles from '../styles/Admin.module.css'
 import Notification from '../components/Notification';
+import Head from 'next/head'
 
 
 const Registered_tutors = () => {
@@ -41,9 +42,16 @@ const Registered_tutors = () => {
 
     return (
         <div>
+            <Head>
+                <title>Tutor Information</title>
+                {/* <meta name="description" content="Learn Any language with ease" /> */}
+                <link rel="icon" href="./images/logo1.png" />
+                <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
+                <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+            </Head>
             <AdminHeader />
             <div className={`${styles.main} w-80 margin-auto margin-top`}>
-                 <RegisteredTutor tutor={tutor} />
+                 <RegisteredTutor tutor={tutor} hide />
             </div>
             <Footer />
         </div>

@@ -9,13 +9,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import Eventmodal from "../components/Eventmodal";
 import Footer from '../components/Footer'
 import Dashboardsubheader from '../components/Dashboardsubheader'
+import Head from 'next/head'
 
 
 
 const Calender = () => {
-
     const [currentmonth, setcurrentmonth] = useState(getMonth())
-
     const dispatch = useDispatch()
     const {monthindex} = useSelector((state) => state);
 
@@ -25,6 +24,13 @@ const Calender = () => {
 
   return (
     <>
+            <Head>
+                <title>User Calender</title>
+                <meta name="description" content="View your events on ahola" />
+                <link rel="icon" href="./images/logo1.png" />
+                <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
+                <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+            </Head>
     <Eventmodal />
             <div className="border">
                 <DashBoardHeader />

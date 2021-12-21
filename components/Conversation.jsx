@@ -5,6 +5,7 @@ import {troncate} from './Troncate'
 import ImageIcon from '@mui/icons-material/Image';
 import { format, render, cancel, register } from 'timeago.js';
 import styles from '../styles/Messages.module.css'
+import Badge from '@mui/material/Badge';
 
 const Conversation = ({con, active, Onclick}) => {
 
@@ -12,10 +13,25 @@ const Conversation = ({con, active, Onclick}) => {
     
 
     return (
-        <div className={`${styles.conversationwrapper} ${active}`} onClick={Onclick}>
+        <div className={`${styles.conversationwrapper} srollin ${active}`} onClick={Onclick}>
                 <div className={`flex`}>
                     <div className={`margin-right`}>
-                    <Avatar sx={{ bgcolor: deepOrange[500] }}>{con.name.sender == user?.firstname ?  con.name.receiver.slice(0, 2) : con.name.sender.slice(0, 2) }</Avatar>
+                    {
+                        user?.type ===  'student' ? con.unread.student > 0 ? <Badge badgeContent={con.unread.student} color="primary"  anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}>
+                        <Avatar sx={{ bgcolor: deepOrange[500] }}>{con.name.sender == user?.firstname ?  con.name.receiver.slice(0, 2) : con.name.sender.slice(0, 2) }</Avatar>
+                    </Badge> : 
+                        <Avatar sx={{ bgcolor: deepOrange[500] }}>{con.name.sender == user?.firstname ?  con.name.receiver.slice(0, 2) : con.name.sender.slice(0, 2) }</Avatar>
+                    :  con.unread.tutor > 0 ?  <Badge badgeContent={con.unread.tutor} color="primary"  anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}>
+                            <Avatar sx={{ bgcolor: deepOrange[500] }}>{con.name.sender == user?.firstname ?  con.name.receiver.slice(0, 2) : con.name.sender.slice(0, 2) }</Avatar>
+                        </Badge> : 
+                            <Avatar sx={{ bgcolor: deepOrange[500] }}>{con.name.sender == user?.firstname ?  con.name.receiver.slice(0, 2) : con.name.sender.slice(0, 2) }</Avatar>
+                    }
                     </div>
                     <div>
                         <div>{con.name.sender == user?.firstname ?  con.name.receiver : con.name.sender}</div>

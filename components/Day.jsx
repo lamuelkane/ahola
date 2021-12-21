@@ -21,8 +21,9 @@ const Day = ({day, rowindx, row, hours}) => {
 
     const geteventclass = (day, hour) => {
          let les = user?.lessons.find(e => new Date(getlessonintimezone(e)).getDate() == new Date(day.toISOString()).getDate() &&  new Date(getlessonintimezone(e)).getHours() == hour)
-
+        alert('here')
          if(les){
+          alert('lesson found')
           if(new Date(getlessonintimezone(les)).getTime() < new Date().getTime()) {
             if(les.confirmed){
               return 'bg-blue-900  hover:bg-blue-900'

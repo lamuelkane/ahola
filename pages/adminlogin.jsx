@@ -23,21 +23,20 @@ export default function Example() {
 
 
  useEffect(() => {
-  if(user){
-    router.push('/calender')
-  }
+//   if(user){
+//     router.push('/calender')
+//   }
  }, [user])
 
   return (
     <>
      <Head>
-        <title>Login</title>
-        <meta name="description" content="Login to your Ahola account" />
+        <title>Administrator Login</title>
+        {/* <meta name="description" content="Login to your Ahola account" /> */}
         <link rel="icon" href="./images/logo1.png" />
-        <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
-        <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+        {/* <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
+        <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" /> */}
       </Head>
-      <Header2 />
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
@@ -46,21 +45,13 @@ export default function Example() {
               src="./images/logo.png"
               alt="Workflow"
             />
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your {tutor? 'tutor' : 'student'} account  <small> Or{' '} <span onClick={e => settutor(!tutor)} className="font-medium pointer text-indigo-600 hover:text-indigo-500">
-                sign in as a {tutor ? 'student' : 'tutor'}
-              </span></small> </h2>
-            <p className="mt-2 text-center text-sm text-gray-600">
-              do not have an account? {' '}
-              <span className="font-medium text-indigo-600 hover:text-indigo-500">
-                <Link href={tutor? '/tutor_register' : 'student_register'}  > register </Link>
-              </span>
-            </p>
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in As an administrator</h2>
           </div>
           <form className="mt-8 space-y-6" action="#" method="POST"   onSubmit={async(e) => {
                 e.preventDefault()
                 if (!email || !password) {
                   Notification({
-                    title:"INcomplete Credentials",
+                    title:"Incomplete Credentials",
                     message:`PLease input full credentials`,
                     type:"info",
                     container:"top-right",
@@ -76,14 +67,14 @@ export default function Example() {
                   password: pass
                 }
                  try {
-                   
-                  const {data} = await axios.post(`${sever}/api/users/${tutor? 'teacher' : 'student'}/signin`, info)
-                  localStorage.setItem('user', JSON.stringify(data))
-                  router.push('/calender')
+                  const {data} = await axios.post(`${sever}/api/users/admin/signin`, info)
+                  localStorage.setItem('admin', JSON.stringify(data))
+                  router.push('/dashboard')
                  } catch (error) {
+                     alert(error)
                   Notification({
                     title:"ERROR",
-                    message:`An error occured, please try again. if you are a student, please change the login type `,
+                    message:`An error occured, please try again`,
                     type:"danger",
                     container:"top-right",
                     insert:"top",
@@ -164,7 +155,6 @@ export default function Example() {
           </form>
         </div>
       </div>
-     <Footer />
     </>
   )
 }

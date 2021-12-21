@@ -10,17 +10,16 @@ import styles from '../styles/Messages.module.css'
 import Messagesstart from '../components/Messagesstart'
 import axios from 'axios';
 import Notification from '../components/Notification';
+import Head from 'next/head'
 
 
 const Messages = () => {
-    const socket = useRef()
     const router = useRouter()
-
     const [receiverid, setreceiverid] = useState('')
     const [conversationid, setconversationid] = useState('')
     const [message, setmessage] = useState('')
     const {rcrid, name, convid} = router.query
-    const {user, sever} = useSelector((state) => state);
+    const {user, sever,} = useSelector((state) => state);
 
 
     const getidfromrouter = async() => {
@@ -75,48 +74,18 @@ const Messages = () => {
     }
 
     useEffect(() => {
-        socket.current = io('ws://aholasocket.herokuapp.com/')
-        // handle the event sent with socket.current.send()
-        socket.current.on("message", data => {
-            // Notification({
-            //     title:"success",
-            //     message:`message received`,
-            //     type:"success",
-            //     container:"top-right",
-            //     insert:"top",
-            //     animationIn:"fadeInUp",
-            //     animationOut:"fadeOut",
-            //     duration:100
-            //   })
-            setmessage('notchnaged')
-        });
-        
-        // handle the event sent with socket.current.emit()
-        socket.current.on("greetings", (elem1, elem2, elem3) => {
-          console.log(elem1, elem2, elem3);
-        });
-    }, [])
-
-    useEffect(() => {
-       if(user) {
-        socket.current?.emit("adduser", user?._id);
-       }
-    }, [user, socket])
-
-    useEffect(() => {
-    //    if(message) {
-        socket.current.emit('sendmessage', receiverid)
-    //    }
-    }, [message])
-
-    useEffect(() => {
         getidfromrouter()
     }, [rcrid, convid, name])
 
-
-
     return (
         <div>
+            <Head>
+                <title>Messages</title>
+                <meta name="description" content="View your messages" />
+                <link rel="icon" href="./images/logo1.png" />
+                {/* <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" /> */}
+                {/* <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" /> */}
+            </Head>
             <div className="border">
                 <DashBoardHeader />
             </div>
@@ -131,7 +100,7 @@ const Messages = () => {
                 </div>
             </div>
             :
-            <Messagecenter socket={message} sk={socket} setsocket={setmessage} receiverid={receiverid} setreceiverid={setreceiverid}  conversationid={conversationid} setconversationid={setconversationid} />}
+            <Messagecenter  receiverid={receiverid} setreceiverid={setreceiverid}  conversationid={conversationid} setconversationid={setconversationid} />}
                { user?.type === 'teacher' && receiverid &&
                <Messagesend receiverid={receiverid} setreceiverid={setreceiverid}  conversationid={conversationid} setconversationid={setconversationid} />}
             </div>

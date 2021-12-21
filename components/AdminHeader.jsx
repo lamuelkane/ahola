@@ -1,11 +1,13 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 import ReactNotification from "react-notifications-component";
 import Link from 'next/link'
+import {useRouter} from 'next/router'
 
 const AdminHeader = () => {
+    const router = useRouter()
     const user = {
         name: 'Tom Cook',
         email: 'tom@example.com',
@@ -24,13 +26,23 @@ const AdminHeader = () => {
         { name: 'Settings', href: '#' },
         { name: 'Sign out', href: '#' },
       ]
+      const [user2, setuser] = useState({})
+
+      useEffect(() => {
+       const admin = JSON.parse(localStorage.getItem('admin'))
+       if(admin){
+        setuser(admin)
+       }else{
+        router.push('/adminlogin')
+       }
+      }, [user])
       
       function classNames(...classes) {
         return classes.filter(Boolean).join(' ')
       }
     return (
         <div>
-            <Disclosure as="nav" className="bg-gray-800">
+            <Disclosure as="nav" className="bg-indigo-800">
           {({ open }) => (
             <>
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -39,7 +51,7 @@ const AdminHeader = () => {
                     <div className="flex-shrink-0">
                       <img
                         className="h-8 w-8"
-                        src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+                        src="./images/logo1.png"
                         alt="Workflow"
                       />
                     </div>
@@ -79,7 +91,7 @@ const AdminHeader = () => {
                         <div>
                           <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                             <span className="sr-only">Open user menu</span>
-                            <img className="h-8 w-8 rounded-full" src={user.imageUrl} alt="" />
+                            <img className="h-8 w-8 rounded-full" src={user2.image} alt="" />
                           </Menu.Button>
                         </div>
                         {/* <Transition
@@ -146,11 +158,11 @@ const AdminHeader = () => {
                 <div className="pt-4 pb-3 border-t border-gray-700">
                   <div className="flex items-center px-5">
                     <div className="flex-shrink-0">
-                      <img className="h-10 w-10 rounded-full" src={user.imageUrl} alt="" />
+                      <img className="h-10 w-10 rounded-full" src={user2.image} alt="" />
                     </div>
                     <div className="ml-3">
-                      <div className="text-base font-medium leading-none text-white">{user.name}</div>
-                      <div className="text-sm font-medium leading-none text-gray-400">{user.email}</div>
+                      <div className="text-base font-medium leading-none text-white">{user2.firstname}</div>
+                      <div className="text-sm font-medium leading-none text-gray-400">{user2.email}</div>
                     </div>
                     <button
                       type="button"

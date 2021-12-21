@@ -9,6 +9,7 @@ import {newtutorregistered} from '../Templates/tutor'
 import Footer from '../components/Footer'
 import {useRouter} from 'next/router'
 import Notification from '../components/Notification'
+import Head from 'next/head'
 
 
 
@@ -37,7 +38,16 @@ export default function Example() {
       const {data} = await axios.get(`${sever}/api/users/subjects`)
       setsubjects(data)
     } catch (error) {
-      alert(error)
+      Notification({
+        title:"Error",
+        message:`An error occured while getting subjects`,
+        type:"danger",
+        container:"top-right",
+        insert:"top",
+        animationIn:"fadeInUp",
+        animationOut:"fadeOut",
+        duration:10000
+      })
     }
   }
 
@@ -153,12 +163,28 @@ let sendimage = async(e) => {
     })
     setphoto(`${sever2}/image/${data.filename}`)
   } catch (error) {
-    alert( error)
+    Notification({
+      title:"ERROR",
+      message:`An error occured while uploading image`,
+      type:"danger",
+      container:"top-right",
+      insert:"top",
+      animationIn:"fadeInUp",
+      animationOut:"fadeOut",
+      duration:10000
+    })
   }
 }
 
   return (
     <>
+        <Head>
+                <title>Register</title>
+                <meta name="description" content="Become a tutor on Ahola" />
+                <link rel="icon" href="./images/logo1.png" />
+                <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
+                <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+            </Head>
     <div className="border"><Header2 /></div>
         <div className={`center margin-bottom bg-gray-400 py-10`}>
                 <h2 className={`text-2xl text-indigo-700`}>become a Tutor on Ahola</h2> or

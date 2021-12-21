@@ -4,12 +4,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios'
 import { newtutoraccount } from '../Templates/tutor';
 import Popup from './Popup';
+import Pagination from '@mui/material/Pagination'
 import { useState } from 'react';
+import Notification from './Notification';
   
   export default function Tutortable({tutors, gettutors}) {
     const {sever} = useSelector((state) => state);
     const [open, setOpen] = useState(true)
-    
+    const [pageNumber, setpageNumber] = useState(1)
+    const [productperpage, setproductperpage] = useState(3)
+    let pagesVited = (pageNumber - 1) * productperpage
+
+    const handleChange = (event, value) => {
+      setpageNumber(value)
+    };
     
 
     return (
@@ -21,7 +29,7 @@ import { useState } from 'react';
               <table className="min-w-full divide-y divide-gray-200">
                
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {tutors?.map((tutor, i) => (
+                  {tutors?.slice(pagesVited, pagesVited + 3)?.map((tutor, i) => (
                     <tr key={i}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
@@ -56,7 +64,16 @@ import { useState } from 'react';
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className="px-2 pointer inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-green-800"
                         onClick={async(e) => {
-                            alert('to be done')
+                          Notification({
+                            title:"THIS IS TO BE DONE",
+                            message:`I will add this functionality in the future`,
+                            type:"info",
+                            container:"top-right",
+                            insert:"top",
+                            animationIn:"fadeInUp",
+                            animationOut:"fadeOut",
+                            duration:10000
+                          })
                         //   try {
                         //     await axios.get(`${sever}/api/users/registeredtutor/delete/${tutor._id}`)
                         //     alert('everything went fine')
@@ -66,7 +83,7 @@ import { useState } from 'react';
                         //   }
                         }}
                         >
-                          Band
+                          HIDE
                         </span>
                       </td>
                     </tr>
@@ -76,6 +93,9 @@ import { useState } from 'react';
             </div>
           </div>
         </div>
+        <div className='flex justify-center align-center margin-top'>
+             <Pagination count={Math.round(tutors?.length / 3)} page={pageNumber} onChange={handleChange} siblingCount={0} color="primary" />
+          </div>
       </div>
     )
   }

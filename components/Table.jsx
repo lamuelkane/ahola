@@ -5,10 +5,20 @@ import axios from 'axios'
 import { newtutoraccount } from '../Templates/tutor';
 import Popup from './Popup';
 import { useState } from 'react';
+import Pagination from '@mui/material/Pagination'
+import Notification from './Notification';
   
   export default function Table({tutors, gettutors}) {
     const {sever} = useSelector((state) => state);
     const [open, setOpen] = useState(true)
+    const [pageNumber, setpageNumber] = useState(1)
+    const [productperpage, setproductperpage] = useState(5)
+    let pagesVited = (pageNumber - 1) * productperpage
+
+    const handleChange = (event, value) => {
+      setpageNumber(value)
+    };
+
     
     
 
@@ -21,7 +31,7 @@ import { useState } from 'react';
               <table className="min-w-full divide-y divide-gray-200">
                
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {tutors?.map((tutor, i) => (
+                  {tutors?.slice(pagesVited, pagesVited + 5)?.map((tutor, i) => (
                     <tr key={i}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
@@ -83,10 +93,28 @@ import { useState } from 'react';
                             }
                             )
                               await axios.get(`${sever}/api/users/registeredtutor/delete/${tutor._id}`)
-                            alert('everything went fine')
+                              Notification({
+                                title:"Tutor approved successfully",
+                                message:`you have successfully approved this tutor profile`,
+                                type:"success",
+                                container:"top-right",
+                                insert:"top",
+                                animationIn:"fadeInUp",
+                                animationOut:"fadeOut",
+                                duration:10000
+                              })
                             gettutors()
                           } catch (error) {
-                            alert(error)
+                            Notification({
+                              title:"Error",
+                              message:`an error ocurred while getting registered tutors`,
+                              type:"danger",
+                              container:"top-right",
+                              insert:"top",
+                              animationIn:"fadeInUp",
+                              animationOut:"fadeOut",
+                              duration:10000
+                            })
                           }
                         }}
                         >
@@ -98,14 +126,32 @@ import { useState } from 'react';
                         onClick={async(e) => {
                           try {
                             await axios.get(`${sever}/api/users/registeredtutor/delete/${tutor._id}`)
-                            alert('everything went fine')
+                            Notification({
+                              title:"USER DELETED SUCCESSFULLY",
+                              message:`an error ocurred while getting registered tutors`,
+                              type:"success",
+                              container:"top-right",
+                              insert:"top",
+                              animationIn:"fadeInUp",
+                              animationOut:"fadeOut",
+                              duration:10000
+                            })
                             gettutors()
                           } catch (error) {
-                            alert('an error occured')
+                            Notification({
+                              title:"Error",
+                              message:`an error ocurred`,
+                              type:"danger",
+                              container:"top-right",
+                              insert:"top",
+                              animationIn:"fadeInUp",
+                              animationOut:"fadeOut",
+                              duration:10000
+                            })
                           }
                         }}
                         >
-                          DELETE
+                          REJECT
                         </span>
                       </td>
                     </tr>
@@ -115,6 +161,9 @@ import { useState } from 'react';
             </div>
           </div>
         </div>
+        <div className='flex justify-center align-center margin-top'>
+             <Pagination count={Math.round(tutors.length / 5)} page={pageNumber} onChange={handleChange} siblingCount={0} color="primary" />
+          </div>
       </div>
     )
   }

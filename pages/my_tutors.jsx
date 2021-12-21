@@ -1,6 +1,6 @@
-import React, {useEffect, useContext, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import DashBoardHeader from '../components/DashBoardHeader'
-import { deepOrange, deepPurple } from '@mui/material/colors';
+import {deepPurple } from '@mui/material/colors';
 import Avatar from '@mui/material/Avatar';
 import { useRouter } from 'next/router'
 import styles from '../styles/Studentdashboard.module.css'
@@ -8,15 +8,16 @@ import Dashboardsubheader from '../components/Dashboardsubheader'
 import Link from 'next/link'
 import { useSelector, useDispatch } from 'react-redux';
 import CloseIcon from '@mui/icons-material/Close';
-import dayjs from 'dayjs'
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import {getaccuratehours2, checklessonstate, getlessonintimezone, getlessoninactualtime2} from '../components/utils'
+import {checklessonstate, getlessonintimezone} from '../components/utils'
 import axios from 'axios'
 import {setUser} from '../actions/User'
 import Footer from '../components/Footer'
 import Tutorpopup from '../components/Tutorpopup';
 import Notification from '../components/Notification';
+import Head from 'next/head'
+import Pagination from '@mui/material/Pagination'
+import { troncate } from '../components/Troncate';
 
 const Mytutor = () => {
     const dispatch = useDispatch()
@@ -25,6 +26,13 @@ const Mytutor = () => {
     const [open, setOpen] = useState(false)
     const [teacher, setteacher] = useState({})
     const router = useRouter()
+    const [pageNumber, setpageNumber] = useState(1)
+    const [productperpage, setproductperpage] = useState(3)
+    let pagesVited = (pageNumber - 1) * productperpage
+
+    const handleChange = (event, value) => {
+      setpageNumber(value)
+    };
 
     const confirmlesson = async(tu, tut) => { 
       try{
@@ -78,6 +86,13 @@ const Mytutor = () => {
 
     return (
         <div>
+          <Head>
+                <title>Tutors</title>
+                {/* <meta name="description" content="Learn Any language with ease" /> */}
+                <link rel="icon" href="./images/logo1.png" />
+                <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
+                <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+            </Head>
             <div className="border">
                 <DashBoardHeader />
             </div>
@@ -85,14 +100,14 @@ const Mytutor = () => {
             <Tutorpopup open={open} setOpen={setOpen} teacher={teacher} />
             <div className={`${styles.mytutorswrapper} text-sm`}>
               {
-                user?.tutors.map(tut => (
+                user?.tutors.slice(pagesVited, pagesVited + 3).map(tut => (
                   <div className={`flex justify-between align-center border p-3`} key={tut.id}>
                         <div className={`flex align-center`}>
-                            <div className={`margin-right`}>  <Avatar sx={{ bgcolor: deepPurple[500] }}>{tut.name.substring(0, 2)}</Avatar></div>
-                            <div className={`margin-right`}>{tut.name}</div>
-                            <div className={`margin-right`}>${tut.rate} per hour</div>
+                            <div className={`margin-right hidel`}>  <Avatar sx={{ bgcolor: deepPurple[500] }}>{tut.name.substring(0, 2)}</Avatar></div>
+                            <div className={`margin-right`}>{troncate(tut.name, 5)}</div>
+                            <div className={`margin-right`}>${tut.rate} <span className="hidel">per hour</span></div>
                         </div>
-                        <div className={`margin-right`}>{tut.hours} hours left</div>
+                        <div className={`margin-right hides`}>{tut.hours} <span className="hidel">hours left</span></div>
                         <div className={`flex`}>
                             <div className={`margin-right`}>
                               <Link href={`messages?convid=${tut.id + user._id}&&name=${tut.name}&&rcrid=${tut.id}`} >message </Link>
@@ -115,9 +130,9 @@ const Mytutor = () => {
                                 })
                               }
                             }} >lessons</div>
-                            <div className={`margin-right pointer`} onClick={async(e) => {
+                            <div className={`margin-right pointer hides`} onClick={async(e) => {
                               try{
-                                const {data} = await axios.get(`${sever}/api/users/tutor/${tut.id}`)
+                              const {data} = await axios.get(`${sever}/api/users/tutor/${tut.id}`)
                                 setteacher(data)
                                 setOpen(true)
                               }
@@ -133,8 +148,8 @@ const Mytutor = () => {
                                   duration:10000
                                 })
                               }
-                            }} >get more hours</div>
-                            <div className={`margin-right pointer`} onClick={async(e) => {
+                            }} >add hours</div>
+                            <div className={`margin-right pointer hidexs`} onClick={async(e) => {
                               try{
                                 const {data} = await axios.get(`${sever}/api/users/tutor/${tut.id}`)
                                 confirmlesson2(data, data.lessons.filter(le => le.student.id == user._id && !le.confirmed && checklessonstate(le)))
@@ -184,6 +199,9 @@ const Mytutor = () => {
                 ))
               }
             </div>
+            <div className='flex justify-center align-center margin-top'>
+             <Pagination count={Math.round(user?.tutors.length / 3)} page={pageNumber} onChange={handleChange} siblingCount={0} color="primary" />
+          </div>
             { 
               tutor && <div className={`${styles.tutordetailswrapper}`}>
                 <div className={`${styles.tutordetails}`}>

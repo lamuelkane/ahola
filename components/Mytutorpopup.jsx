@@ -99,7 +99,7 @@ const Mytutorpopup = () => {
 
                     <section aria-labelledby="options-heading" className="mt-10">
                       <h3 id="options-heading" className="sr-only">
-                        Product options
+                        {/* Product options */}
                       </h3>
 
                       <form>

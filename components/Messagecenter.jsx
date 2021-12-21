@@ -13,10 +13,10 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import styles from '../styles/Messages.module.css'
 import Notification from './Notification';
 
-const Messagecenter = ({conversationid, socket, sk, setsocket, receiverid, setreceiverid}) => {
+const Messagecenter = ({conversationid, receiverid, setreceiverid}) => {
     const [messages, setmessages] = useState([])
     const message = useRef()
-    const {user, sever, sever2} = useSelector((state) => state);
+    const {user, sever, sever2, socket} = useSelector((state) => state);
     const [type, settype] = useState('text')
     const [showimoji, setshowimoji] = useState(false)
     const [file, setfile] = useState(false)
@@ -34,11 +34,33 @@ const Messagecenter = ({conversationid, socket, sk, setsocket, receiverid, setre
     const router = useRouter()
 
 
-    const getmessages = async() => {
+    const getmessages = async(send) => {
         if(conversationid){
             try {
                 const {data} = await axios.get(`${sever}/api/chats/messages/${conversationid}`)
+                if(!send){
+                    const {data : res} = await axios.get(`${sever}/api/chats/conversation/${conversationid}`)
+                    if(user?.type === 'student'){
+                        if(res.unread.student <= 0) {
+
+                        }
+                        else {
+                            res.unread.student  = 0
+                            await axios.post(`${sever}/api/chats/conversation/update`, res)
+                        }
+                    }
+                    else {
+                        if(res.unread.tutor <= 0) {
+
+                        }
+                        else {
+                            res.unread.tutor  = 0
+                            await axios.post(`${sever}/api/chats/conversation/update`, res)
+                        }
+                    }
+                }
                 setmessages(data)
+                socket.emit('conversationchanged', receiverid)
             } catch (error) {
                 Notification({
                     title:"Error",
@@ -69,12 +91,12 @@ const Messagecenter = ({conversationid, socket, sk, setsocket, receiverid, setre
             const {data} = await axios.post(`${sever}/api/chats/message/save`, mes)
             const {data : res} = await axios.get(`${sever}/api/chats/conversation/${conversationid}`)
             res.lastmessage = data
+            user?.type === 'student'? res.unread.tutor += 1 : res.unread.student += 1
             await axios.post(`${sever}/api/chats/conversation/update`, res)
             message.current.value = ''
             setshowimoji(false)
-            // setsocket('changed')
-            sk.current.emit('sendmessage', receiverid)
-            getmessages()
+            socket.emit('sendmessage', receiverid)
+            getmessages(true)
         } catch (error) {
             Notification({
                 title:"Error",
@@ -122,40 +144,14 @@ const Messagecenter = ({conversationid, socket, sk, setsocket, receiverid, setre
 
     useEffect(()=> {
         getmessages()
-    }, [conversationid, socket])
+    }, [conversationid])
 
     useEffect(() => {
-        sk.current.on("message", data => {
-            // Notification({
-            //     title:"success",
-            //     message:`message received`,
-            //     type:"info",
-            //     container:"top-right",
-            //     insert:"top",
-            //     animationIn:"fadeInUp",
-            //     animationOut:"fadeOut",
-            //     duration:100
-            //   })
-
-              getmessages()
-            // setmessage('notchnaged')
-        });
+        socket.on("message", data => {
+                  getmessages()
+            });
     }, [])
-
     
-    // useEffect(()=> {
-    //     Notification({
-    //         title:"changed",
-    //         message:`socket just changed`,
-    //         type:"danger",
-    //         container:"top-right",
-    //         insert:"top",
-    //         animationIn:"fadeInUp",
-    //         animationOut:"fadeOut",
-    //         duration:100
-    //       })
-    // }, [socket])
-
     useEffect(() => {
         let prevkey = ''
         let third = ''

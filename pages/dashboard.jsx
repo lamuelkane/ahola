@@ -6,6 +6,7 @@ import Footer from '../components/Footer'
 import { useSelector, useDispatch } from 'react-redux';
 import styles from '../styles/Admin.module.css'
 import Notification from '../components/Notification'
+import Head from 'next/head'
 
 
 
@@ -38,6 +39,13 @@ export default function Example() {
   return (
     <>
       <div className="min-h-full">
+          <Head>
+                <title>Admin Dashboard</title>
+                {/* <meta name="description" content="Learn Any language with ease" /> */}
+                <link rel="icon" href="./images/logo1.png" />
+                <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
+                <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+            </Head>
         <AdminHeader />
         <main className={`${styles.main}`}>
           <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">

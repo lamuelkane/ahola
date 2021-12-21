@@ -126,6 +126,7 @@ const Studentschedule = ({weeks}) => {
                       })
                 }
             } catch(err) {
+                alert(err)
                 Notification({
                     title:"Error",
                     message:`An error occured`,
@@ -200,6 +201,7 @@ const Studentschedule = ({weeks}) => {
                     duration:10000
                   })
             } catch(err) {
+                alert(err)
                 Notification({
                     title:"Error",
                     message:`An error Occured`,

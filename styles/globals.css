@@ -617,6 +617,10 @@ input{
   margin: auto;
 }
 
+.srollin{
+  animation: Bottom 0.3s linear;
+}
+
 .cartItem .cartItem-total{
   margin-top: auto;
   margin-bottom: 0px;
@@ -665,6 +669,26 @@ input{
   color: #008;
 }
 
+.sidebar{
+  transform: translateX(100%)
+}
+
+.showsidebar{
+  transform: translateX(0)
+}
+
+
+
+
+@keyframes Bottom {
+  from { 
+      transform: translateY(-80%);
+  }
+  to {
+      transform: translateY(0);
+  }
+}
+
 /* -------------------------------------------------------------- order details ------------------------------------------------- */
 @media screen and (max-width: 900px){
  
@@ -695,13 +719,13 @@ input{
     width: 100vw;
     flex: 7;
     /* transition: all .05s ease; */
-    animation: scrollright 1s  linear ;
+    animation: scrollright .5s  linear ;
 }
 
 .left{
    display: none;
    /* transition: all .05s ease; */
-   animation: scrollleft 1s  linear ;
+   animation: scrollleft .5s  linear ;
 }
 }
 

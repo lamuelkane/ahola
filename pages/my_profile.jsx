@@ -7,6 +7,7 @@ import {timezones} from '../components/lists'
 import Footer from '../components/Footer'
 import axios from 'axios';
 import Notification from '../components/Notification';
+import Head from 'next/head'
 
 const my_profile = () => {
   const [videolink, setvideolink] = useState()
@@ -141,6 +142,13 @@ const submitrequest2 = async() => {
     return user?.type === 'student' ?
     (
         <div>
+            <Head>
+                <title>Student Profile</title>
+                {/* <meta name="description" content="Learn Any language with ease" /> */}
+                <link rel="icon" href="./images/logo1.png" />
+                <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
+                <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+            </Head>
             <div className="border">
                  <DashBoardHeader />
             </div>
@@ -225,6 +233,13 @@ const submitrequest2 = async() => {
         </div>
     ) : (
       <div>
+          <Head>
+                <title>Tutor's Profile</title>
+                {/* <meta name="description" content="Learn Any language with ease" /> */}
+                <link rel="icon" href="./images/logo1.png" />
+                <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
+                <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+            </Head>
           <div className="border">
                <DashBoardHeader />
           </div>

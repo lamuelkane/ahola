@@ -13,6 +13,7 @@ import Tutorpopup from '../components/Tutorpopup';
 import Footer from '../components/Footer'
 import Header2 from '../components/Header2';
 import Notification from '../components/Notification';
+import Head from 'next/head'
 
 const Tutor = () => {
     const router = useRouter()
@@ -106,6 +107,13 @@ const Tutor = () => {
 
     return (
         <div>
+            <Head>
+                <title>Tutor Profile</title>
+                {/* <meta name="description" content="Learn Any language with ease" /> */}
+                <link rel="icon" href="./images/logo1.png" />
+                <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
+                <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+            </Head>
             <Tutorpopup open={open} setOpen={setOpen} teacher={tutor} />
             <div className="border">
                 <Header2 />

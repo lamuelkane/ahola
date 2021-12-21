@@ -22,6 +22,19 @@ export const setUser = (sever, user) => async(dispatch) => {
  }
 
 
+ export const removeUser = () => {
+        localStorage.removeItem('user')
+        dispatch( {
+            type:'REMOVE_USER',
+            payload: null
+        })
+   
+ }
+
+     
+
+
+
 // export const setUser = (sever, user) => async(dispatch) => {
 //     if(user){
 //         localStorage.setItem('user', JSON.stringify(user))

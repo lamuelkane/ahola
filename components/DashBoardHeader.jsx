@@ -3,7 +3,7 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {useContext, useEffect, useState} from 'react'
 import { Fragment } from 'react'
-import {setUser} from '../actions/User'
+import {removeUser, setUser} from '../actions/User'
 import ReactNotification from "react-notifications-component";
 import { useSelector, useDispatch } from 'react-redux';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
@@ -12,7 +12,7 @@ import Link from 'next/link'
 
 const DashBoardHeader = () => {
     const dispatch = useDispatch()
-    const {user, sever} = useSelector((state) => state);
+    const {user, sever, socket} = useSelector((state) => state);
     const router = useRouter()
     const [show, setshow] = useState(false)
 
@@ -34,6 +34,11 @@ const DashBoardHeader = () => {
         }, 10000);
     }, [])
 
+    useEffect(() => {
+      if(user) {
+        socket.emit("adduser", user?._id);
+       }
+    }, [user])
     return (
         <div>
             <div className="headerwrapeer">
@@ -98,7 +103,7 @@ const DashBoardHeader = () => {
                                   <div className={
 -                                    'block px-4 py-2 ml-3 margin-left text-sm textgray-700'
                                   } onClick={e => {
-                                    localStorage.removeItem('user')
+                                    dispatch(removeUser())
                                     router.push('/')
                                   }}>
                                    Sign out

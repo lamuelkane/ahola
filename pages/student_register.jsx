@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import {useRouter} from 'next/router'
 import {newstudentaccount} from '../Templates/student'
 import Footer from '../components/Footer'
+import Notification from '../components/Notification';
+import Head from 'next/head'
 
 
 export default function Example() {
@@ -33,17 +35,45 @@ const submitrequest = async(e) => {
   e.preventDefault()
 
   if(!photo) {
-    alert('please choose a profile image')
+    Notification({
+      title:"NO Profile Iamge",
+      message:`please choose a profile image`,
+      type:"info",
+      container:"top-right",
+      insert:"top",
+      animationIn:"fadeInUp",
+      animationOut:"fadeOut",
+      duration:10000
+    })
     return
   }
 
   if(!timezone || !country) {
-    alert('please check your timezone or country')
+    Notification({
+      title:"Incomplete datails",
+      message:`please check your timezone or country`,
+      type:"info",
+      container:"top-right",
+      insert:"top",
+      animationIn:"fadeInUp",
+      animationOut:"fadeOut",
+      duration:10000
+    })
+
     return
   }
 
   if(password !== comfirmpassword) {
-    alert('please make sure your password matches')
+    Notification({
+      title:"Password's don't match",
+      message:`please make sure your password matches`,
+      type:"info",
+      container:"top-right",
+      insert:"top",
+      animationIn:"fadeInUp",
+      animationOut:"fadeOut",
+      duration:10000
+    })
     return
   }
 
@@ -66,14 +96,29 @@ const submitrequest = async(e) => {
   try{
     const {data} = await axios.post(`${sever}/api/users/student/singup`, body)
     localStorage.setItem('user', JSON.stringify(data))
-    alert('everything went fine')
+    Notification({
+      title:"SUCCESS",
+      message:`successfully registerted as an Ahola student`,
+      type:"success",
+      container:"top-right",
+      insert:"top",
+      animationIn:"fadeInUp",
+      animationOut:"fadeOut",
+      duration:10000
+    })
     router.push('/calender')
 } catch(err) {
-  alert(err)
-  console.log(err.response.message)
+  Notification({
+    title:"Error",
+    message:`an error ocurred`,
+    type:"danger",
+    container:"top-right",
+    insert:"top",
+    animationIn:"fadeInUp",
+    animationOut:"fadeOut",
+    duration:10000
+  })
 }
-
-  console.log(body)
 }
 
 let sendimage = async(e) => {
@@ -87,15 +132,30 @@ let sendimage = async(e) => {
       data: bodyFormData,
       headers: { "Content-Type": "multipart/form-data" },
     })
-    setphoto(`image/${data.filename}`)
-    console.log(data, data.filename)
+    setphoto(`${sever2}/image/${data.filename}`)
   } catch (error) {
-    alert( error)
+    Notification({
+      title:"Error",
+      message:`an error ocurred`,
+      type:"danger",
+      container:"top-right",
+      insert:"top",
+      animationIn:"fadeInUp",
+      animationOut:"fadeOut",
+      duration:10000
+    })
   }
 }
 
   return (
     <>
+          <Head>
+                <title>Register</title>
+                <meta name="description" content="Become a student on Ahola" />
+                <link rel="icon" href="./images/logo1.png" />
+                <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
+                <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+            </Head>
     <div className="border"><Header2 /></div>
     <div className={`center bg-gray-400 py-10 margin-bottom`}>
             <h2 className={`text-2xl text-indigo-700`}>become a student on Ahola</h2>

@@ -4,7 +4,9 @@ import RegisteredTutor from '../components/RegisteredTutor'
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux';
 import Footer from '../components/Footer'
+import Notification from '../components/Notification';
 import axios from 'axios'
+import Head from 'next/head'
 
 const Registered_tutors = () => {
     const router = useRouter()
@@ -17,7 +19,16 @@ const Registered_tutors = () => {
             const {data} = await axios.get(`${sever}/api/users/registeredtutor/${id}`)
             settutor(data)
         } catch (error) {
-            alert(error)
+            Notification({
+                title:"Error",
+                message:`an error ocurred while getting tutors`,
+                type:"danger",
+                container:"top-right",
+                insert:"top",
+                animationIn:"fadeInUp",
+                animationOut:"fadeOut",
+                duration:10000
+              })
         }
     }
 
@@ -29,6 +40,13 @@ const Registered_tutors = () => {
 
     return (
         <div>
+            <Head>
+                <title>Tutors  Requests</title>
+                {/* <meta name="description" content="Learn Any language with ease" /> */}
+                <link rel="icon" href="./images/logo1.png" />
+                <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
+                <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+            </Head>
             <AdminHeader />
             <div className="w-80 margin-auto margin-top">
                  <RegisteredTutor tutor={tutor} />

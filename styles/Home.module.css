@@ -117,9 +117,30 @@
 }
 
 .coureswrapper{
-  width: 70vw;
-  padding: 20px;
+  width: 60vw;
+  margin: auto;
+}
+
+.coolsectionwrapper{
+  width: 95vw;
+  margin: auto;
+}
+
+.somewrapper{
+  width: 95vw;
   margin: 30px auto;
+}
+
+.somewrapper2{
+  padding: 20px;
+  width: 95vw;
+  margin: 20px auto;
+}
+
+.chourseshowcase{
+  width: 95vw;
+  margin: 30px auto;
+  padding: 20px;
 }
 
 .course:hover{
@@ -145,15 +166,11 @@
 }
 
 .showcase{
-  /* background: rgb(131, 139, 252); */
-  /* background: white; */
   background: rgb(175, 36, 36);
   border-left: 5px solid #4F46E5;
-    /* border: .2px solid blue; */
-  /* color: white; */
   width: 300px;
   margin-bottom: 20px;
-  margin-left: 10px;
+  /* margin-left: 10px; */
   border-radius: 10px;
   
 }
@@ -201,14 +218,33 @@
   text-align: center;
 }
 
-.shwcasewrapper{
-  /* background: rgb(163, 159, 159) */
-        
+/* .shwcasewrapper{
+  margin: 0 20px;        
+} */
+
+.homeheader{
+  background: white;
+  padding: 10px;
 }
 
-.showcasewrapper{
-  width: 90vw;
+.homeimg{
+  height: 50px;
+  width: 100px;
+  margin-right: 50px;
+  margin-left: 20px;
 }
+
+.shwcasewrapper{
+  width: 95vw;
+  margin: auto;
+  padding: 20px;
+}
+
+.homenaveitem{
+  margin-right: 10px;
+  font-size: large;
+}
+
 
 .registersection{
   width: 50%;
@@ -222,6 +258,34 @@
   height: 300px;
 }
 
+.courses{
+  position: absolute;
+  top: 20px;
+  left: -70px;
+  width: 200px;
+  display: flex;
+  align-items: space-between;
+  flex-direction: column;
+  color: white;
+  padding: 20px;
+  display: none;
+  height: 80vh;
+  overflow-y: scroll;
+}
+
+.coursesholder{
+  position: relative;
+}
+
+.coursesholder:hover > .courses{
+  display: flex;
+}
+
+.headersmall{
+  display: none;
+  transition: all 0.5s ease;
+}
+
 @media screen and (min-width: 1200px) {
   .course{
     width: 200px;
@@ -233,17 +297,23 @@
     justify-content: center;
   }
 
+  .homeheader{
+    justify-content: space-between;
+  }
+
   .coolimagereverse, .coolimage{
     width: 80vw;
   }
 
-  .showcasewrapper{
+  .shwcasewrapper{
     justify-content: center;
+    /* padding: 0px; */
+    align-items: center;
   }
 
   .showcase{
     align-self: center;
-    width: 350px;
+    width: 300px;
     margin-bottom: 20px;
   }
 
@@ -266,10 +336,30 @@
 @media screen and (max-width: 556px) {
 
   .course{
-    width: 130px;
+    width: 170px;
     padding: 1px 3px;
-
   }
+
+  .headerlarge{
+    display: none;
+  }
+
+  .homenaveitem{
+    font-size: medium;
+  }
+  
+  .headersmall{
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    position: fixed;
+    right: 0;
+    width: 230px;
+    height: 100vh;
+    color: white;
+    z-index: 5;
+  }
+  
   
   .courseimg{
     margin-right: 10px;
@@ -285,5 +375,18 @@
   }
   .homehero{
     height: 500px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+
+  .course{
+    width: 150px;
+    padding: 1px 3px;
+
+  }
+  
+  .courseimg{
+    margin-right: 10px;
   }
 }

@@ -15,7 +15,7 @@ const ShowCase = ({showcase}) => {
             >
         <div className={`${styles.showcase} `}>
             <Paper>
-        <div className={`flex nowrap ${styles.showcaseinner} align-center`}>
+        <div className={`flex column  nowrap ${styles.showcaseinner} align-center`}>
             <img src="./images/one.svg" alt="" className={`${styles.showcaseimg}`} />
             <div className={`flex column`}>
                 <h3 className={`${styles.showcaseh2} font-extrabold text-indigo-700 font-medium`}>{showcase?.title}</h3>

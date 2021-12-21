@@ -106,6 +106,7 @@ const Tutorschedule = ({weeks}) => {
                     duration:10000
                   })
             } catch(err) {
+                alert(err)
                 Notification({
                     title:"ERROR",
                     message:`An Error Occured`,
@@ -179,6 +180,7 @@ const Tutorschedule = ({weeks}) => {
                     duration:10000
                   })
             } catch(err) {
+                alert(err)
                 Notification({
                     title:"Error",
                     message:`An error Occured`,
@@ -222,6 +224,7 @@ const Tutorschedule = ({weeks}) => {
                       })
                    }
                    else{
+                    alert(err)
                     Notification({
                         title:"Error",
                         message:`Lesson not found`,

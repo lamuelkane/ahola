@@ -13,11 +13,20 @@ import axios from 'axios'
 import Footer from '../components/Footer'
 import {setUser} from '../actions/User'
 import Notification from '../components/Notification';
+import Pagination from '@mui/material/Pagination'
+import Head from 'next/head'
 
 const Mytutor = () => {
     const {user, sever} = useSelector((state) => state);
     const [tutor, settutor] = useState(null)
     const router = useRouter()
+    const [pageNumber, setpageNumber] = useState(1)
+    const [productperpage, setproductperpage] = useState(5)
+    let pagesVited = (pageNumber - 1) * productperpage
+
+    const handleChange = (event, value) => {
+      setpageNumber(value)
+    };
 
     useEffect(() => {
         if(user){
@@ -29,13 +38,20 @@ const Mytutor = () => {
 
     return (
         <div>
+          <Head>
+                <title>Students</title>
+                {/* <meta name="description" content="Learn Any language with ease" /> */}
+                <link rel="icon" href="./images/logo1.png" />
+                <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
+                <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+            </Head>
             <div className="border">
                 <DashBoardHeader />
             </div>
             <Dashboardsubheader />
             <div className={`${styles.mytutorswrapper} text-sm`} style={{minHeight: '50vh'}}>
               {
-                user?.students.map(tut => (
+                user?.students.slice(pagesVited, pagesVited + 5).map(tut => (
                   <div className={`flex justify-between align-center border p-3`} key={tut.id}>
                         <div className={`flex align-center`}>
                             <div className={`margin-right`}>  <Avatar sx={{ bgcolor: deepPurple[500] }}>{tut.name.slice(0, 2)}</Avatar></div>
@@ -70,6 +86,9 @@ const Mytutor = () => {
                 ))
               }
             </div>
+            <div className='flex justify-center align-center margin-top'>
+             <Pagination count={Math.round(user?.students.length / 5)} page={pageNumber} onChange={handleChange} siblingCount={0} color="primary" />
+          </div>
             { 
               tutor && <div className={`${styles.tutordetailswrapper}`}>
                 <div className={`${styles.tutordetails}`}>

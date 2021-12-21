@@ -13,7 +13,7 @@ import { alpha } from '@mui/material';
 
 const Messagesstart = ({receiverid, setreceiverid, conversationid, setconversationid}) => {
     const [conversations, setconversations] = useState([])
-    const {user, sever} = useSelector((state) => state);
+    const {user, sever, socket} = useSelector((state) => state);
 
 
 
@@ -39,6 +39,14 @@ const Messagesstart = ({receiverid, setreceiverid, conversationid, setconversati
         if(user) getconverstions()
     }, [user])
 
+    useEffect(() => {
+        socket.on("message", data => {
+            getconverstions()
+            });
+        socket.on('getconversations', data => {
+            getconverstions()
+        })
+    }, [conversations])
 
     return (
              <div className={`${styles.messagestartwrapper} ${receiverid? 'left' : 'right'} `}>
@@ -64,10 +72,13 @@ const Messagesstart = ({receiverid, setreceiverid, conversationid, setconversati
 
                 <div className={`${styles.conversationswrapper}`}>
                     {
-                        conversations.sort((a, b) => a.lastmessage?.createdAt - b.lastmessage?.createdAt).map(con => <Conversation Onclick={e => {
+                        conversations.sort((a, b) => {
+                            let older = new Date(a.lastmessage?.createdAt).getTime()
+                                          let newer = new Date(b.lastmessage?.createdAt).getTime()
+                                          return older > newer? -1 : 1
+                        }).map(con => <Conversation Onclick={e => {
                             setconversationid(con.id)
                             setreceiverid(con.members.find(mem => mem !== user?._id))
-
                         }} active={con.id === conversationid? 'bg-gray-300' : ''} key={con._id} con={con} />)
                     }
                 </div>
