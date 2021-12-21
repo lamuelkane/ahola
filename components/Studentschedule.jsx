@@ -81,7 +81,8 @@ const Studentschedule = ({weeks}) => {
                 // console.log(day)
                 // return
                 const {data} = await axios.get(`${sever}/api/users/tutor/${tutor}`)
-                const exist = data.availiability[0][dayjs(day.day).format('dd').toLowerCase()].find(h => h == day.hour)
+                const exist = true
+                // const exist = data.availiability[0][dayjs(day.day).format('dd').toLowerCase()].find(h => h == day.hour)
                 if(exist || exist == 0){
                     settutor({
                         id: data._id,
