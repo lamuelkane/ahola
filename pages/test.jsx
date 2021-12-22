@@ -10,35 +10,32 @@ import Notification from '../components/Notification';
 import ReactNotification from "react-notifications-component";
 import axios from 'axios'
 import {setUser} from '../actions/User'
+import Header2 from '../components/Header2'
 
 
-const Header2 = () => {
+const Test = () => {
     const {weekindex, user} = useSelector((state) => state);
 
-//     const getaccuratehours2 = (lesson) => {
-//         if(lesson.toString().length == 1) {
-//           return '0' + lesson
-//         }
+    const getaccuratehours2 = (lesson) => {
+        if(lesson.toString().length == 1) {
+          return '0' + lesson
+        }
 
-//         return lesson
-// }
+        return lesson
+}
+ const getlessonintimezone = (lesson) => {
+    const month = dayjs(new Date(lesson.day.year, lesson.day.month , lesson.day.date)).format('MMM')
+    const date = dayjs(new Date(lesson.day.year, lesson.day.month , lesson.day.date)).format('DD')
+    const year = dayjs(new Date(lesson.day.year, lesson.day.month , lesson.day.date)).format('YYYY')
+    const time = getaccuratehours2(lesson?.day?.hour)
+    const les = lesson.day.day + " " + month + ' ' + date + ' ' + year + '  ' + time + ':00' +  '  ' + lesson?.timezone?.offset + ' ' + "(" + lesson?.timezone?.name + ')'
+    // console.log(dayjs('Wed Dec 22 2021 12:00  GMT+14:00 (Pacific/Kiritimati)').tz('Pacific/Kiritimati').toLocaleString())
+    console.log(les)
+    // console.log(dayjs(les).toLocaleString(), new Date(les).toLocaleString(), les)
+    // console.log(dayjs("2013-11-18 11:55").tz("America/Toronto"))
+    return new Date(les).toLocaleString()
     
-    // const getlessonintimezone = (lesson) => {
-    //     const year2 = dayjs(lesson.day.day).year()
-    //     const month2 = dayjs(lesson.day.day).month()
-    //     const day1 = dayjs(lesson.day.day).date()
-
-    //     console.log(dayjs(lesson.day.day).year(), dayjs(lesson.day.day).month(), dayjs(lesson.day.day).date())
-
-    //     const day = dayjs(new Date(year2, month2 , day1)).format('ddd')
-    //     const month = dayjs(new Date(year2, month2 , day1)).format('MMM')
-    //     const date = dayjs(new Date(year2, month2 , day1)).format('DD')
-    //     const year = dayjs(new Date(year2, month2 , day1)).format('YYYY')
-    //     const time = getaccuratehours2(lesson?.day?.hour)
-    //     const les = day + " " + month + ' ' + date + ' ' + year + ' ' + time + ':00' +  '  ' + lesson?.timezone?.offset + ' ' + "(" + lesson?.timezone?.name + ')'
-    //     return new Date(les).toLocaleString()
-    // }
-
+}
     // useEffect(() => {
     //    JSON.parse(localStorage.getItem('user'))?.lessons.map(les => {
     //        getlessonintimezone(les)
@@ -47,9 +44,13 @@ const Header2 = () => {
 
     return (
         <>
-            {new Date().toString()}
+          <Header2 />
+
+            {
+                user?.lessons.map(les => <div key={les._id}>{getlessonintimezone(les)}</div>)
+            }
         </>
     )
 }
 
-export default Header2
+export default Test
