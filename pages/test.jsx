@@ -33,7 +33,7 @@ const Test = () => {
     console.log(les)
     // console.log(dayjs(les).toLocaleString(), new Date(les).toLocaleString(), les)
     // console.log(dayjs("2013-11-18 11:55").tz("America/Toronto"))
-    return new Date(les).toLocaleString()
+    return new Date(les).toString()
     
 }
     // useEffect(() => {
