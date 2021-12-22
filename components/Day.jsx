@@ -16,7 +16,7 @@ const Day = ({day, rowindx, row, hours}) => {
     }
 
     const geteventclass = (day, hour) => {
-         let les = user?.lessons.find(e => new Date(getlessonintimezone(e)).getDate() == new Date(day.toISOString()).getDate() &&  new Date(getlessonintimezone(e)).getHours() == hour)
+         let les = user?.lessons.find(e => new Date(getlessonintimezone(e)).getDate() == day.date() &&  new Date(getlessonintimezone(e)).getHours() == hour)
          if(les){
           if(new Date(getlessonintimezone(les)).getTime() < new Date().getTime()) {
             if(les.confirmed){
@@ -69,7 +69,7 @@ const Day = ({day, rowindx, row, hours}) => {
                     })
                     dispatch(showeventmodalaction())
                 }} className={`text-xs font-thin ps text-opacity-5 p-6 my-1 text-center`}>
-                      {geteventname(day, i) || h}
+                      {geteventname(day, i) || new Date().getTime()}
                   </p>
             </div>  
         )) 
