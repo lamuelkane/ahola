@@ -69,7 +69,7 @@ const Day = ({day, rowindx, row, hours}) => {
                     })
                     dispatch(showeventmodalaction())
                 }} className={`text-xs font-thin ps text-opacity-5 p-6 my-1 text-center`}>
-                      {geteventname(day, i) || new Date().getTime()}
+                      {geteventname(day, i) || h}
                   </p>
             </div>  
         )) 

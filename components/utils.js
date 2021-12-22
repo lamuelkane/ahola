@@ -1,5 +1,7 @@
 import dayjs from 'dayjs';
 import day from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
 
 
 export function getMonth(month = dayjs().month()) {
@@ -21,18 +23,23 @@ export function getMonth(month = dayjs().month()) {
 }
 
 export const getlessonintimezone = (lesson) => {
-    // const year2 = dayjs(lesson.day.day).year()
-    // const month2 = dayjs(lesson.day.day).month()
-    // const day1 = dayjs(lesson.day.day).date()
+   
+    dayjs.extend(utc)
+    dayjs.extend(timezone)
+
     
     // const day = dayjs(new Date(lesson.day.year, lesson.day.month , lesson.day.date)).format('ddd')
     const month = dayjs(new Date(lesson.day.year, lesson.day.month , lesson.day.date)).format('MMM')
     const date = dayjs(new Date(lesson.day.year, lesson.day.month , lesson.day.date)).format('DD')
     const year = dayjs(new Date(lesson.day.year, lesson.day.month , lesson.day.date)).format('YYYY')
     const time = getaccuratehours2(lesson?.day?.hour)
-    const les = lesson.day.day + " " + month + ' ' + date + ' ' + year + ' ' + time + ':00' +  '  ' + lesson?.timezone?.offset + ' ' + "(" + lesson?.timezone?.name + ')'
-    console.log(new Date(les).toLocaleString())
+    const les = lesson.day.day + " " + month + ' ' + date + ' ' + year + '  ' + time + ':00' +  '  ' + lesson?.timezone?.offset + ' ' + "(" + lesson?.timezone?.name + ')'
+    // console.log(dayjs('Wed Dec 22 2021 12:00  GMT+14:00 (Pacific/Kiritimati)').tz('Pacific/Kiritimati').toLocaleString())
+    console.log(les)
+    // console.log(dayjs(les).toLocaleString(), new Date(les).toLocaleString(), les)
+    // console.log(dayjs("2013-11-18 11:55").tz("America/Toronto"))
     return new Date(les).toLocaleString()
+    
 }
 
 
