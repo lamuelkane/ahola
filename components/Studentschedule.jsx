@@ -58,7 +58,7 @@ const Studentschedule = ({weeks}) => {
                 }
             </select>
         <div className="bg-blue-50 text-xs margin padding items-center flex justify-between p-3">
-           Schedule new lesson for {day.day}
+           Schedule new lesson for {day.daystring}
            {/* Schedule new lesson for {getlessoninactualtime2(lesson)} */}
         </div>
         <button onClick={async(e) => 
@@ -78,7 +78,7 @@ const Studentschedule = ({weeks}) => {
                     return
                 }
             try{
-                // console.log(day)
+                console.log(day)
                 // return
                 const {data} = await axios.get(`${sever}/api/users/tutor/${tutor}`)
                 const exist = true

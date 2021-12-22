@@ -10,7 +10,7 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import {useRouter} from 'next/router'
 import Link from 'next/link'
 
-const DashBoardHeader = () => {
+const  DashBoardHeader = () => {
     const dispatch = useDispatch()
     const {user, sever, socket} = useSelector((state) => state);
     const router = useRouter()
@@ -99,16 +99,13 @@ const DashBoardHeader = () => {
                               </Menu.Item>
                             ))}
                             <Menu.Item>
-                                {({ active }) => (
-                                  <div className={
--                                    'block px-4 py-2 ml-3 margin-left text-sm textgray-700'
-                                  } onClick={e => {
-                                    dispatch(removeUser())
+                                  <div className={'block px-4 py-2 ml-3 margin-left text-sm textgray-700 cursor-pointer pointer'} onClick={e => {
+                                    // dispatch(removeUser())
+                                    localStorage.removeItem('user')
                                     router.push('/')
                                   }}>
-                                   Sign out
+                                   Sign outs
                                   </div>
-                                )}
                               </Menu.Item>
                           </Menu.Items>
                         </Transition>

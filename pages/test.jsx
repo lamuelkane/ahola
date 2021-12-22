@@ -13,84 +13,41 @@ import {setUser} from '../actions/User'
 
 
 const Header2 = () => {
-    const [show, setshow] = useState(false)
-    const [courses, setcourses] = useState([])
-    const {user, sever} = useSelector((state) => state);
-     const dispatch = useDispatch()
+    const {weekindex, user} = useSelector((state) => state);
+
+    const getaccuratehours2 = (lesson) => {
+        if(lesson.toString().length == 1) {
+          return '0' + lesson
+        }
+
+        return lesson
+}
+    
+    const getlessonintimezone = (lesson) => {
+        const year2 = dayjs(lesson.day.day).year()
+        const month2 = dayjs(lesson.day.day).month()
+        const day1 = dayjs(lesson.day.day).date()
+
+        console.log(dayjs(lesson.day.day).year(), dayjs(lesson.day.day).month(), dayjs(lesson.day.day).date())
+
+        const day = dayjs(new Date(year2, month2 , day1)).format('ddd')
+        const month = dayjs(new Date(year2, month2 , day1)).format('MMM')
+        const date = dayjs(new Date(year2, month2 , day1)).format('DD')
+        const year = dayjs(new Date(year2, month2 , day1)).format('YYYY')
+        const time = getaccuratehours2(lesson?.day?.hour)
+        const les = day + " " + month + ' ' + date + ' ' + year + ' ' + time + ':00' +  '  ' + lesson?.timezone?.offset + ' ' + "(" + lesson?.timezone?.name + ')'
+        return new Date(les).toLocaleString()
+    }
 
     useEffect(() => {
-        if(!user) {
-          dispatch(setUser(sever))
-        }
+       JSON.parse(localStorage.getItem('user'))?.lessons.map(les => {
+           getlessonintimezone(les)
+       })
     }, [user])
-
-
-    const getsubjects = async() => {
-        try {
-          const {data} = await axios.get(`${sever}/api/users/subjects`)
-          setcourses(data)
-        } catch (error) {
-          Notification({
-            title:"Error",
-            message:`an error ocurred while saving conversation`,
-            type:"danger",
-            container:"top-right",
-            insert:"top",
-            animationIn:"fadeInUp",
-            animationOut:"fadeOut",
-            duration:10000
-          })
-        }
-      }
-
-        useEffect(() => {
-            getsubjects()
-        }, [])
 
     return (
         <>
-        <div className={`flex align-center ${styles.homeheader}`}>
-            <div>
-                <img src="./images/logo.png" alt=""  className={`${styles.homeimg} pointer`} />
-            </div>
-            <div className={`${styles.headerlarge} text-gray-500`}>
-                <span className={`${styles.homenaveitem} ${styles.coursesholder}`}>
-                    <Link href='/tutors'>tutors</Link>
-                    <div className={`${styles.courses} bg-gray-500`}>
-                        {
-                            courses.map(sub =>  <span className={`text-gray-100 text-sm`}><Link href={`tutors?teach=${sub.subject}&&country=all&&lp=0&&hp=100`} key={sub._id}>{sub.subject}</Link></span>)
-                        }
-                    </div>
-                </span>
-                <span className={`${styles.homenaveitem}`}><Link href='/tutor_register'>register</Link></span>
-                <span className={`${styles.homenaveitem}`}><Link href='/student_register'>courses</Link></span>
-                <span className={`${styles.homenaveitem}`}><Link href='/login'>login</Link></span>
-            </div>
-            {!show ? <div className={`hide showxs pointer`} onClick={e => setshow(true)}>
-                <ReorderIcon />
-            </div> :
-            <div className={`hide showxs pointer`} onClick={e => setshow(false)}>
-                <CloseIcon />
-            </div> }
-        </div>
-            <div className={`${styles.headersmall} bg-gray-500  ${show ? 'showsidebar' : 'sidebar'}`}>
-                <soan className={`${styles.homenaveitem}`}><Link href='/tutors'>Tutors</Link></soan>
-                <span className={`${styles.homenaveitem}`}><Link href='/tutor_register'>Register</Link></span>
-                <span className={`${styles.homenaveitem}`}><Link href='/login'>Login</Link></span>
-                <span className={`${styles.homenaveitem} text-indigo-700`}>Feature Languages</span>
-                {
-                courses.filter(course => course.type === 'lang').slice(0, 6).map(co => <span className={`${styles.homenaveitems} margin-left text-gray-200 text-sm`}><Link href={`tutors?teach=${co.subject}&&country=all&&lp=0&&hp=100`}>{co.subject}</Link></span>)
-                }
-                <span className={`${styles.homenaveitem} text-indigo-700`}>Feature Subjects</span>
-                {
-                courses.filter(course => course.type === 'subj').slice(0, 6).map(co => <span className={`${styles.homenaveitems} margin-left text-gray-200 text-sm`}><Link href={`tutors?teach=${co.subject}&&country=all&&lp=0&&hp=100`}>{co.subject}</Link></span>)
-                }
-                <span className={`${styles.homenaveitem} text-indigo-700`}>Feature Skills</span>
-                {
-                courses.filter(course => course.type === 'skill').slice(0, 6).map(co => <span className={`${styles.homenaveitems} margin-left text-gray-200 text-sm`}><Link href={`tutors?teach=${co.subject}&&country=all&&lp=0&&hp=100`}>{co.subject}</Link></span>)
-                }
-            </div>
-        <ReactNotification />
+                test
         </>
     )
 }

@@ -21,18 +21,20 @@ export function getMonth(month = dayjs().month()) {
 }
 
 export const getlessonintimezone = (lesson) => {
-    const year2 = dayjs(lesson.day.day).year()
-    const month2 = dayjs(lesson.day.day).month()
-    const day1 = dayjs(lesson.day.day).date()
+    // const year2 = dayjs(lesson.day.day).year()
+    // const month2 = dayjs(lesson.day.day).month()
+    // const day1 = dayjs(lesson.day.day).date()
     
-    const day = dayjs(new Date(year2, month2 , day1)).format('ddd')
-    const month = dayjs(new Date(year2, month2 , day1)).format('MMM')
-    const date = dayjs(new Date(year2, month2 , day1)).format('DD')
-    const year = dayjs(new Date(year2, month2 , day1)).format('YYYY')
+    // const day = dayjs(new Date(lesson.day.year, lesson.day.month , lesson.day.date)).format('ddd')
+    const month = dayjs(new Date(lesson.day.year, lesson.day.month , lesson.day.date)).format('MMM')
+    const date = dayjs(new Date(lesson.day.year, lesson.day.month , lesson.day.date)).format('DD')
+    const year = dayjs(new Date(lesson.day.year, lesson.day.month , lesson.day.date)).format('YYYY')
     const time = getaccuratehours2(lesson?.day?.hour)
-    const les = day + " " + month + ' ' + date + ' ' + year + ' ' + time + ':00' +  '  ' + lesson?.timezone?.offset + ' ' + "(" + lesson?.timezone?.name + ')'
+    const les = lesson.day.day + " " + month + ' ' + date + ' ' + year + ' ' + time + ':00' +  '  ' + lesson?.timezone?.offset + ' ' + "(" + lesson?.timezone?.name + ')'
+    console.log(new Date(les).toLocaleString())
     return new Date(les).toLocaleString()
 }
+
 
 export const getlessoninactualtime3 = (day, hour) => {
     const year = day.year()

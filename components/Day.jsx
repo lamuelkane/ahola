@@ -15,14 +15,9 @@ const Day = ({day, rowindx, row, hours}) => {
         return day.format('DD-MM-YY') === dayjs().format('DD-MM-YY') ? parseInt(dayjs().format('HH')) == index ? 'text-red-700 border-dashed border-2 border-red-600' : ' border-grey-200' : ' border-grey-200'
     }
 
-  useEffect(() => {
-    console.log(user?.lessons[0]?.day)
-  }, [user])
-
     const geteventclass = (day, hour) => {
          let les = user?.lessons.find(e => new Date(getlessonintimezone(e)).getDate() == new Date(day.toISOString()).getDate() &&  new Date(getlessonintimezone(e)).getHours() == hour)
          if(les){
-          alert('lesson found')
           if(new Date(getlessonintimezone(les)).getTime() < new Date().getTime()) {
             if(les.confirmed){
               return 'bg-blue-900  hover:bg-blue-900'
@@ -62,9 +57,13 @@ const Day = ({day, rowindx, row, hours}) => {
                     }
                     dispatch({
                       type: 'SET_DAY',
-                      payload: {
-                        day: getlessoninactualtime3(day, i),
+                      payload:{
+                        day: day.format('ddd'),
+                        date: day.date(),
+                        month: day.month(),
+                        year: day.year(),
                         hour: i,
+                        daystring: getlessoninactualtime3(day, i),
                         exist: les?.id || false
                       }
                     })
