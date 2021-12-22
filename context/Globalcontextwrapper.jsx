@@ -59,8 +59,8 @@ const reducers = combineReducers({
     events:Eventreducer,
     user:User,
     eventday:EventDayreducer,
-    sever:() => 'https://aholasever.herokuapp.com',
-    // sever : () => 'http://localhost:5000',
+    // sever:() => 'https://aholasever.herokuapp.com',
+    sever : () => 'http://localhost:5000',
     // sever2:() => 'http://localhost:5001',
     sever2: () => 'https://aholaimageupload.herokuapp.com',
     socket: () => io('ws://aholasocket.herokuapp.com')

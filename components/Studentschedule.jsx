@@ -29,7 +29,6 @@ const Studentschedule = ({weeks}) => {
         rate
     }
 
-
     return !day?.exist ? ( <form className={`bg-white ontop rounded-lg shadow-2xl w-1/4 minw`}>
     <header className={`bg-gray-50 px-4 py-2 flex justify-between items-center`}>
         <span className={`text-gray-400`}>lesson</span>
@@ -78,8 +77,6 @@ const Studentschedule = ({weeks}) => {
                     return
                 }
             try{
-                console.log(day)
-                // return
                 const {data} = await axios.get(`${sever}/api/users/tutor/${tutor}`)
                 const exist = true
                 // const exist = data.availiability[0][dayjs(day.day).format('dd').toLowerCase()].find(h => h == day.hour)
@@ -127,7 +124,6 @@ const Studentschedule = ({weeks}) => {
                       })
                 }
             } catch(err) {
-                alert(err)
                 Notification({
                     title:"Error",
                     message:`An error occured`,
@@ -156,12 +152,14 @@ const Studentschedule = ({weeks}) => {
     </header>
     <div className={`p-3`}>
     <div className="bg-blue-50 text-sm margin padding items-center flex justify-between p-3">
-           current lesson time {getlessonintimezone(student.lessons.find(les => les.id === day.exist))}
+           current lesson time {new Date(getlessonintimezone(student?.lessons.find(les => les.id === day.exist))).toLocaleString()}
         </div>
         <div className="bg-blue-50 items-center flex justify-between p-3">
         <select name="" id="" className={`text-sm`} onChange={e => {
-                // day.day = e.target.value
-                day.day = getlessoninactualtime3(dayjs(e.target.value), day.hour)
+            day.day = dayjs(e.target.value).format('ddd')
+            day.date = dayjs(e.target.value).date()
+            day.month = dayjs(e.target.value).month()
+            day.year = dayjs(e.target.value).year()
             }}>
                 {weeks.map((d, i) => (
                     <option key={i} value={d}>{dayjs(d).format('dd')}-{dayjs(d).format('DD')}</option>

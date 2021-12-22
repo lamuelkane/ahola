@@ -60,7 +60,7 @@ const Tutorschedule = ({weeks}) => {
                 }
             </select>
         <div className="bg-blue-50 items-center margin text-sm flex justify-between p-3">
-           Schedule new lesson for {day.day} 
+           Schedule new lesson for {day.daystring} 
         </div>
         <button onClick={async(e) => 
             {e.preventDefault()
@@ -78,8 +78,6 @@ const Tutorschedule = ({weeks}) => {
                     return
                 }
             try{
-                console.log(lesson, day)
-                // return
                 const {data} = await axios.get(`${sever}/api/users/student/${student.id}`)
                 setstudent({
                     id: data._id,
@@ -133,11 +131,14 @@ const Tutorschedule = ({weeks}) => {
     </header>
     <div className={`p-3`}>
             <div className="bg-blue-50 text-sm margin padding items-center flex justify-between p-3">
-                current lesson time {getlessonintimezone(tutor.lessons.find(les => les.id === day.exist))}
+                current lesson time {new Date(getlessonintimezone(tutor.lessons.find(les => les.id === day.exist))).toLocaleString()}
                 </div>
         <div className="bg-blue-50 items-center flex justify-between p-3">
         <select name="" className={`text-sm`} id="" onChange={e => {
-                 day.day = getlessoninactualtime3(dayjs(e.target.value), day.hour)
+                 day.day = dayjs(e.target.value).format('ddd')
+                 day.date = dayjs(e.target.value).date()
+                 day.month = dayjs(e.target.value).month()
+                 day.year = dayjs(e.target.value).year()
             }}>
                 {weeks.map((d, i) => (
                     <option key={i} value={d}>{dayjs(d).format('dd')}-{dayjs(d).format('DD')}</option>
@@ -156,12 +157,9 @@ const Tutorschedule = ({weeks}) => {
             try{
                 const les = tutor?.lessons.find(les => les.id == day.exist)
                 les.day = day
-                console.log(day, les.day)
-                // return
                 les.timezone = tutor.timezone
                 const {data} = await axios.get(`${sever}/api/users/student/${les.student.id}`)
                 data.lessons.find(l => l.id == les.id).day = day
-                
                 const {data: res} = await axios.post(`${sever}/api/users/student/update`, data)
                 const {data: dat} = await axios.post(`${sever}/api/users/tutor/update`, tutor)
                 await axios.post(`${sever}/api/users/lessonrescheduled`, {
@@ -224,7 +222,6 @@ const Tutorschedule = ({weeks}) => {
                       })
                    }
                    else{
-                    alert(err)
                     Notification({
                         title:"Error",
                         message:`Lesson not found`,

@@ -35,9 +35,9 @@ const CalenderHeader = () => {
             </button>
             <div>
                  { getnextlesson()?<div className={`flex text-xs align-center`}>  <h3 className={`margin-right`}>Next lesson </h3>
-                    <div className="margin-right text-xs text-indigo-500">{getlessonintimezone(getnextlesson())}</div>
+                    <div className="margin-right text-xs text-indigo-500">{new Date(getlessonintimezone(getnextlesson())).toLocaleString()}</div>
                      { new Date(getlessonintimezone(getnextlesson())).getTime() - new Date().getTime() < 300000 && <button onClick={e => {
-                         console.log(new Date(getlessonintimezone(getnextlesson())).getTime() - new Date().getTime())
+                        //  console.log(new Date(getlessonintimezone(getnextlesson())).getTime() - new Date().getTime())
                      }} className="border rounded py-2 px-4 mr-5">
                          <a href={`https://aholalessons.netlify.app?id=${getnextlesson().id}&&user=${user?.firstname}`} rel='noreferrer' target="_blank" >Join lesson </a>
                     </button> } </div> 
