@@ -59,6 +59,13 @@ export default function Example() {
     return str.split("").reverse().join("");
 }
 
+const checkvideolink = (link) => {
+  if (link?.includes('youtube.com')) {
+      return true
+  }
+  return false
+}
+
 const submitrequest = async(e) => {
   e.preventDefault()
   if(!video || description?.length < 300 || !photo) {
@@ -182,14 +189,13 @@ let sendimage = async(e) => {
                 <title>Register</title>
                 <meta name="description" content="Become a tutor on Ahola" />
                 <link rel="icon" href="./images/logo1.png" />
-                <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
-                <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+                <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
             </Head>
     <div className="border"><Header2 /></div>
-        <div className={`center margin-bottom bg-gray-400 py-10`}>
-                <h2 className={`text-2xl text-indigo-700`}>become a Tutor on Ahola</h2> or
+        <div className={`center margin-bottom bg-gray-700 py-10`}>
+                <h2 className={`text-2xl text-indigo-700`}>Become a Tutor on Ahola</h2> or
                 <div className={`text-indigo-700`}>
-                  <Link href='/student_register' > become a student</Link>
+                  <Link href='/student_register' > Become a student</Link>
                 </div>
                 <p className={`text-sm`}>Create your very own tutor account with Ahola and start earning from home</p>
         </div>
@@ -197,7 +203,7 @@ let sendimage = async(e) => {
         <div className="md:grid md:grid-cols-3 md:gap-6">
           <div className="md:col-span-1">
             <div className="px-4 sm:px-0">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">Profile</h3>
+              <h3 className="text-lg font-medium margin-left leading-6 text-gray-900">Profile</h3>
               <p className="mt-1 text-sm text-gray-600">
                 
               </p>
@@ -222,9 +228,9 @@ let sendimage = async(e) => {
                           setvideo(e.target.value)
                           clearTimeout(typing)
                           const {value} = e.target
-                          let str = reverseString(value)
+                          let str =  reverseString(value)
                                                               
-                          let sub = str.substring(0, str.indexOf("="))
+                          let sub = checkvideolink(e.target.value) ? str.substring(0, str.indexOf("=")) : str.substring(0, str.indexOf("/"))
                           let typing = setTimeout(() => {
                              setvideolink(reverseString(sub))
                           }, 3000);
@@ -243,7 +249,7 @@ let sendimage = async(e) => {
                     <label className="block text-sm font-medium text-gray-700 mb-3">Video preview</label>
                     <div className={`${styles.videopreview}`}>
                     {  !videolink ? <span>paste link to view video here</span> : <iframe className={`${styles.videopreviewiframe}`}
-                          src={`https://www.youtube.com/embed/${videolink}`}>
+                         src={`${ checkvideolink(video)? `https://www.youtube.com/embed/${videolink}` : `https://player.vimeo.com/video/${videolink}`}`}>
                           </iframe>
                             }
                     </div>

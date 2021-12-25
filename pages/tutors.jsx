@@ -3,7 +3,7 @@ import Tutorprofile from '../components/Tutorprofile'
 import styles from '../styles/Tutor.module.css'
 import Pagination from '@mui/material/Pagination'
 import {countries} from '../components/lists'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import React, { useMemo } from 'react'
 import countryList from 'react-select-country-list'
 import { useSelector } from 'react-redux';
@@ -50,6 +50,7 @@ const Tutors = () => {
     const [pageNumber, setpageNumber] = useState(1)
     const [productperpage, setproductperpage] = useState(2)
     let pagesVited = (pageNumber - 1) * productperpage
+    const totop = useRef()
 
 
   const getsubjects = async() => {
@@ -72,6 +73,7 @@ const Tutors = () => {
 
   const handleChange = (event, value) => {
     setpageNumber(value)
+    totop.current.scrollIntoView({behavior: 'smooth'})
   };
 
   useEffect(() => {
@@ -90,6 +92,7 @@ const Tutors = () => {
           settutors(data)
           setloading(false)
         } catch (error) {
+          setloading(false)
           Notification({
             title:"Error",
             message:`An error occured while getting tutors`,
@@ -113,8 +116,7 @@ const Tutors = () => {
             <title>Ahola Tutors</title>
             <meta name="description" content="The right Tutor always makes a difference" />
             <link rel="icon" href="./images/logo1.png" />
-            <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-            <script type="text/javascript" id="hs-script-loader" defer src="/translate.js"></script> 
+            <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
           </Head>
           <Tutorpopup open={open} setOpen={setOpen} teacher={teach} />
           <div className="border">
@@ -122,8 +124,8 @@ const Tutors = () => {
           </div>
           <div className={`bg-gray-100`}>
           <div className={`center bg-gray-700 ${styles.tuttorshero}`}>
-            <h2 className={`text-2xl text-white`}>Find the best tutor for you</h2>
-            <p className={`text-sm text-white`}>Find the best English teacher for you: choose from our experienced English teachers online and get the best learning experience.</p>
+            <h2 className={`text-2xl text-white margin-bottom`}>Find the best tutor for you</h2>
+            <p className={`text-sm text-white`}>Find the best teacher for you: choose from our experienced teachers online and get the best learning experience.</p>
           </div>
           <div className="flex wrap justify-center margin-y align-center">
           <select name="" id="" className={`margin-right margin-top`} onChange={e => {
@@ -167,7 +169,7 @@ const Tutors = () => {
               return
             }
             setsubject(e.target.value)
-          }}>
+          }} ref={totop}>
                 <option >Tutor Teaches</option>
                 {
                   subjects.map(sub => <option >{sub.subject}</option>)
@@ -179,7 +181,7 @@ const Tutors = () => {
           <div className={`flex justify-center align-center`}>
             <div className={`flex justify-center align-center ${styles.tutorprofileswraper} column w-4/5`}>
                {
-                loading? <h3>Loading tutors...</h3> : tutors.length < 1 ? <h3>No tutor available</h3> : tutors.slice(pagesVited, pagesVited + 2).map((teacher, i) => (
+                loading? <h3>Loading tutors...</h3> : tutors.length < 1 ? <h3>No tutor available</h3> : tutors.filter(tut => !tut.hidden).slice(pagesVited, pagesVited + 2).map((teacher, i) => (
                   <Tutorprofile key={i} open={open} teacher={teacher} setOpen={setOpen} setteacher={setteacher} />
                 )) 
                }

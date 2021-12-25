@@ -146,8 +146,7 @@ const submitrequest2 = async() => {
                 <title>Student Profile</title>
                 {/* <meta name="description" content="Learn Any language with ease" /> */}
                 <link rel="icon" href="./images/logo1.png" />
-                <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
-                <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+                <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
             </Head>
             <div className="border">
                  <DashBoardHeader />
@@ -235,16 +234,13 @@ const submitrequest2 = async() => {
       <div>
           <Head>
                 <title>Tutor's Profile</title>
-                {/* <meta name="description" content="Learn Any language with ease" /> */}
                 <link rel="icon" href="./images/logo1.png" />
-                <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
-                <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+                <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
             </Head>
           <div className="border">
                <DashBoardHeader />
           </div>
           <Dashboardsubheader />
-
           <div className="bg-white w-80 margin-auto margin-top shadow overflow-hidden sm:rounded-lg">
                 <div className="px-4 py-5 sm:px-6">
                   <h3 className="text-lg leading-6 font-medium text-gray-900">Your Profile Information</h3>

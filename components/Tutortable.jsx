@@ -61,31 +61,65 @@ import Notification from './Notification';
                           view
                         </Link>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      { 
+                        !tutor?.hidden? <td className="px-6 py-4 whitespace-nowrap">
                         <span className="px-2 pointer inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-green-800"
                         onClick={async(e) => {
-                          Notification({
-                            title:"THIS IS TO BE DONE",
-                            message:`I will add this functionality in the future`,
-                            type:"info",
-                            container:"top-right",
-                            insert:"top",
-                            animationIn:"fadeInUp",
-                            animationOut:"fadeOut",
-                            duration:10000
-                          })
-                        //   try {
-                        //     await axios.get(`${sever}/api/users/registeredtutor/delete/${tutor._id}`)
-                        //     alert('everything went fine')
-                        //     gettutors()
-                        //   } catch (error) {
-                        //     alert('an error occured')
-                        //   }
+                          const {_id, hidden} = tutor
+                          try {
+                            await axios.post(`${sever}/api/users/tutor/update`, {_id, hidden: true})
+                            gettutors()
+                          } catch (error) {
+                            Notification({
+                              title:"ERROR",
+                              message:`An error occured`,
+                              type:"danger",
+                              container:"top-right",
+                              insert:"top",
+                              animationIn:"fadeInUp",
+                              animationOut:"fadeOut",
+                              duration:10000
+                            })                 
+                          }
                         }}
                         >
                           HIDE
                         </span>
+                      </td> : <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-2 pointer inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-green-800"
+                        onClick={async(e) => {
+                          try {
+                            tutor.hidden = false
+                            await axios.post(`${sever}/api/users/tutor/update`, tutor)
+                            Notification({
+                              title:"SUCCESS",
+                              message:`tutor profile is now live`,
+                              type:"success",
+                              container:"top-right",
+                              insert:"top",
+                              animationIn:"fadeInUp",
+                              animationOut:"fadeOut",
+                              duration:10000
+                            })
+                            gettutors()
+                          } catch (error) {
+                            Notification({
+                              title:"ERROR",
+                              message:`An error occured`,
+                              type:"danger",
+                              container:"top-right",
+                              insert:"top",
+                              animationIn:"fadeInUp",
+                              animationOut:"fadeOut",
+                              duration:10000
+                            })                 
+                          }
+                        }}
+                        >
+                          UNHIDE
+                        </span>
                       </td>
+                      }
                     </tr>
                   ))}
                 </tbody>

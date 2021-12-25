@@ -57,6 +57,13 @@ export default function Tutordetails({teacher}) {
     setValue(index);
   };
 
+  const checkvideolink = (link) => {
+    if (link?.includes('youtube.com')) {
+        return true
+    }
+    return false
+  }
+
   const week = [
     '',
     'mo',
@@ -103,7 +110,7 @@ export default function Tutordetails({teacher}) {
 
 const tutorvideo = () => {
   let str = reverseString(teacher.video)
-  let sub = str.substring(0, str.indexOf("="))
+  let sub = checkvideolink(teacher.video) ? str.substring(0, str.indexOf("=")) : str.substring(0, str.indexOf("/"))
   return reverseString(sub)
 }
 
@@ -145,7 +152,7 @@ const tutorvideo = () => {
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
                     <iframe width="350" height="215"
-            src={`https://www.youtube.com/embed/${tutorvideo()}`}>
+            src={`${ checkvideolink(teacher.video)? `https://www.youtube.com/embed/${tutorvideo()}` : `https://player.vimeo.com/video/${tutorvideo()}`}`}>
             </iframe>
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>

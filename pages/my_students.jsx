@@ -11,7 +11,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import {getlessonintimezone, checklessonstate} from '../components/utils'
 import axios from 'axios'
 import Footer from '../components/Footer'
-import {setUser} from '../actions/User'
 import Notification from '../components/Notification';
 import Pagination from '@mui/material/Pagination'
 import Head from 'next/head'
@@ -40,10 +39,8 @@ const Mytutor = () => {
         <div>
           <Head>
                 <title>Students</title>
-                {/* <meta name="description" content="Learn Any language with ease" /> */}
                 <link rel="icon" href="./images/logo1.png" />
-                <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
-                <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+                <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
             </Head>
             <div className="border">
                 <DashBoardHeader />
@@ -95,13 +92,13 @@ const Mytutor = () => {
                     <div className={`${styles.tutordetailsclose} pointer`} onClick={e => settutor(null)}>
                       <CloseIcon />
                     </div>
-                    <h1 className={`margin-left margin-top center text-xl`}>See more information about you and tutor {tutor.firstname}</h1>
+                    <h1 className={`margin-left margin-top center text-xl`}>See more information about you and student {tutor.firstname}</h1>
                     <div className={`${styles.tutorlessonwrapper} text-sm`}>
                     {
                       user?.lessons.filter(les => les.student.id === tutor._id).map(tut => (
                         <div className={`flex justify-between align-center border p-3`} key={tut.id}>
                               <div className={`flex align-center`}>
-                                  <div className={`margin-right`}>{getlessonintimezone(tut)} { '    ' }      at $ {tut.rate.toFixed(2)} </div>
+                                  <div className={`margin-right`}>{new Date(getlessonintimezone(tut)).toLocaleString()} { '    ' }      at $ {tut.rate.toFixed(2)} </div>
                               </div>
                               <div className={`flex`}>
                                   <div className={`margin-right`}>

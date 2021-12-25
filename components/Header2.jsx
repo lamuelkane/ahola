@@ -32,7 +32,7 @@ const Header2 = () => {
         } catch (error) {
           Notification({
             title:"Error",
-            message:`an error ocurred while saving conversation`,
+            message:`an error ocurred while getting courses`,
             type:"danger",
             container:"top-right",
             insert:"top",
@@ -62,9 +62,9 @@ const Header2 = () => {
                         }
                     </div>
                 </span>
-                <span className={`${styles.homenaveitem}`}><Link href='/tutor_register'>register</Link></span>
-                <span className={`${styles.homenaveitem}`}><Link href='/student_register'>courses</Link></span>
-                <span className={`${styles.homenaveitem}`}><Link href='/login'>login</Link></span>
+                <span className={`${styles.homenaveitem}`}><Link href='/student_register'>register</Link></span>
+                <span className={`${styles.homenaveitem}`}><Link href='/studentlogin'>Student login</Link></span>
+                <span className={`${styles.homenaveitem}`}><Link href='/login'>Tutor login</Link></span>
             </div>
             {!show ? <div className={`hide showxs pointer`} onClick={e => setshow(true)}>
                 <ReorderIcon />
@@ -75,8 +75,10 @@ const Header2 = () => {
         </div>
             <div className={`${styles.headersmall} bg-gray-500  ${show ? 'showsidebar' : 'sidebar'}`}>
                 <soan className={`${styles.homenaveitem}`}><Link href='/tutors'>Tutors</Link></soan>
-                <span className={`${styles.homenaveitem}`}><Link href='/tutor_register'>Register</Link></span>
-                <span className={`${styles.homenaveitem}`}><Link href='/login'>Login</Link></span>
+                <span className={`${styles.homenaveitem}`}><Link href='/student_register'>Register</Link></span>
+                <span className={`${styles.homenaveitem}`}><Link href='/tutor_register'>Become a Tutor</Link></span>
+                <span className={`${styles.homenaveitem}`}><Link href='/studentlogin'>Student login</Link></span>
+                <span className={`${styles.homenaveitem}`}><Link href='/login'>Tutor login</Link></span>
                 <span className={`${styles.homenaveitem} text-indigo-700`}>Feature Languages</span>
                 {
                 courses.filter(course => course.type === 'lang').slice(0, 6).map(co => <span className={`${styles.homenaveitems} margin-left text-gray-200 text-sm`}><Link href={`tutors?teach=${co.subject}&&country=all&&lp=0&&hp=100`}>{co.subject}</Link></span>)

@@ -19,9 +19,6 @@ import Notification from './Notification';
       setpageNumber(value)
     };
 
-    
-    
-
     return (
       <div className="flex flex-col">
         {/* <Popup text={`please confirm that you want to delete this tutor profile`}  /> */}
@@ -107,7 +104,7 @@ import Notification from './Notification';
                           } catch (error) {
                             Notification({
                               title:"Error",
-                              message:`an error ocurred while getting registered tutors`,
+                              message:`an error ocurred`,
                               type:"danger",
                               container:"top-right",
                               insert:"top",
@@ -127,8 +124,8 @@ import Notification from './Notification';
                           try {
                             await axios.get(`${sever}/api/users/registeredtutor/delete/${tutor._id}`)
                             Notification({
-                              title:"USER DELETED SUCCESSFULLY",
-                              message:`an error ocurred while getting registered tutors`,
+                              title:"USER REJECTED SUCCESSFULLY",
+                              message:`You have succesfully rejected applicant information`,
                               type:"success",
                               container:"top-right",
                               insert:"top",

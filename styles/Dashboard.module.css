@@ -8,6 +8,23 @@
     transition: all .5s ease;
 }
 
+.course{
+    border-bottom: 1px solid black;
+    min-width: 300px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.coursename{
+    /* min-width: 150px; */
+}
+.coursebtn{
+    padding: 5px 20px;
+    color: white;
+}
+
+
+
 .mainsignupwrapper{
     width:70%;
     margin: 30px  auto;      

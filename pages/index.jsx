@@ -1,17 +1,16 @@
 
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import Header from '../components/Header'
 import Homehero from '../components/Homehero'
 import Course from '../components/Course'
 import ShowCase from '../components/ShowCase'
-import { Carousel } from '@trendyol-js/react-carousel';
 import { AnnotationIcon, GlobeAltIcon, LightningBoltIcon, ScaleIcon } from '@heroicons/react/outline'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import Notification from '../components/Notification';
 import Footer from '../components/Footer'
+import Link from 'next/link'
 
 const features = [
   {
@@ -49,6 +48,10 @@ const showcase = [
     text: 'Have 1-on-1 lessons with our proven best Tutors and attain your goals in no time',
   }, 
   { 
+    title: '1-on-many lessons with experts',
+    text: 'Have group lessons with a best Tutors and attain your goals in no time',
+  }, 
+  { 
     title: 'Exam preparation',
     text: 'your desired score in exams like IELTS, TOEFL, DELF and many more, in just one bold step',
   }, 
@@ -64,18 +67,18 @@ const showcase = [
     title: 'Conversation Practice',
     text: 'Speak confidently about topics you love and reach fluency through conversation',
   },
-  // { 
-  //   title: 'Adaptive Learning',
-  //   text: 'Learn from the confort of your home, job, whereever! and still the best learning experience',
-  // },
+  { 
+    title: 'Adaptive Learning',
+    text: 'Learn from the confort of your home, job, whereever! and still have the best learning experience',
+  },
   { 
     title: 'English for Kids',
     text: 'Want your child to learn a Language, no worries Ahola Tutors are trained to teach children in a fun way',
   },
-  // { 
-  //   title: 'Guarantee of Satisfaction',
-  //   text: 'If you have a bad experience with a Tutor, you can always cancel the lesson and get back funds',
-  // }
+  { 
+    title: 'Guarantee of Satisfaction',
+    text: 'If you have a bad experience with a Tutor, you can always cancel the lesson and get back funds',
+  }
 ]
 
 export default function Home() {
@@ -89,7 +92,7 @@ export default function Home() {
     } catch (error) {
       Notification({
         title:"Error",
-        message:`an error ocurred while saving conversation`,
+        message:`an error ocurred while getting courses`,
         type:"danger",
         container:"top-right",
         insert:"top",
@@ -110,8 +113,7 @@ export default function Home() {
         <title>Ahola language school</title>
         <meta name="description" content="Learn Any language with ease" />
         <link rel="icon" href="./images/logo1.png" />
-        <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
-        <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+        <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
       </Head>
       <Homehero />
       <div className={`${styles.chourseshowcase} bg-gray-500`}>
@@ -119,7 +121,7 @@ export default function Home() {
             <h2 className={`text-xl font-medium text-black`}>Feature Languages you could learn</h2>
             <div className={`flex wrap justify-between`}>
               {
-                subjects.filter(su => su.type === 'lang').slice(0, 6).map(c =>  <Course key={c._id} course={c.subject} />)
+                subjects.filter(su => su.type === 'lang').map(c =>  <Course key={c._id} course={c.subject} />)
               }
             </div>
           </div>
@@ -129,7 +131,7 @@ export default function Home() {
             <h2 className={`text-xl font-medium text-black`}>Feature Subjects you could learn</h2>
             <div className={`flex wrap justify-between`}>
               {
-                subjects.filter(su => su.type === 'subj').slice(0, 6).map(c =>  <Course key={c._id} course={c.subject} />)
+                subjects.filter(su => su.type === 'subj').map(c =>  <Course key={c._id} course={c.subject} />)
               }
             </div>
           </div>
@@ -139,7 +141,7 @@ export default function Home() {
             <h2 className={`text-xl font-medium text-black`}>Feature Skills you could learn</h2>
             <div className={`flex wrap justify-between`}>
               {
-                subjects.filter(su => su.type === 'skill').slice(0, 6).map(c =>  <Course key={c._id} course={c.subject} />)
+                subjects.filter(su => su.type === 'skill').map(c =>  <Course key={c._id} course={c.subject} />)
               }
             </div>
           </div>
@@ -159,8 +161,8 @@ export default function Home() {
             <div>
         <div className={` ${styles.coolsection} wrap w-80 text-sm margin-auto flex justify-between align-center`}>
           <div>
-              <h2 className={`text-2xl text-white`}>Learn From Your Comfort Zone</h2>
-              <p className="hide-s">
+              <h2 className={`text-2xl text-Lime-300 font-extrabold margin-bottom`}>Learn From Your Comfort Zone</h2>
+              <p className="hide-s text-white">
                <div> Take lessons from whereever and Whenever you want.</div>
                 <div>The beauty about online learning is .</div>
                 <div>you can learn from 
@@ -180,8 +182,8 @@ export default function Home() {
             <img src="./images/goal.svg" className={`${styles.coolimagereverse}`} alt="" />
           </div>
           <div>
-              <h2 className={`text-2xl text-white`}>Take the step to become a better you</h2>
-              <p className="hide-s">
+              <h2 className={`text-2xl text-lime-300 font-extrabold margin-bottom`}>Take the step to become a better you</h2>
+              <p className="hide-s text-white">
                <div>Everyone sees a better version of themselves,</div>
                 <div>But sometimes, we need to do a little</div>
                 <div>learning to ge there.</div>
@@ -191,23 +193,6 @@ export default function Home() {
         </div>
       </div>
             </div>
-      {/* another section */}
-      {/* <div>
-        <div className={` ${styles.coolsection} w-80 wrap margin-auto flex justify-between align-center`}>
-        <div>
-              <h2 className={`text-2xl font-extrabold text-indigo-700`}>Freindly and understanding tutors</h2>
-              <p className="hide-s">
-               <div>Learning can sometimes be hard if</div>
-                <div>your tutor is always frowniong.</div>
-                <div>Ahola tutors have been proven to be the most friendly </div>
-                <div>online tutors which makes learning fun and easy</div>
-              </p>
-          </div>
-          <div>
-            <img src="./images/friendly.svg" className={`${styles.coolimage}`} alt="" />
-          </div>
-        </div>
-      </div> */}
       <div className={`${styles.somewrapper}`}>
       {/* feature start */}
 
@@ -252,7 +237,9 @@ export default function Home() {
               <li>Grow your carear</li>
               <li>Get paid</li>
             </ul>
-            <button className={`${styles.showmoercoursesbutton} pointer`}>Become a Tutor</button>
+            <button className={`${styles.showmoercoursesbutton} pointer`}>
+              <Link href='/tutor_register'>Become a Tutor</Link>
+            </button>
           </div>
           <div>
             <img src="./images/team.svg" alt="" className={`${styles.registerimage}`} />

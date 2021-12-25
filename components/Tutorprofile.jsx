@@ -55,7 +55,7 @@ const Tutorprofile = ({open, setOpen, teacher, setteacher}) => {
                     <div className={`${styles.tutorinfo} padding-right`}>
                             <div className={`text-xs mt-2`}>{troncate(teacher.description, 500)}
                             </div>
-                            <Rating name="read-only" value={4} readOnly />
+                            <Rating name="read-only" value={teacher.rating} readOnly />
                             <div>
                                 <span>Tutor is from :</span>
                                 <span className={`text-sm margin-left text-indigo-700`}>{teacher.country}</span>

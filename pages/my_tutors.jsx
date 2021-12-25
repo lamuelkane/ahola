@@ -88,10 +88,8 @@ const Mytutor = () => {
         <div>
           <Head>
                 <title>Tutors</title>
-                {/* <meta name="description" content="Learn Any language with ease" /> */}
                 <link rel="icon" href="./images/logo1.png" />
-                <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
-                <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+                <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
             </Head>
             <div className="border">
                 <DashBoardHeader />
@@ -112,7 +110,7 @@ const Mytutor = () => {
                             <div className={`margin-right`}>
                               <Link href={`messages?convid=${tut.id + user._id}&&name=${tut.name}&&rcrid=${tut.id}`} >message </Link>
                             </div>
-                            <div className={`margin-right pointer`} onClick={async(e) => {
+                            <div className={`margin-right cursor-pointer pointer`} onClick={async(e) => {
                               try{
                                 const {data} = await axios.get(`${sever}/api/users/tutor/${tut.id}`)
                                 settutor(data)
@@ -149,7 +147,7 @@ const Mytutor = () => {
                                 })
                               }
                             }} >add hours</div>
-                            <div className={`margin-right pointer hidexs`} onClick={async(e) => {
+                            <div className={`margin-right cursor-pointer pointer hidexs`} onClick={async(e) => {
                               try{
                                 const {data} = await axios.get(`${sever}/api/users/tutor/${tut.id}`)
                                 confirmlesson2(data, data.lessons.filter(le => le.student.id == user._id && !le.confirmed && checklessonstate(le)))
@@ -214,7 +212,7 @@ const Mytutor = () => {
                       user?.lessons.filter(les => les.tutor.id === tutor._id).map(tut => (
                         <div className={`flex justify-between align-center border p-3`} key={tut.id}>
                               <div className={`flex align-center`}>
-                                  <div className={`margin-right`}>{getlessonintimezone(tut)} for $ {tut.rate.toFixed(2)} </div>
+                                  <div className={`margin-right`}>{new Date(getlessonintimezone(tut)).toLocaleString()} for $ {tut.rate.toFixed(2)} </div>
                               </div>
                               <div className={`flex`}>
                                   <div className={`margin-right`}>

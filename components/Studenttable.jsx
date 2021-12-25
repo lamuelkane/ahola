@@ -2,8 +2,6 @@
 import Link from 'next/link'
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios'
-import { newtutoraccount } from '../Templates/tutor';
-import Popup from './Popup';
 import { useState } from 'react';
 import Pagination from '@mui/material/Pagination'
 import Notification from './Notification';
@@ -19,8 +17,6 @@ import Notification from './Notification';
       setpageNumber(value)
     };
     
-    
-
     return (
       <div className="flex flex-col">
         {/* <Popup text={`please confirm that you want to delete this tutor profile`}  /> */}
@@ -61,7 +57,7 @@ import Notification from './Notification';
                         {tutor.lessons.length} lessons
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-2 pointer inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-green-800"
+                        {/* <span className="px-2 pointer inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-green-800"
                         onClick={async(e) => {
                           Notification({
                             title:"THIS IS TO BE DONE",
@@ -83,7 +79,7 @@ import Notification from './Notification';
                         }}
                         >
                          HIDE
-                        </span>
+                        </span> */}
                       </td>
                     </tr>
                   ))}

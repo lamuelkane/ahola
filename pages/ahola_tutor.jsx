@@ -44,10 +44,8 @@ const Registered_tutors = () => {
         <div>
             <Head>
                 <title>Tutor Information</title>
-                {/* <meta name="description" content="Learn Any language with ease" /> */}
                 <link rel="icon" href="./images/logo1.png" />
-                <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
-                <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+                <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
             </Head>
             <AdminHeader />
             <div className={`${styles.main} w-80 margin-auto margin-top`}>

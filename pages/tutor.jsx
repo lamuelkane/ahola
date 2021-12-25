@@ -25,9 +25,19 @@ const Tutor = () => {
     const {id} = router.query
     const {sever, user} = useSelector((state) => state);
     const [tutor, settutor] = useState({})
+
+    
+  const checkvideolink = (link) => {
+    if (link?.includes('youtube.com')) {
+        return true
+    }
+    return false
+  }
+
     const tutorvideo = () => {
         let str = reverseString(tutor.video)
-        let sub = str.substring(0, str.indexOf("="))
+        let sub = checkvideolink(tutor.video) ? str.substring(0, str.indexOf("=")) : str.substring(0, str.indexOf("/"))
+
         return reverseString(sub)
     }
      const gettutor = async () => {
@@ -111,8 +121,7 @@ const Tutor = () => {
                 <title>Tutor Profile</title>
                 {/* <meta name="description" content="Learn Any language with ease" /> */}
                 <link rel="icon" href="./images/logo1.png" />
-                <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
-                <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+                <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
             </Head>
             <Tutorpopup open={open} setOpen={setOpen} teacher={tutor} />
             <div className="border">
@@ -121,7 +130,7 @@ const Tutor = () => {
             { 
             tutor.firstname  && <div>
                 <div className={`${styles.tutoriframeholdeer}`}>
-                    <iframe className={`${styles.tutoriframe}`} src={`https://www.youtube.com/embed/${tutorvideo()}`} frameborder="0"></iframe>
+                    <iframe className={`${styles.tutoriframe}`} src={`${ checkvideolink(tutor.video)? `https://www.youtube.com/embed/${tutorvideo()}` : `https://player.vimeo.com/video/${tutorvideo()}`}`} frameborder="0"></iframe>
                 </div>
                 <div>
                     <div className={`${styles.tutorsubjumb} flex wrap justify-between`}>

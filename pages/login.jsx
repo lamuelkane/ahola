@@ -34,8 +34,7 @@ export default function Example() {
         <title>Login</title>
         <meta name="description" content="Login to your Ahola account" />
         <link rel="icon" href="./images/logo1.png" />
-        <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
-        <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+        <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
       </Head>
       <Header2 />
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -46,9 +45,7 @@ export default function Example() {
               src="./images/logo.png"
               alt="Workflow"
             />
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your {tutor? 'tutor' : 'student'} account  <small> Or{' '} <span onClick={e => settutor(!tutor)} className="font-medium pointer text-indigo-600 hover:text-indigo-500">
-                sign in as a {tutor ? 'student' : 'tutor'}
-              </span></small> </h2>
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your tutor account</h2>
             <p className="mt-2 text-center text-sm text-gray-600">
               do not have an account? {' '}
               <span className="font-medium text-indigo-600 hover:text-indigo-500">
@@ -77,7 +74,7 @@ export default function Example() {
                 }
                  try {
                    
-                  const {data} = await axios.post(`${sever}/api/users/${tutor? 'teacher' : 'student'}/signin`, info)
+                  const {data} = await axios.post(`${sever}/api/users/teacher/signin`, info)
                   localStorage.setItem('user', JSON.stringify(data))
                   router.push('/calender')
                  } catch (error) {
@@ -142,11 +139,11 @@ export default function Example() {
                 </label>
               </div>
 
-              <div className="text-sm">
+              {/* <div className="text-sm">
                 <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
                   Forgot your password?
                 </a>
-              </div>
+              </div> */}
             </div>
 
             <div>

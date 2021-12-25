@@ -153,19 +153,18 @@ let sendimage = async(e) => {
                 <title>Register</title>
                 <meta name="description" content="Become a student on Ahola" />
                 <link rel="icon" href="./images/logo1.png" />
-                <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" />
-                <script type="text/javascript" id="hs-script-loader" defer src="./translate.js" />
+                <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
             </Head>
     <div className="border"><Header2 /></div>
-    <div className={`center bg-gray-400 py-10 margin-bottom`}>
-            <h2 className={`text-2xl text-indigo-700`}>become a student on Ahola</h2>
+    <div className={`center bg-gray-700 py-10 margin-bottom`}>
+            <h2 className={`text-2xl text-indigo-700 margin-bottom`}>Become a student on Ahola</h2>
             <p className={`text-sm`}>Create your very own student account with Ahola and begin your learning process</p>
         </div>
       <div>
         <div className="md:grid md:grid-cols-3 md:gap-6">
           <div className="md:col-span-1">
             <div className="px-4 sm:px-0">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">Profile</h3>
+              <h3 className="text-lg font-medium leading-6 text-gray-900 margin-left">Profile</h3>
               <p className="mt-1 text-sm text-gray-600">
               </p>
             </div>
@@ -179,7 +178,7 @@ let sendimage = async(e) => {
                     <div className="mt-1 flex items-center">
                       <span className="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
                         {photo ?
-                        <img src={`${sever2}/${photo}`} alt="" height='50' width='50' className={`rounded`} />
+                        <img src={`${photo}`} alt="" height='50' width='50' className={`rounded`} />
                         : <svg className="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>}

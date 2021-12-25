@@ -82,11 +82,19 @@
   border: none;
 }
 
+.justify{
+  text-align:start;
+}
+
+.footerlogoimg{
+  width: 100px;
+  height: 50px;
+}
 
 .Footer{
   padding: 30px;
   margin-top: 30px;
-  background: grey;
+  /* background: grey; */
 }
 
 .homeherobutton:hover{

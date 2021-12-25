@@ -29,9 +29,17 @@ export default function RegisteredTutor({tutor, hide}) {
     return str?.split("")?.reverse()?.join("");
 }
 
+const checkvideolink = (link) => {
+  if (link?.includes('youtube.com')) {
+      return true
+  }
+  return false
+}
+
+
 const getvideolink = () => {
   let str = reverseString(tutor?.video)
-  let sub = str?.substring(0, str.indexOf("="))
+  let sub =  checkvideolink(tutor?.video) ? str.substring(0, str.indexOf("=")) : str.substring(0, str.indexOf("/"))
   let typing = setTimeout(() => {
       setvideolink(reverseString(sub))
   }, 3000);
@@ -204,7 +212,7 @@ useEffect(() => {
           <div>
             <div className={`${styles.videopreview}`}>
                     <iframe className={`${styles.videopreviewiframe}`}
-                  src={`https://www.youtube.com/embed/${videolink}`}>
+                   src={`${ checkvideolink(tutor?.video)? `https://www.youtube.com/embed/${videolink}` : `https://player.vimeo.com/video/${videolink}`}`}>
                   </iframe>
             </div>
           </div>
