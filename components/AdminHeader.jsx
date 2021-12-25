@@ -14,7 +14,7 @@ const Test = () => {
         { name: 'Dashboard', href: '/dashboard', current: true },
         { name: 'Students', href: '/ahola_students', current: false },
         { name: 'Tutors', href: '/ahola_tutors', current: false },
-        { name: 'Admins', href: '/ahola_admins', current: false },
+        // { name: 'Admins', href: '/ahola_admins', current: false },
         // { name: 'courses', href: '/courses', current: false },
       ]
 
