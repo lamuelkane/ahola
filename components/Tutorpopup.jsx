@@ -62,9 +62,24 @@ export default function Tutorpopup({open, setOpen, teacher}) {
       if(tutor || stu){
           tutor.hours += selectedSize.value 
           stu.hours += selectedSize.value
+
+          if(student?.currentearning > 0){
+            if((selectedSize.value * tutor.rate) > student?.currentearning) {
+                student.currentearning = 0
+            }
+            else{
+              student.currentearning = student.currentearning - (selectedSize.value * tutor.rate) 
+            }
+          }
+
+
           try{
             const {data} = await axios.post(`${sever}/api/users/student/update`, student)
             const {data: res} = await axios.post(`${sever}/api/users/tutor/update`, teacher)
+            const sample = await axios.post(`${sever}/api/users/tutor/hoursbought`, {
+              template: boughthours(teacher.firstname, student.firstname, selectedSize.value),
+              email: teacher.email
+            })
             Notification({
               title:"Hours Bought",
               message:`successfully bought additional ${selectedSize.value} with tutor ${name}`,
@@ -194,6 +209,7 @@ export default function Tutorpopup({open, setOpen, teacher}) {
                       </h3>
 
                       <p className="text-2xl text-gray-900">${teacher.rate}/hr</p>
+                      <p className="text-2xl text-gray-900">Ahola funds ${student?.currentearning}</p>
 
                       <div className="mt-6">
                         {/* <h4 className="sr-only">Reviews</h4> */}
@@ -208,7 +224,7 @@ export default function Tutorpopup({open, setOpen, teacher}) {
                             ${teacher.rate} per hour {  } =
                           </a>
                           <a href="#" className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                            ${selectedSize.value * teacher.rate} 
+                            ${(selectedSize.value * teacher.rate) - student?.currentearning} 
                           </a>
                         </div>
                       </div>
@@ -282,8 +298,8 @@ export default function Tutorpopup({open, setOpen, teacher}) {
                         </div>
 
                         <div className="mt-4">
-                           { paypalready && <PayPalButton
-                              amount={selectedSize.value * teacher.rate} 
+                           {(selectedSize.value * teacher.rate) > student?.currentearning ?  paypalready && <PayPalButton
+                              amount={(selectedSize.value * teacher.rate) - student.currentearning} 
                               // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
                               // onSuccess={savehoursbought}
                               onSuccess={(details, data) => {
@@ -292,14 +308,14 @@ export default function Tutorpopup({open, setOpen, teacher}) {
                                 // OPTIONAL: Call your server to save the transaction
                                 // return savehoursbought()
                               }}
-                            />}
-                            {/* <button
+                            /> :
+                             <button
                           type="submit"
                           onClick={savehoursbought}
                           className="mt-6 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                          Add to bag
-                        </button> */}
+                          Buy hours
+                        </button> }
                         </div>
                       </form>
                     </section>

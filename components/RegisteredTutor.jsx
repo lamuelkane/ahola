@@ -39,7 +39,7 @@ const checkvideolink = (link) => {
 
 const getvideolink = () => {
   let str = reverseString(tutor?.video)
-  let sub =  checkvideolink(tutor?.video) ? str.substring(0, str.indexOf("=")) : str.substring(0, str.indexOf("/"))
+  let sub =  checkvideolink(tutor?.video) ? str.substring(0, str.indexOf("=")) : str?.substring(0, str.indexOf("/"))
   let typing = setTimeout(() => {
       setvideolink(reverseString(sub))
   }, 3000);

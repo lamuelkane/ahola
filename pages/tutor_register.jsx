@@ -418,6 +418,7 @@ let sendimage = async(e) => {
                         autoComplete="country-name"
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       >
+                            <option >Country</option>
                       
                         {
                           countries.map((country, i) => (
@@ -441,6 +442,7 @@ let sendimage = async(e) => {
                         autoComplete="country-name"
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       >
+                            <option >Timezone{country.label}</option>
                           { 
                             timezones.map((time, i) => (
                               <option key={i} value={time.name} >{time.offset}-{time.name}</option>

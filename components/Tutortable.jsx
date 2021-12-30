@@ -128,7 +128,7 @@ import Notification from './Notification';
           </div>
         </div>
         <div className='flex justify-center align-center margin-top'>
-             <Pagination count={Math.round(tutors?.length / 3)} page={pageNumber} onChange={handleChange} siblingCount={0} color="primary" />
+             <Pagination count={Math.ceil(tutors?.length / 3)} page={pageNumber} onChange={handleChange} siblingCount={0} color="primary" />
           </div>
       </div>
     )

@@ -34,19 +34,19 @@ export default function Example() {
 const submitrequest = async(e) => {
   e.preventDefault()
 
-  if(!photo) {
-    Notification({
-      title:"NO Profile Iamge",
-      message:`please choose a profile image`,
-      type:"info",
-      container:"top-right",
-      insert:"top",
-      animationIn:"fadeInUp",
-      animationOut:"fadeOut",
-      duration:10000
-    })
-    return
-  }
+  // if(!photo) {
+  //   Notification({
+  //     title:"NO Profile Iamge",
+  //     message:`please choose a profile image`,
+  //     type:"info",
+  //     container:"top-right",
+  //     insert:"top",
+  //     animationIn:"fadeInUp",
+  //     animationOut:"fadeOut",
+  //     duration:10000
+  //   })
+  //   return
+  // }
 
   if(!timezone || !country) {
     Notification({
@@ -108,6 +108,7 @@ const submitrequest = async(e) => {
     })
     router.push('/calender')
 } catch(err) {
+  alert(err)
   Notification({
     title:"Error",
     message:`an error ocurred`,
@@ -309,7 +310,7 @@ let sendimage = async(e) => {
                         autoComplete="country-name"
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       >
-                      
+                        <option >Country</option>
                         {
                           countries.map((country , i)=> (
                             <option key={i} >{country.label}</option>
@@ -332,6 +333,7 @@ let sendimage = async(e) => {
                         autoComplete="country-name"
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       >
+                         <option >Timezone</option>
                           {
                             timezones.map((time, i) => (
                               <option key={i} value={time.name} >{time.offset}-{time.name}</option>

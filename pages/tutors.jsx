@@ -14,6 +14,7 @@ import Head from 'next/head'
 import Notification from '../components/Notification';
 import {troncate} from '../components/Troncate'
 import {useRouter} from 'next/router'
+import RangeSlider from '../components/Rangesliders'
 
 
 const sortOptions = [
@@ -32,6 +33,7 @@ function classNames(...classes) {
 
 const Tutors = () => {
     const [openfilters, setOpenfilters] = useState(false)
+    const {user, Currency, Currencies} = useSelector((state) => state);
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
     const [value, setValue] = useState('')
     const options = useMemo(() => countryList().getData(), [])
@@ -48,6 +50,7 @@ const Tutors = () => {
     const [lowprice, setlowprice] = useState(lp)
     const [highprice, sethighprice] = useState(hp)
     const [pageNumber, setpageNumber] = useState(1)
+    const [range, setrange] = useState([0, 100])
     const [productperpage, setproductperpage] = useState(2)
     let pagesVited = (pageNumber - 1) * productperpage
     const totop = useRef()
@@ -75,6 +78,17 @@ const Tutors = () => {
     setpageNumber(value)
     totop.current.scrollIntoView({behavior: 'smooth'})
   };
+
+  
+  const changerange = (event, newValue) => {
+    clearTimeout(chnaging)
+    setrange(newValue);
+    const chnaging = setTimeout(() => {
+      setlowprice(newValue[0])
+      sethighprice(newValue[1])
+    }, 5000)
+};
+
 
   useEffect(() => {
     getsubjects()
@@ -126,9 +140,8 @@ const Tutors = () => {
           <div className={`center bg-gray-700 ${styles.tuttorshero}`}>
             <h2 className={`text-2xl text-white margin-bottom`}>Find the best tutor for you</h2>
             <p className={`text-sm text-white`}>Find the best teacher for you: choose from our experienced teachers online and get the best learning experience.</p>
-          </div>
-          <div className="flex wrap justify-center margin-y align-center">
-          <select name="" id="" className={`margin-right margin-top`} onChange={e => {
+            <div className={`flex wrap justify-center ${styles.tutorsfilterwrapper} margin-y align-center bg-white`}>
+          <select name="" id="" className={`margin-right`} onChange={e => {
             if(e.target.value == 'Tutor from'){
               return
             }
@@ -141,30 +154,15 @@ const Tutors = () => {
                           ))
                         }
               </select>
-              
-              <select name="" id="" className={`margin-right margin-top`}  onChange={e => {
-            if(e.target.value == 'Lowest Price'){
-              return
-            }
-            setlowprice(e.target.value)
-          }}>
-              <option >Lowest Price</option>
-            {  
-                Array.from(Array(24), (_, i) => i).map(ti => <option >{ti}</option>)
-            }
-              </select>
-              <select name="" id="" className={`margin-right margin-top`}  onChange={e => {
-            if(e.target.value == 'Highest Price'){
-              return
-            }
-            sethighprice(e.target.value)
-          }}>
-              <option >Highest Price</option>
-            {  
-                Array.from(Array(24), (_, i) => i).map(ti => <option >{ti}</option>)
-            }
-              </select>
-              <select name="" id="" className={`margin-right margin-top`}  onChange={e => {
+              <div className={`flex justify-center margin-right align-center  border ${styles.rangesliderwrapper}`}>
+                  {/* <div> */}
+                    <span className={`text-xs`}> ${range[0]} </span>
+                      {/* <span className={`text-xs`}>to</span> */}
+                  {/* </div> */}
+                  <RangeSlider changerange={changerange} range={range} setrange={setrange}/>
+                    <span className={`text-xs`}> ${range[1]} </span>
+              </div>
+              <select name="" id="" className={`margin-right`}  onChange={e => {
             if(e.target.value == 'Tutor Teaches'){
               return
             }
@@ -175,10 +173,12 @@ const Tutors = () => {
                   subjects.map(sub => <option >{sub.subject}</option>)
                 }
               </select>
-              
+              <input type="text" />
               
           </div>
-          <div className={`flex justify-center align-center`}>
+            <img src="./images/tutorhero.svg" className={`${styles.tutorsheroimg}`} alt="" />
+          </div>
+          <div className={`flex justify-center align-center margin-top`}>
             <div className={`flex justify-center align-center ${styles.tutorprofileswraper} column w-4/5`}>
                {
                 loading? <h3>Loading tutors...</h3> : tutors.length < 1 ? <h3>No tutor available</h3> : tutors.filter(tut => !tut.hidden).slice(pagesVited, pagesVited + 2).map((teacher, i) => (

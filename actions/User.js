@@ -31,6 +31,20 @@ export const setUser = (sever, user) => async(dispatch) => {
    
  }
 
+
+ export const setcurrency = (Currency) => {
+    return {
+        type:'SET_CURRENCY',
+        payload: Currency
+    }
+}
+
+export const setcurrencies = (Currency) => {
+    return {
+        type:'SET_CURRENCIES',
+        payload: Currency
+    }
+}
      
 
 

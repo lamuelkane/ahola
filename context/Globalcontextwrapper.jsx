@@ -3,7 +3,7 @@ import GlobalContext from './Globalcontext'
 import {Month, week} from '../reducer/month'
 import dayjs from 'dayjs'
 import { Eventmodal, Eventreducer, EventDayreducer } from "../reducer/Event";
-import { User } from "../reducer/user";
+import { User , Currency, Currencies} from "../reducer/user";
 import {createStore, applyMiddleware, combineReducers} from 'redux'
 import {HYDRATE, createWrapper} from 'next-redux-wrapper'
 import {io} from 'socket.io-client'
@@ -57,14 +57,16 @@ const reducers = combineReducers({
     weekindex:week,
     monthindex: Month,
     events:Eventreducer,
-    user:User,
+    user:User,  
     eventday:EventDayreducer,
     sever:() => 'https://aholasever.herokuapp.com',
     // sever : () => 'http://localhost:5000',
     // sever2:() => 'http://localhost:5001',
     sever2: () => 'https://aholaimageupload.herokuapp.com',
-    socket: () => io('ws://aholasocket.herokuapp.com')
-    // socket: () => io('ws://localhost:8000')
+    // socket: () => io('ws://aholasocket.herokuapp.com'),
+    socket: () => io('ws://localhost:8000'),
+    Currency,
+    Currencies,
 })
 
 

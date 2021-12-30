@@ -6,10 +6,8 @@ import {useState, useEffect, useContext} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import Link from 'next/link'
 import {useRouter} from 'next/router'
-import Footer from '../components/Footer'
 import Redirect from '../components/redirect'
 import Notification from '../components/Notification';
-import Head from 'next/head'
 
 
 export default function Example() {
@@ -24,18 +22,12 @@ export default function Example() {
 
  useEffect(() => {
   if(user){
-    router.push('/calender')
+    router.push('/messages')
   }
  }, [user])
 
   return (
     <>
-     <Head>
-        <title>Login</title>
-        <meta name="description" content="Login to your Ahola account" />
-        <link rel="icon" href="./images/logo1.png" />
-        <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
-      </Head>
       <Header2 />
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
@@ -45,11 +37,13 @@ export default function Example() {
               src="./images/logo.png"
               alt="Workflow"
             />
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your tutor account</h2>
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your {tutor? 'tutor' : 'student'} account  <small> Or{' '} <span onClick={e => settutor(!tutor)} className="font-medium pointer text-indigo-600 hover:text-indigo-500">
+                sign in as a {tutor ? 'student' : 'tutor'}
+              </span></small> </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
               do not have an account? {' '}
               <span className="font-medium text-indigo-600 hover:text-indigo-500">
-                <Link href={tutor? '/tutor_register' : 'student_register'}  > register </Link>
+                <Link href={tutor? '/tutor_register' : '/student_register'}  > register </Link>
               </span>
             </p>
           </div>
@@ -74,7 +68,7 @@ export default function Example() {
                 }
                  try {
                    
-                  const {data} = await axios.post(`${sever}/api/users/teacher/signin`, info)
+                  const {data} = await axios.post(`${sever}/api/users/${tutor? 'teacher' : 'student'}/signin`, info)
                   localStorage.setItem('user', JSON.stringify(data))
                   router.push('/calender')
                  } catch (error) {
@@ -139,11 +133,11 @@ export default function Example() {
                 </label>
               </div>
 
-              {/* <div className="text-sm">
+              <div className="text-sm">
                 <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
                   Forgot your password?
                 </a>
-              </div> */}
+              </div>
             </div>
 
             <div>
@@ -161,7 +155,7 @@ export default function Example() {
           </form>
         </div>
       </div>
-     <Footer />
+      <Redirect item={user} page={'/calender'} />
     </>
   )
 }

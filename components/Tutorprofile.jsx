@@ -12,7 +12,7 @@ import { troncate } from './Troncate';
 
 
 const Tutorprofile = ({open, setOpen, teacher, setteacher}) => {
-    const {user} = useSelector((state) => state);
+    const {user, Currency, Currencies} = useSelector((state) => state);
     const router = useRouter()
 
 
@@ -36,7 +36,8 @@ const Tutorprofile = ({open, setOpen, teacher, setteacher}) => {
                         </Link>
                         <div className={` ${``} flex column justify-center align-center padding-right`}>
                             <h2 className={`font-bold text-indigo-700`}>{teacher.firstname}</h2>
-                            <div className={`text-xs`}>{teacher.subject} Tutor <small className={`text-indigo-700`}>{teacher.rate}/hr</small></div>
+                            <div className={`text-xs`}>{teacher.subject} Tutor </div>
+                            <div><small className={`text-indigo-700`}>{Currency === 'USD' ? teacher.rate : (teacher.rate * Currencies.data[Currency]).toFixed(2)}</small>   {Currency} /hr</div>
                             <div className={`text-xs`}>{teacher.lessons.length} lessons</div>
 
                             <button className={`${styles.bookbtn}  text-xs `} onClick={e => {

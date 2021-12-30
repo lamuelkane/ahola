@@ -14,7 +14,12 @@ body {
   /* font-family: 'Scheherazade New', serif; */
   /* line-height: normal !important; */
   /* line-height: 30%; */
-  background-color: #EDEFF0;
+  /* background-color: rgb(180, 182, 184); */
+  /* background-color: #EDEFF0; */
+}
+
+.overflow-hide{
+  overflow-x: hidden;
 }
 
 .bold{
@@ -294,6 +299,15 @@ tr{
   margin-bottom: 100px;
 }
 
+.margin-top-80{
+  margin-top: 80px;
+}
+
+.margin-bottom-80{
+  margin-bottom: 80px;
+}
+
+
 .margin-top,
 .margin-y{
   margin-top: 15px !important;
@@ -359,7 +373,16 @@ tr{
 }
 
 .main-bg{
-  background: rgb(175, 36, 36) !important;
+  background: white !important;
+  /* background: rgb(175, 36, 36) !important; */
+  /* background: #e2d5b7; */
+}
+
+.sub-bg{
+  background: white !important;
+  /* background: rgb(175, 36, 36) !important; */
+
+  /* background: #e2d5b7; */
 }
 
 .main-color{
