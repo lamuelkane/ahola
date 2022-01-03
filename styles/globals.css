@@ -462,6 +462,10 @@ a:hover{
   display: none;
 }
 
+.hide2{
+  display: none !important;
+}
+
 .black{
   background-color: black;
 }

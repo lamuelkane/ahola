@@ -6,28 +6,35 @@ import {useState, useEffect, useContext} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import Link from 'next/link'
 import {useRouter} from 'next/router'
-import Redirect from '../components/redirect'
 import Notification from '../components/Notification';
+import Footer from '../components/Footer'
+import Head from 'next/head'
 
 
 export default function Example() {
  const [email, setemail ] = useState('')
  const [pass, setpass] = useState('')
- const [tutor, settutor] = useState(true)
+ const [tutor, settutor] = useState(false)
 
  const router = useRouter()
 
  const {sever, user} = useSelector((state) => state);
 
 
- useEffect(() => {
-  if(user){
-    router.push('/messages')
-  }
- }, [user])
+//  useEffect(() => {
+//   if(user){
+//     router.push('/messages')
+//   }
+//  }, [user])
 
   return (
     <>
+      <Head>
+        <title>Login</title>
+        <meta name="description" content="Login to your user account" />
+        <link rel="icon" href="./images/logo1.png" />
+        <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
+      </Head>
       <Header2 />
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
@@ -37,13 +44,69 @@ export default function Example() {
               src="./images/logo.png"
               alt="Workflow"
             />
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your {tutor? 'tutor' : 'student'} account  <small> Or{' '} <span onClick={e => settutor(!tutor)} className="font-medium pointer text-indigo-600 hover:text-indigo-500">
-                sign in as a {tutor ? 'student' : 'tutor'}
-              </span></small> </h2>
-            <p className="mt-2 text-center text-sm text-gray-600">
-              do not have an account? {' '}
+            <h2 className="mt-6 text-center text-2xl font-extrabold text-gray-900">
+            {  router.locale  === 'en-US' ? 'login to your account'
+
+: router.locale === 'fr' ? 'Connectez-vous à votre compte'
+
+: router.locale === 'de' ?
+                          'Melde dich in deinem Konto an'
+: router.locale === 'es' ?
+                          'Ingrese a su cuenta'
+: router.locale === 'zh' ?
+                          '登录到您的帐户'
+:  'login to your account'
+}
+            </h2>
+            <p className="mt-2 text-center  text-gray-600">
+              <div>
+              {  router.locale  === 'en-US' ? 'do not have an account?'
+
+            : router.locale === 'fr' ? `Vous n'avez pas de compte?`
+
+            : router.locale === 'de' ?
+                                      'Haben Sie kein Konto?'
+            : router.locale === 'es' ?
+                                      '¿No tiene una cuenta?'
+            : router.locale === 'zh' ?
+                                      '还没有账号？'
+            :  'do not have an account?'
+            }
+              </div>
+              <span className="font-medium text-indigo-600 hover:text-indigo-500 margin-right">
+                <Link href={'/student_register'}  > 
+                {  router.locale  === 'en-US' ? 'Sign up as a Student '
+
+: router.locale === 'fr' ? `Inscrivez-vous en tant qu'étudiant`
+
+: router.locale === 'de' ?
+                          'Als Student anmelden'
+: router.locale === 'es' ?
+                          'Regístrate como estudiante'
+: router.locale === 'zh' ?
+                          '注册为学生'
+:  'Sign up as a Student'
+}
+                </Link>
+              </span>
+              <span className="font-medium text-sm margin-right">
+                Or
+              </span>
               <span className="font-medium text-indigo-600 hover:text-indigo-500">
-                <Link href={tutor? '/tutor_register' : '/student_register'}  > register </Link>
+                <Link href={'/tutor_register'}  > 
+                {  router.locale  === 'en-US' ? 'sign up as a tutor'
+
+: router.locale === 'fr' ? 'Inscrivez-vous en tant que tuteur'
+
+: router.locale === 'de' ?
+                          'Melden Sie sich als Tutor an'
+: router.locale === 'es' ?
+                          'Regístrate como tutor'
+: router.locale === 'zh' ?
+                          '注册为导师'
+:  'sign up as a tutor'
+}
+                 </Link>
               </span>
             </p>
           </div>
@@ -68,7 +131,7 @@ export default function Example() {
                 }
                  try {
                    
-                  const {data} = await axios.post(`${sever}/api/users/${tutor? 'teacher' : 'student'}/signin`, info)
+                  const {data} = await axios.post(`${sever}/api/users/teacher/signin`, info)
                   localStorage.setItem('user', JSON.stringify(data))
                   router.push('/calender')
                  } catch (error) {
@@ -88,7 +151,19 @@ export default function Example() {
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
                 <label htmlFor="email-address" className="sr-only">
-                  Email address
+                  
+                  {  router.locale  === 'en-US' ? 'Email address'
+
+: router.locale === 'fr' ? 'Adresse e-mail'
+
+: router.locale === 'de' ?
+                          'E-Mail-Addresse'
+: router.locale === 'es' ?
+                          'Dirección de correo electrónico'
+: router.locale === 'zh' ?
+                          '电子邮件地址'
+:  'Email address'
+}
                 </label>
                 <input
                 value={email}
@@ -104,7 +179,19 @@ export default function Example() {
               </div>
               <div>
                 <label htmlFor="password" className="sr-only">
-                  Password
+                  
+                  {  router.locale  === 'en-US' ? 'Password'
+
+: router.locale === 'fr' ? 'Mot de passe'
+
+: router.locale === 'de' ?
+                          'Passwort'
+: router.locale === 'es' ?
+                          'Contraseña'
+: router.locale === 'zh' ?
+                          '密码'
+:  'Password'
+}
                 </label>
                 <input
                 value={pass}
@@ -155,7 +242,7 @@ export default function Example() {
           </form>
         </div>
       </div>
-      <Redirect item={user} page={'/calender'} />
+      <Footer />
     </>
   )
 }

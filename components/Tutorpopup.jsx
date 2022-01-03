@@ -2,15 +2,15 @@ import { PayPalButton } from "react-paypal-button-v2";
 import { Fragment, useState, useEffect } from 'react'
 import { Dialog, RadioGroup, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
-import { StarIcon } from '@heroicons/react/solid'
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux';
 import {paypalclient} from './keys'
 import {boughthours} from '../Templates/tutor'
 import Notification from "./Notification";
+import {useRouter} from 'next/router'
 
 
-const packages = [
+let packages = [
   { name: 'Trial', inStock: true, value:1 },
   { name: '6hrs', inStock: true,  value:6  },
   { name: '8hrs', inStock: true,  value:8  },
@@ -26,10 +26,77 @@ function classNames(...classes) {
 }
 
 export default function Tutorpopup({open, setOpen, teacher}) {
-
+  const router = useRouter()
   const [selectedSize, setSelectedSize] = useState(packages[2])
   const [paypalready, setpaypalready] = useState()
-  const {sever, user: student} = useSelector((state) => state);
+  const {sever, user: student,  Currency, Currencies} = useSelector((state) => state);
+
+  packages =  router.locale  === 'en-US' ? [
+    { name: 'Trial', inStock: true, value:1 },
+    { name: '6hrs', inStock: true,  value:6  },
+    { name: '8hrs', inStock: true,  value:8  },
+    { name: '10hrs', inStock: true,  value:10  },
+    { name: '12hrs', inStock: true,  value:12  },
+    { name: '16hrs', inStock: true,  value:16  },
+    { name: '18hrs', inStock: true,  value:18  },
+    { name: '20hrs', inStock: true ,  value:20 },
+  ]
+
+  : router.locale === 'fr' ? [
+    { name: 'Procès', inStock: true, value:1 },
+    { name: '6heures', inStock: true,  value:6  },
+    { name: '8heures', inStock: true,  value:8  },
+    { name: '10heures', inStock: true,  value:10  },
+    { name: '12heures', inStock: true,  value:12  },
+    { name: '16heures', inStock: true,  value:16  },
+    { name: '18heures', inStock: true,  value:18  },
+    { name: '20heures', inStock: true ,  value:20 },
+  ]
+  
+  : router.locale === 'de' ?
+  [
+    { name: 'Versuch', inStock: true, value:1 },
+    { name: '6Std', inStock: true,  value:6  },
+    { name: '8Std', inStock: true,  value:8  },
+    { name: '10Std', inStock: true,  value:10  },
+    { name: '12Std', inStock: true,  value:12  },
+    { name: '16Std', inStock: true,  value:16  },
+    { name: '18Std', inStock: true,  value:18  },
+    { name: '20Std', inStock: true ,  value:20 },
+  ]
+  : router.locale === 'es' ?
+  [
+    { name: 'Juicio', inStock: true, value:1 },
+    { name: '6horas', inStock: true,  value:6  },
+    { name: '8horas', inStock: true,  value:8  },
+    { name: '10horas', inStock: true,  value:10  },
+    { name: '12horas', inStock: true,  value:12  },
+    { name: '16horas', inStock: true,  value:16  },
+    { name: '18horas', inStock: true,  value:18  },
+    { name: '20horas', inStock: true ,  value:20 },
+  ]
+  : router.locale === 'zh' ?
+  [
+    { name: '审判', inStock: true, value:1 },
+    { name: '6小时', inStock: true,  value:6  },
+    { name: '8小时', inStock: true,  value:8  },
+    { name: '10小时', inStock: true,  value:10  },
+    { name: '12小时', inStock: true,  value:12  },
+    { name: '16小时', inStock: true,  value:16  },
+    { name: '18小时', inStock: true,  value:18  },
+    { name: '20小时', inStock: true ,  value:20 },
+  ]
+  : [
+    { name: 'Trial', inStock: true, value:1 },
+    { name: '6hrs', inStock: true,  value:6  },
+    { name: '8hrs', inStock: true,  value:8  },
+    { name: '10hrs', inStock: true,  value:10  },
+    { name: '12hrs', inStock: true,  value:12  },
+    { name: '16hrs', inStock: true,  value:16  },
+    { name: '18hrs', inStock: true,  value:18  },
+    { name: '20hrs', inStock: true ,  value:20 },
+  ]
+
 
   const addpaypalscript = () => {
    let script = document.createElement('script')
@@ -59,10 +126,10 @@ export default function Tutorpopup({open, setOpen, teacher}) {
       const {_id: id, rate, firstname: name, timezone} = teacher
       const tutor = student.tutors.find(tut => tut.id === teacher._id)
       const stu = teacher.students.find(stu => stu.id === student._id)
+      
       if(tutor || stu){
           tutor.hours += selectedSize.value 
           stu.hours += selectedSize.value
-
           if(student?.currentearning > 0){
             if((selectedSize.value * tutor.rate) > student?.currentearning) {
                 student.currentearning = 0
@@ -71,8 +138,6 @@ export default function Tutorpopup({open, setOpen, teacher}) {
               student.currentearning = student.currentearning - (selectedSize.value * tutor.rate) 
             }
           }
-
-
           try{
             const {data} = await axios.post(`${sever}/api/users/student/update`, student)
             const {data: res} = await axios.post(`${sever}/api/users/tutor/update`, teacher)
@@ -90,6 +155,7 @@ export default function Tutorpopup({open, setOpen, teacher}) {
               animationOut:"fadeOut",
               duration:10000
             })
+        localStorage.setItem('user', JSON.stringify(student))
 
           } catch(error) {
             Notification({
@@ -107,6 +173,15 @@ export default function Tutorpopup({open, setOpen, teacher}) {
           return
       }
 
+      if(student?.currentearning > 0){
+        if((selectedSize.value * teacher.rate) > student?.currentearning) {
+            student.currentearning = 0
+        }
+        else{
+          student.currentearning = student.currentearning - (selectedSize.value * teacher.rate) 
+        }
+      }
+
       student.tutors.push({
         id,
         rate,
@@ -122,6 +197,8 @@ export default function Tutorpopup({open, setOpen, teacher}) {
         hours: selectedSize.value,
         timezone: student.timezone
       })
+
+
       try{
         const {data: res} = await axios.post(`${sever}/api/users/tutor/update`, teacher)
         const {data} = await axios.post(`${sever}/api/users/student/update`, student)
@@ -139,6 +216,8 @@ export default function Tutorpopup({open, setOpen, teacher}) {
           animationOut:"fadeOut",
           duration:10000
         })
+
+        localStorage.setItem('user', JSON.stringify(student))
 
       } catch(error) {
         Notification({
@@ -206,25 +285,71 @@ export default function Tutorpopup({open, setOpen, teacher}) {
                     <section aria-labelledby="information-heading" className="mt-2">
                       <h3 id="information-heading" className="sr-only">
                         Product information
+                   
                       </h3>
 
                       <p className="text-2xl text-gray-900">${teacher.rate}/hr</p>
-                      <p className="text-2xl text-gray-900">Ahola funds ${student?.currentearning}</p>
+                      <p className="text-2xl text-gray-900">
+                      {  router.locale  === 'en-US' ? 'Ahola funds  '
+
+: router.locale === 'fr' ? 'Fonds Ahola'
+
+: router.locale === 'de' ?
+                          'Ahola-Gelder'
+: router.locale === 'es' ?
+                          'Fondos Ahola'
+: router.locale === 'zh' ?
+                          '阿霍拉基金'
+:  'Ahola funds  '
+}
+
+  {Currency === 'USD' ?  student?.currentearning  : (student?.currentearning * Currencies?.data[Currency] ).toFixed(2)} {Currency}</p> 
 
                       <div className="mt-6">
                         {/* <h4 className="sr-only">Reviews</h4> */}
                         <div className="flex items-center">
                         <a href="#" className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                            {selectedSize.value} hrs
+                            {selectedSize.value}      {  router.locale  === 'en-US' ? `hrs`
+
+: router.locale === 'fr' ? `heures`
+
+: router.locale === 'de' ?
+                          `Std`
+: router.locale === 'es' ?
+                            `horas`
+: router.locale === 'zh' ?
+                          `个小时`
+:  'hrs'
+}
                           </a>
                           <a href="#" className="ml-3 font-medium">
                             X
                           </a>
                           <a href="#" className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                            ${teacher.rate} per hour {  } =
+                            
+                            {  router.locale  === 'en-US' ? `${Currency === 'USD' ?  teacher.rate  : (teacher.rate * Currencies?.data[Currency] ).toFixed(2)} ${Currency}  per hour `
+
+: router.locale === 'fr' ? `${Currency === 'USD' ?  teacher.rate  : (teacher.rate * Currencies?.data[Currency] ).toFixed(2)} ${Currency}   par heure`
+
+: router.locale === 'de' ?
+                          `${Currency === 'USD' ?  teacher.rate  : (teacher.rate * Currencies?.data[Currency] ).toFixed(2)} ${Currency}  pro Stunde`
+: router.locale === 'es' ?
+                            `${Currency === 'USD' ?  teacher.rate  : (teacher.rate * Currencies?.data[Currency] ).toFixed(2)} ${Currency}  por hora`
+: router.locale === 'zh' ?
+                          `每小时 ${Currency === 'USD' ?  teacher.rate  : (teacher.rate * Currencies?.data[Currency] ).toFixed(2)} ${Currency}   个`
+:  'per hour '
+}
+                            {  } 
+                          </a>
+
+                          <a href="#" className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                            -
                           </a>
                           <a href="#" className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                            ${(selectedSize.value * teacher.rate) - student?.currentearning} 
+                            {Currency === 'USD' ?  student?.currentearning  : (student?.currentearning * Currencies?.data[Currency] ).toFixed(2)} {Currency} = 
+                          </a>
+                          <a href="#" className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                            {Currency === 'USD' ?  ((selectedSize.value * teacher.rate) - student?.currentearning)  : (((selectedSize.value * teacher.rate) - student?.currentearning) * Currencies?.data[Currency] ).toFixed(2)} {Currency}
                           </a>
                         </div>
                       </div>
@@ -238,10 +363,23 @@ export default function Tutorpopup({open, setOpen, teacher}) {
                       <form>
                         <div className="mt-10">
                           <div className="flex items-center justify-between">
-                            <h4 className="text-sm text-gray-900 font-medium">packages</h4>
-                            <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                            <h4 className="text-sm text-gray-900 font-medium">
+                            {  router.locale  === 'en-US' ? `packages`
+
+: router.locale === 'fr' ? `paquets`
+
+: router.locale === 'de' ?
+                          `Pakete`
+: router.locale === 'es' ?
+                            `paquetes`
+: router.locale === 'zh' ?
+                          `包裹`
+:  'packages'
+}
+                            </h4>
+                            {/* <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
                               Package guide
-                            </a>
+                            </a> */}
                           </div>
 
                           <RadioGroup value={selectedSize} onChange={setSelectedSize} className="mt-4">
@@ -314,7 +452,19 @@ export default function Tutorpopup({open, setOpen, teacher}) {
                           onClick={savehoursbought}
                           className="mt-6 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                          Buy hours
+                          
+                          {  router.locale  === 'en-US' ? `Buy hours with Ahola funds`
+
+: router.locale === 'fr' ? `Acheter des heures avec des fonds Ahola`
+
+: router.locale === 'de' ?
+                          `Kaufen Sie Stunden mit Ahola-Geldern`
+: router.locale === 'es' ?
+                            `Compra horas con fondos Ahola`
+: router.locale === 'zh' ?
+                          `用 Ahola 基金购买时间`
+:  'Buy hours with Ahola funds'
+}
                         </button> }
                         </div>
                       </form>

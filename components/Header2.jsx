@@ -54,13 +54,13 @@ const Header2 = () => {
             case 'en-US':
                   return 'English'
             case 'de':
-                  return 'Deutsch'
+                  return 'German'
             case 'fr':
-                  return 'Français'
+                  return 'French'
             case 'es':
-                  return 'Español'
+                  return 'Spanish'
             case 'zh':
-                  return '中国人'
+                  return 'Chinese'
             default:
                   return 'English'
           }
@@ -103,15 +103,40 @@ const Header2 = () => {
             </Link>
             <div className={`${styles.headerlarge} text-gray-500`}>
                 <span className={`${styles.homenaveitem} ${styles.coursesholder}`}>
-                    <Link href='/tutors'>Find a Tutor</Link>
-                    <div className={`${styles.courses} bg-gray-500`}>
-                        {
-                            courses.map(sub =>  <span className={`text-gray-500  text-sm margin`}><Link href={`tutors?teach=${sub.subject}&&country=all&&lp=0&&hp=100`} key={sub._id}>{sub.subject}</Link></span>)
-                        }
-                    </div>
+                    <Link href='/tutors'>
+                    {  router.locale  === 'en-US' ? 'Find a Tutor'
+
+                     : router.locale === 'fr' ? 'Trouver un tuteur'
+
+                    : router.locale === 'de' ?
+                                                'Finde einen Tutor'
+                    : router.locale === 'es' ?
+  
+                                                'Encontrar un tutor'
+                    : router.locale === 'zh' ?
+                                                '找导师'
+                    :  'Find a Tutor'
+                  }
+
+                      </Link>
+                    
                 </span>
                 {/* <span className={`${styles.homenaveitem}`}><Link href='/student_register'>register</Link></span> */}
-                <span className={`${styles.homenaveitem}`}><Link href='/login'>login</Link></span>
+                <span className={`${styles.homenaveitem}`}><Link href='/login'>
+                  
+                  {  router.locale  === 'en-US' ? 'login'
+
+                  : router.locale === 'fr' ? 'connexion'
+
+                  : router.locale === 'de' ?
+                                            'Anmeldung'
+                  : router.locale === 'es' ?
+                                            'acceso'
+                  : router.locale === 'zh' ?
+                                            '登录'
+                  :  'Login'
+                  }
+                </Link></span>
             </div>
             <span className={`${styles.homenaveitem} ${styles.coursesholder}`}>
                     <span className={`text-sm pointer`} onClick={e => setshowlang(!showlang)}>{getlanguagename(router.locale)}, {Currency}<KeyboardArrowDownIcon /></span>
@@ -137,20 +162,88 @@ const Header2 = () => {
             </div> }
         </div>
             <div className={`${styles.headersmall} bg-gray-500  ${show ? 'showsidebar' : 'sidebar'}`}>
-                <soan className={`${styles.homenaveitem}`}><Link href='/tutors'>Find a Tutor</Link></soan>
-                <span className={`${styles.homenaveitem}`}><Link href='/student_register'>Register</Link></span>
-                <span className={`${styles.homenaveitem}`}><Link href='/login'>login</Link></span>
-                <span className={`${styles.homenaveitem} text-indigo-700`}>Feature Languages</span>
+                <soan className={`${styles.homenaveitem}`}><Link href='/tutors'>
+                                  {  router.locale  === 'en-US' ? 'Find a Tutor'
+
+                  : router.locale === 'fr' ? 'Trouver un tuteur'
+
+                  : router.locale === 'de' ?
+                                            'Finde einen Tutor'
+                  : router.locale === 'es' ?
+
+                                            'Encontrar un tutor'
+                  : router.locale === 'zh' ?
+                                            '找导师'
+                  :  'Find a Tutor'
+                  }
+                  
+                  </Link></soan>
+                <span className={`${styles.homenaveitem}`}><Link href='/login'>
+                          {  router.locale  === 'en-US' ? 'login'
+
+                          : router.locale === 'fr' ? 'connexion'
+
+                          : router.locale === 'de' ?
+                                                    'Anmeldung'
+                          : router.locale === 'es' ?
+                                                    'acceso'
+                          : router.locale === 'zh' ?
+                                                    '登录'
+                          :  'login'
+                          }
+                  </Link></span>
+                <span className={`${styles.homenaveitem} text-indigo-700`}>
+                                        {  router.locale  === 'en-US' ? 'Feature Languages'
+
+                        : router.locale === 'fr' ? 'Langues des fonctionnalités'
+
+                        : router.locale === 'de' ?
+                                                  'Feature-Sprachen'
+                        : router.locale === 'es' ?
+                                                  'Idiomas de funciones'
+                        : router.locale === 'zh' ?
+                                                  '功能语言'
+                        :  'Feature Languages'
+                        }
+                </span>
                 {
-                courses.filter(course => course.type === 'lang').slice(0, 6).map(co => <span className={`${styles.homenaveitems} margin-left text-gray-200 text-sm`}><Link href={`tutors?teach=${co.subject}&&country=all&&lp=0&&hp=100`}>{co.subject}</Link></span>)
+                courses.filter(course => course.type === 'lang').slice(0, 6).map(co => <span className={`${styles.homenaveitems} margin-left text-gray-200 text-sm`}><Link href={`tutors?teach=${co.subject['en-US']}&&country=all&&lp=0&&hp=100`}>{co.subject[router.locale]}</Link></span>)
                 }
-                <span className={`${styles.homenaveitem} text-indigo-700`}>Feature Subjects</span>
+                <span className={`${styles.homenaveitem} text-indigo-700`}>
+                 
+                  {  router.locale  === 'en-US' ? ' Feature Skills'
+
+                    : router.locale === 'fr' ? 'Compétences fonctionnelles'
+
+                    : router.locale === 'de' ?
+                                              'Feature-Fähigkeiten'
+                    : router.locale === 'es' ?
+                                              'Habilidades de funciones'
+                    : router.locale === 'zh' ?
+                                              '特色技能'
+                    :  ' Feature Skills'
+                    }
+                  </span>
                 {
-                courses.filter(course => course.type === 'subj').slice(0, 6).map(co => <span className={`${styles.homenaveitems} margin-left text-gray-200 text-sm`}><Link href={`tutors?teach=${co.subject}&&country=all&&lp=0&&hp=100`}>{co.subject}</Link></span>)
+                courses.filter(course => course.type === 'subj').slice(0, 6).map(co => <span className={`${styles.homenaveitems} margin-left text-gray-200 text-sm`}><Link href={`tutors?teach=${co.subject['en-US']}&&country=all&&lp=0&&hp=100`}>{co.subject[router.locale]}</Link></span>)
                 }
-                <span className={`${styles.homenaveitem} text-indigo-700`}>Feature Skills</span>
+                <span className={`${styles.homenaveitem} text-indigo-700`}>
+                  
+                  {  router.locale  === 'en-US' ? ' Feature Subjects'
+
+                    : router.locale === 'fr' ? 'Sujets vedettes'
+
+                    : router.locale === 'de' ?
+                                              'Feature-Themen'
+                    : router.locale === 'es' ?
+                                              'Temas destacados'
+                    : router.locale === 'zh' ?
+                                              '特色科目'
+                    :  ' Feature Subjects'
+                    }
+                </span>
                 {
-                courses.filter(course => course.type === 'skill').slice(0, 6).map(co => <span className={`${styles.homenaveitems} margin-left text-gray-200 text-sm`}><Link href={`tutors?teach=${co.subject}&&country=all&&lp=0&&hp=100`}>{co.subject}</Link></span>)
+                courses.filter(course => course.type === 'skill').slice(0, 6).map(co => <span className={`${styles.homenaveitems} margin-left text-gray-200 text-sm`}><Link href={`tutors?teach=${co.subject['en-US']}&&country=all&&lp=0&&hp=100`}>{co.subject[router.locale]}</Link></span>)
                 }
             </div>
         <ReactNotification />

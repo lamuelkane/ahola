@@ -9,6 +9,7 @@ import {newstudentaccount} from '../Templates/student'
 import Footer from '../components/Footer'
 import Notification from '../components/Notification';
 import Head from 'next/head'
+import Link from 'next/link'
 
 
 export default function Example() {
@@ -157,15 +158,88 @@ let sendimage = async(e) => {
                 <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
             </Head>
     <div className="border"><Header2 /></div>
-    <div className={`center bg-gray-700 py-10 margin-bottom`}>
-            <h2 className={`text-2xl text-indigo-700 margin-bottom`}>Become a student on Ahola</h2>
-            <p className={`text-sm`}>Create your very own student account with Ahola and begin your learning process</p>
+    <div className={`center border bg-red-500  py-10 margin-bottom`}>
+            <h2 className={`text-2xl white margin-bottom`}>
+            {  router.locale  === 'en-US' ? 'Register as a student'
+
+: router.locale === 'fr' ? `S'inscrire en tant qu'étudiant`
+
+: router.locale === 'de' ?
+                          `Als Student anmelden`
+: router.locale === 'es' ?
+                          `Registrarse como estudiante`
+: router.locale === 'zh' ?
+                          `注册为学生`
+:  'Register as a student'
+}
+            </h2> 
+            <span className={`text-w`}>
+            {  router.locale  === 'en-US' ? 'Or'
+
+: router.locale === 'fr' ? `Ou`
+
+: router.locale === 'de' ?
+                          `Oder`
+: router.locale === 'es' ?
+                          `O`
+: router.locale === 'zh' ?
+                          `或者`
+:  'Or'
+}
+            </span>
+                <div className="mt-2 sm:mt-5 sm:flex sm:justify-center lg:justify-center">
+                <div className="rounded-md margin-right margin-bottom shadow">
+                  <div className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium hover:text-indigo-500 hover:border-indigo-500 rounded-md text-white bg-indigo-600 hover:bg-white md:py-4 md:text-lg md:px-10">
+                      <Link href='/tutor_register' > 
+                      {  router.locale  === 'en-US' ? 'Become a Tutor'
+
+: router.locale === 'fr' ? `Devenir Tuteur`
+
+: router.locale === 'de' ?
+                          `Werde Tutor`
+: router.locale === 'es' ?
+                          `Conviértete en tutor`
+: router.locale === 'zh' ?
+                          `成为导师`
+:  'Become a Tutor'
+}
+                      </Link>
+                  </div>
+                </div>
+              </div>
+            <p className={`text-sm text-white`}>
+            {  router.locale  === 'en-US' ? 'Create your very own student account with Ahola and begin your learning process'
+
+: router.locale === 'fr' ? `Créez votre propre compte étudiant avec Ahola et commencez votre processus d'apprentissage`
+
+: router.locale === 'de' ?
+                          `Erstelle dein eigenes Studentenkonto bei Ahola und beginne deinen Lernprozess`
+: router.locale === 'es' ?
+                          `Crea tu propia cuenta de estudiante con Ahola y comienza tu proceso de aprendizaje`
+: router.locale === 'zh' ?
+                          `使用 Ahola 创建您自己的学生帐户并开始您的学习过程`
+:  'Create your very own student account with Ahola and begin your learning process'
+}
+            </p>
         </div>
       <div>
         <div className="md:grid md:grid-cols-3 md:gap-6">
           <div className="md:col-span-1">
             <div className="px-4 sm:px-0">
-              <h3 className="text-lg font-medium leading-6 text-gray-900 margin-left">Profile</h3>
+              <h3 className="text-lg font-medium leading-6 text-gray-900 margin-left">
+              {  router.locale  === 'en-US' ? 'Profile'
+
+: router.locale === 'fr' ? `profil`
+
+: router.locale === 'de' ?
+                          `Profil`
+: router.locale === 'es' ?
+                          `perfil`
+: router.locale === 'zh' ?
+                          `轮廓`
+:  'Profile'
+}
+              </h3>
               <p className="mt-1 text-sm text-gray-600">
               </p>
             </div>
@@ -175,7 +249,20 @@ let sendimage = async(e) => {
               <div className="shadow sm:rounded-md sm:overflow-hidden">
                 <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Photo</label>
+                    <label className="block text-sm font-medium text-gray-700">
+                    {  router.locale  === 'en-US' ? 'Photo'
+
+: router.locale === 'fr' ? `photo`
+
+: router.locale === 'de' ?
+                          `Fotol`
+: router.locale === 'es' ?
+                          `Foto`
+: router.locale === 'zh' ?
+                          `照片`
+:  'Photo'
+}
+                    </label>
                     <div className="mt-1 flex items-center">
                       <span className="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
                         {photo ?
@@ -188,7 +275,21 @@ let sendimage = async(e) => {
                             htmlFor="file-upload"
                             className="relative margin-x cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                           >
-                            <span>Upload a file</span>
+                            <span>
+                            {  router.locale  === 'en-US' ? 'Upload a file'
+
+: router.locale === 'fr' ? `Télécharger un fichiere`
+
+: router.locale === 'de' ?
+                          `Eine Datei hochladen`
+: router.locale === 'es' ?
+                          `Cargar un archivo`
+: router.locale === 'zh' ?
+                          `上传一个文件`
+:  'Upload a file'
+}
+                           
+                            </span>
                             <input id="file-upload" accept="image/*" name="file-upload" onChange={sendimage} type="file" className="sr-only" />
                           </label>
                     </div>
@@ -208,8 +309,34 @@ let sendimage = async(e) => {
         <div className="md:grid md:grid-cols-3 md:gap-6">
           <div className="md:col-span-1">
             <div className="px-4 sm:px-0">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">Personal Information</h3>
-              <p className="mt-1 text-sm text-gray-600">Use a permanent email address where you can receive emails.</p>
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+              {  router.locale  === 'en-US' ? 'Personal Information'
+
+: router.locale === 'fr' ? `Informations personnelles`
+
+: router.locale === 'de' ?
+                          `Persönliche Informationen`
+: router.locale === 'es' ?
+                          `Informacion personal`
+: router.locale === 'zh' ?
+                          `个人信息`
+:  'Personal Information'
+}
+              </h3>
+              <p className="mt-1 text-sm text-gray-600">
+              {  router.locale  === 'en-US' ? 'Use a permanent email address where you can receive emails.'
+
+: router.locale === 'fr' ? `Utilisez une adresse e-mail permanente où vous pouvez recevoir des e-mails.`
+
+: router.locale === 'de' ?
+                          `Verwenden Sie eine dauerhafte E-Mail-Adresse, unter der Sie E-Mails empfangen können.`
+: router.locale === 'es' ?
+                          `Utilice una dirección de correo electrónico permanente donde pueda recibir correos electrónicos.`
+: router.locale === 'zh' ?
+                          `使用可以接收电子邮件的永久电子邮件地址。`
+:  'Use a permanent email address where you can receive emails.'
+}
+</p>
             </div>
           </div>
           <div className="mt-5 md:mt-0 md:col-span-2">
@@ -219,7 +346,19 @@ let sendimage = async(e) => {
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3">
                       <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
-                        First name
+                       
+                        {  router.locale  === 'en-US' ? ' First name'
+
+: router.locale === 'fr' ? `Prénom`
+
+: router.locale === 'de' ?
+                          `Vorname`
+: router.locale === 'es' ?
+                          `Nombre de pila`
+: router.locale === 'zh' ?
+                          `名`
+:  ' First name'
+}
                       </label>
                       <input
                       required
@@ -237,7 +376,19 @@ let sendimage = async(e) => {
 
                     <div className="col-span-6 sm:col-span-3">
                       <label htmlFor="last-name" className="block text-sm font-medium text-gray-700">
-                        Last name
+                        
+                        {  router.locale  === 'en-US' ? 'Last name'
+
+: router.locale === 'fr' ? `Nom de famille`
+
+: router.locale === 'de' ?
+                          `Nachname`
+: router.locale === 'es' ?
+                          `Apellido`
+: router.locale === 'zh' ?
+                          `姓`
+:  'Last name'
+}
                       </label>
                       <input
                       required
@@ -253,7 +404,19 @@ let sendimage = async(e) => {
 
                     <div className="col-span-6 sm:col-span-3">
                       <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
-                        password
+                        
+                      {  router.locale  === 'en-US' ? 'Password'
+
+: router.locale === 'fr' ? 'Mot de passe'
+
+: router.locale === 'de' ?
+                          'Passwort'
+: router.locale === 'es' ?
+                          'Contraseña'
+: router.locale === 'zh' ?
+                          '密码'
+:  'Password'
+}
                       </label>
                       <input
                       required
@@ -269,7 +432,19 @@ let sendimage = async(e) => {
 
                     <div className="col-span-6 sm:col-span-3">
                       <label htmlFor="last-name" className="block text-sm font-medium text-gray-700">
-                        comfirm password
+                        
+                        {  router.locale  === 'en-US' ? 'comfirm password'
+
+: router.locale === 'fr' ? 'Confirmez le mot de passe'
+
+: router.locale === 'de' ?
+                          'Kennwort bestätigen'
+: router.locale === 'es' ?
+                          'Confirmar contraseña'
+: router.locale === 'zh' ?
+                          '确认密码'
+:  'comfirm password'
+}
                       </label>
                       <input
                       required
@@ -285,7 +460,18 @@ let sendimage = async(e) => {
 
                     <div className="col-span-6 sm:col-span-4">
                       <label htmlFor="email-address" className="block text-sm font-medium text-gray-700">
-                        Email address
+                      {  router.locale  === 'en-US' ? 'Email address'
+
+: router.locale === 'fr' ? 'Adresse e-mail'
+
+: router.locale === 'de' ?
+                          'E-Mail-Addresse'
+: router.locale === 'es' ?
+                          'Dirección de correo electrónico'
+: router.locale === 'zh' ?
+                          '电子邮件地址'
+:  'Email address'
+}
                       </label>
                       <input
                       required
@@ -301,7 +487,19 @@ let sendimage = async(e) => {
 
                     <div className="col-span-6 sm:col-span-3">
                       <label htmlFor="country" className="block text-sm font-medium text-gray-700">
-                        Country
+                        
+                        {  router.locale  === 'en-US' ? 'Country'
+
+: router.locale === 'fr' ? 'Pays'
+
+: router.locale === 'de' ?
+                          'Land'
+: router.locale === 'es' ?
+                          'País'
+: router.locale === 'zh' ?
+                          '国家'
+:  'Country'
+}
                       </label>
                       <select
                         onChange={e => setcountry(e.target.value)}
@@ -310,7 +508,18 @@ let sendimage = async(e) => {
                         autoComplete="country-name"
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       >
-                        <option >Country</option>
+                        <option >  {  router.locale  === 'en-US' ? 'Country'
+
+: router.locale === 'fr' ? 'Pays'
+
+: router.locale === 'de' ?
+                          'Land'
+: router.locale === 'es' ?
+                          'País'
+: router.locale === 'zh' ?
+                          '国家'
+:  'Country'
+}</option>
                         {
                           countries.map((country , i)=> (
                             <option key={i} >{country.label}</option>
@@ -321,7 +530,19 @@ let sendimage = async(e) => {
 
                     <div className="col-span-6 sm:col-span-3">
                       <label htmlFor="country" className="block text-sm font-medium text-gray-700">
-                        Time Zone
+                        
+                        {  router.locale  === 'en-US' ? 'Time Zone'
+
+: router.locale === 'fr' ? 'Fuseau horaire'
+
+: router.locale === 'de' ?
+                          'Zeitzone'
+: router.locale === 'es' ?
+                          'Zona horaria'
+: router.locale === 'zh' ?
+                          '时区'
+:  'Time Zone'
+}
                       </label>
                       <select
                         onChange={e => {
@@ -333,7 +554,18 @@ let sendimage = async(e) => {
                         autoComplete="country-name"
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       >
-                         <option >Timezone</option>
+                         <option >{  router.locale  === 'en-US' ? 'Time Zone'
+
+: router.locale === 'fr' ? 'Fuseau horaire'
+
+: router.locale === 'de' ?
+                          'Zeitzone'
+: router.locale === 'es' ?
+                          'Zona horaria'
+: router.locale === 'zh' ?
+                          '时区'
+:  'Time Zone'
+}</option>
                           {
                             timezones.map((time, i) => (
                               <option key={i} value={time.name} >{time.offset}-{time.name}</option>
@@ -350,7 +582,19 @@ let sendimage = async(e) => {
                     
                     className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
-                    Save
+                    
+                    {  router.locale  === 'en-US' ? 'Save'
+
+: router.locale === 'fr' ? 'Sauvegarder'
+
+: router.locale === 'de' ?
+                          'Speichern'
+: router.locale === 'es' ?
+                          'Ahorrar'
+: router.locale === 'zh' ?
+                          '保存'
+:  'Save'
+}
                   </button>
                 </div>
               </div>

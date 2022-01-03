@@ -7,7 +7,9 @@ import Header2 from './Header2'
 import {useRouter} from 'next/router'
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
+import styles from '../styles/Home.module.css'
+
 
 
 const navigation = [
@@ -20,7 +22,13 @@ const navigation = [
 
 
 
-export default function Example() {
+export default function Example({subjects, setsubjects}) {
+    const [courses, setcourses] = useState([])
+    const [showsearch, setshowsearch] = useState(false)
+
+    useEffect(() => {
+      setcourses(subjects)
+    }, [subjects])
 
   let herotext = {
     main: 'Your Fluency Is Just A Few',
@@ -132,17 +140,25 @@ export default function Example() {
               </p>
               <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                 <div className="rounded-md margin-right margin-bottom shadow">
-                  <div className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-red-600 hover:bg-red-700 md:py-4 md:text-lg md:px-10">
+                  <div className={` ${styles.coursessearch} w-full flex items-center  border border-transparent text-base font-medium rounded-md`}>
+                      <input className={`${styles.coursessearchlabel} ${styles.coursessearchinput}`} type="text" placeholder='Search Courses' onChange={e => {
+                        if (e.target.value === '') {
+                          setshowsearch(false)
+                          return
+                        }
+                        setshowsearch(true)
+                          setcourses(subjects.filter(sub => sub.subject[router.locale].toLowerCase().includes(e.target.value.toLowerCase())))
 
-                      <Link
-                        href="/tutors"
-                        
-                      >
-                        {herotext.btn1}
-                      </Link>
+                      }} />
+                      <div className={`${styles.coursessearchlabel} bg-red-700 text-white focus:ring-transparent`}>Expore Tutors</div>
+                      <div className={`${styles.courses} ${!showsearch && 'hide2'} bg-gray-500`}>
+                        {
+                            courses.map(sub =>  <div key={sub._id} className={`text-gray-500  text-sm margin`}><Link href={`tutors?teach=${sub.subject['en-US']}&&country=all&&lp=0&&hp=100`}>{sub.subject[router.locale]}</Link></div>)
+                        }
+                    </div>
                   </div>
                 </div>
-                <div className="rounded-md shadow">
+                <div className="rounded-md">
                   <div className="w-full flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
                       <Link
                         href="/tutor_register"
@@ -160,7 +176,7 @@ export default function Example() {
       <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
         <img
           className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
-          src="./images/hero4.jpg"
+          src="./images/hero.jpg"
           alt=""
         />
       </div>

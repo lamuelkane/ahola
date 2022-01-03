@@ -1,8 +1,5 @@
-import Header from '../components/Header'
 import Rating from '@mui/material/Rating';
-import Paper from '@mui/material/Paper';
 import styles from '../styles/Tutor2.module.css'
-import Reviewprogress from '../components/Reviewprogress';
 import StarRateIcon from '@mui/icons-material/StarRate';
 import {useRouter} from 'next/router'
 import axios from 'axios'
@@ -45,6 +42,7 @@ const Tutor = () => {
             const {data} = await axios.get(`${sever}/api/users/tutor/${id}`)
             settutor(data)
          } catch (error) {
+             alert(error)
              Notification({
                 title:"Error",
                 message:`an error ocurred while getting tutor information`,
@@ -141,15 +139,84 @@ const Tutor = () => {
                                     <span>{tutor.firstname}</span> {' '}
                                     <span>{tutor.lastname}</span>
                                 </div>
-                                <div>Teaches {tutor.subject}  </div>
-                                <div>From {tutor.country}</div>
-                                <div className={`text-xs`} >Teaches at ${tutor.rate} per lesson</div>
+                                <div>
+                                {  router.locale  === 'en-US' ? 'Teaches '
+
+: router.locale === 'fr' ? 'Enseigne'
+
+: router.locale === 'de' ?
+                          'Unterrichtet'
+: router.locale === 'es' ?
+                          'Enseña'
+: router.locale === 'zh' ?
+                          '教'
+:  'Teaches '
+}
+                                    {tutor.subject}  </div>
+                                <div>
+                                    
+                                {  router.locale  === 'en-US' ? 'From '
+
+: router.locale === 'fr' ? 'À partir de'
+
+: router.locale === 'de' ?
+                          'Von'
+: router.locale === 'es' ?
+                          'Desde'
+: router.locale === 'zh' ?
+                          '从'
+:  'From '
+} {tutor.country}</div>
+                                <div className={`text-xs`} >
+                                {  router.locale  === 'en-US' ? 'Teaches at  '
+
+: router.locale === 'fr' ? 'Enseigne à'
+
+: router.locale === 'de' ?
+                          'Lehrt bei'
+: router.locale === 'es' ?
+                          'Enseña en'
+: router.locale === 'zh' ?
+                          '任教于'
+:  'Teaches at  '
+} 
+                                ${tutor.rate} 
+                                {  router.locale  === 'en-US' ? 'per lesson'
+
+: router.locale === 'fr' ? 'par leçon'
+
+: router.locale === 'de' ?
+                          'pro Lektion'
+: router.locale === 'es' ?
+                          'por lección'
+: router.locale === 'zh' ?
+                          '每节课'
+:  'per lesson'
+} 
+                                </div>
                             </div>
                         </div>
                         <div className={`flex column`}>
                             <button className={`${styles.actionbtn}`}  onClick={e => {
+                                if(user?.type !== 'student'){
+                                    router.push('/student_register')
+                                    return
+                                }
                                 router.push(`messages?convid=${tutor._id + user._id}&&name=${tutor.firstname}&&rcrid=${tutor._id}`)
-                            }} >Message {tutor.firstname}</button>
+                            }} >
+                                    {  router.locale  === 'en-US' ? 'Message'
+
+: router.locale === 'fr' ? 'Message'
+
+: router.locale === 'de' ?
+                          'Nachricht'
+: router.locale === 'es' ?
+                          'Mensaje'
+: router.locale === 'zh' ?
+                          '信息'
+:  'Message'
+} 
+                             {tutor.firstname}</button>
                             <button className={`${styles.actionbtn}`}  onClick={e => {
                                     const tuto = user.tutors.find(tut => tut.id === tutor._id)
                                     if(tuto){
@@ -160,12 +227,37 @@ const Tutor = () => {
                                         setOpen(true)
                                         return
                                     }
-                                }} >Book a lesson</button>
+                                }} >
+                                  {  router.locale  === 'en-US' ? 'Book a lesson'
+
+: router.locale === 'fr' ? 'Réserver une leçon'
+
+: router.locale === 'de' ?
+                          'Buchen Sie eine Lektion'
+: router.locale === 'es' ?
+                          'Reservar una lección'
+: router.locale === 'zh' ?
+                          '预约课程'
+:  'Book a lesson'
+} 
+                                </button>
                         </div>
                     </div>
                     <div className={`${styles.tutormainwrapper}`}>
                         <div>
-                        <h3 className={`margin-y`}> See when {tutor.firstname} is available for lessons</h3>
+                        <h3 className={`margin-y`}> 
+                        {  router.locale  === 'en-US' ? `See when ${tutor.firstname} is available for lessons`
+
+: router.locale === 'fr' ? `Voir quand ${tutor.firstname} est disponible pour les cours`
+
+: router.locale === 'de' ?
+                          `Sehen Sie, wann ${tutor.firstname} für den Unterricht verfügbar ist`
+: router.locale === 'es' ?
+                          `Ver cuándo ${tutor.firstname} está disponible para lecciones`
+: router.locale === 'zh' ?
+                          `查看 ${tutor.firstname} 何时可以上课`
+:  `See when ${tutor.firstname} is available for lessons`
+}</h3>
                         <div className={`grid grid-cols-7 border border-green-400`}>
                                 {
                                 week.map((day, dayidx) => (
@@ -181,11 +273,36 @@ const Tutor = () => {
                                 ))
                                 }
                             </div>
-                            <h3 className={`margin-top`}> Get to know  {tutor.firstname}</h3>
+                            <h3 className={`margin-top`}> 
+                            {  router.locale  === 'en-US' ? ` Get to know ${tutor.firstname}`
+
+: router.locale === 'fr' ? `Faites connaissance avec ${tutor.firstname}`
+
+: router.locale === 'de' ?
+                          `Lerne ${tutor.firstname} kennen`
+: router.locale === 'es' ?
+                          `Conocer ${tutor.firstname}`
+: router.locale === 'zh' ?
+                          `认识导师`
+:  ` Get to know ${tutor.firstname}`
+}</h3>
                             <div className={`text-sm ${styles.tutordes}`}>
                                 {tutor.description}
                             </div>
-                            <h3 className={`margin-top`}> What students think about  {tutor.firstname}</h3>
+                            <h3 className={`margin-top`}> 
+                            {  router.locale  === 'en-US' ? ` What students think about ${tutor.firstname}`
+
+: router.locale === 'fr' ? `Ce que les élèves pensent de ${tutor.firstname}`
+
+: router.locale === 'de' ?
+                          `Was Schüler über ${tutor.firstname} denken`
+: router.locale === 'es' ?
+                          `Lo que piensan los estudiantes sobre ${tutor.firstname}`
+: router.locale === 'zh' ?
+                          `学生对 ${tutor.firstname} 的看法`
+:  ` What students think about ${tutor.firstname}`
+}
+                             </h3>
                             <div className={`flex justify-between ${styles.tutorreview}`}>
                                     <img src="./images/femaleteacher.jpg" className={` ${styles.tutorreviewimg}`} alt="" width="100" height="100"/>
                                     <div className={`${styles.tutorreviewtext}`}>
