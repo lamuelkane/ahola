@@ -252,6 +252,14 @@
     background-color: transparent;
 }
 
+.bookbtn2{
+    padding: 10px 35px;
+    margin: 5px 0px;
+    border-radius: 5px;
+    border: none;
+    background-color: #4F46E5;
+}
+
 .bookbtn:hover{
     background-color: #4F46E5;;
 
@@ -310,6 +318,16 @@
         border: 1px solid #4F46E5;
         transition: all 0.5s ease;
     }
+
+    .bookbtn2{
+        padding: 10px 7px;
+        margin: 5px 0px;
+        background-color: transparent;
+        border-radius: 10px;
+        border: 1px solid #4F46E5;
+        transition: all 0.5s ease;
+    }
+
 
     .tutorabout{
         flex-direction: row;

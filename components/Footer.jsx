@@ -69,10 +69,11 @@ const Footer = () => {
     return (
         <>
         <div className={`flex justify-between wrap bg-gray-700 text-white padding ${styles.Footer}`}>
-            {/* <img src="./images/logo.png" alt="" width='100' height='100' title="logo" className={styles.footerlogoimg} /> */}
             <div></div>
-        <div className={`center ${styles.contactus}`}>
-                <h1 className={`text-white  text-2xl  margin-bottom`}>
+            <div></div>
+            <div></div>
+        <div className={`center margin-bottom ${styles.contactus}`} style={{textAlign: 'start'}}>
+                <h1 className={`text-white  text-xl  margin-bottom`}>
                { router.locale  === 'en-US' ? 'Learn Languages'
 
             : router.locale === 'fr' ? 'Apprendre des langues'
@@ -86,13 +87,13 @@ const Footer = () => {
             :  'Learn Languages'
         }</h1>
                 { 
-                    subjects.filter(sub => sub.type === 'lang').map(e => <div key={e._id} className={` text-gray-300 ${styles.justify}`} style={{textAlign: 'start'}}>
+                    subjects.filter(sub => sub.type === 'lang').map(e => <div key={e._id} className={` text-gray-300 text-sm ${styles.justify}`} >
                         <a href={`/tutors?teach=${e.subject['en-US']}&&lp=0&&hp=100&&country=all`}>{translate('learn')} {  e.subject[router.locale]  } {translate('online')}</a>
                     </div>)
                 }
             </div>
-            <div className={`center ${styles.contactus}`}>
-                <h1 className={`text-white  text-2xl  margin-bottom`}>
+            <div className={`center margin-bottom ${styles.contactus}`} style={{textAlign: 'start'}}>
+                <h1 className={`text-white  text-xl  margin-bottom`}>
                 { router.locale  === 'en-US' ? 'Learn Subjects'
 
 : router.locale === 'fr' ? 'Apprendre des matières'
@@ -107,13 +108,13 @@ const Footer = () => {
 }
                 </h1>
                 { 
-                    subjects.filter(sub => sub.type === 'subj').map(e => <div key={e._id} className={` text-gray-300`} style={{textAlign: 'start'}}>
+                    subjects.filter(sub => sub.type === 'subj').map(e => <div key={e._id} className={`text-sm text-gray-300`} >
                         <a href={`/tutors?teach=${e.subject['en-US']}&&lp=0&&hp=100&&country=all`}> {translate('learn')}  {e.subject[router.locale]}  {translate('online')} </a>
                     </div>)
                 }
             </div>
-            <div className={`center ${styles.contactus}`}>
-                <h1 className={`text-white  text-2xl  margin-bottom`}>
+            <div className={`center margin-bottom ${styles.contactus}`} style={{textAlign: 'start'}}>
+                <h1 className={`text-white  text-xl  margin-bottom`}>
                 { router.locale  === 'en-US' ? 'Learn Skills'
 
 : router.locale === 'fr' ? 'Apprendre des compétences'
@@ -128,19 +129,19 @@ const Footer = () => {
 }
                 </h1>
                 { 
-                    subjects.filter(sub => sub.type === 'skill').map(e => <div key={e._id} className={` text-gray-300`} style={{textAlign: 'start'}}>
+                    subjects.filter(sub => sub.type === 'skill').map(e => <div key={e._id} className={`text-sm text-gray-300`} >
                         <a href={`/tutors?teach=${e.subject['en-US']}&&lp=0&&hp=100&&country=all`}> {translate('learn')} {e.subject[router.locale]} {translate('online')} </a>
                     </div>)
                 }
             </div>
-            <div className={`center ${styles.contactus}`} style={{textAlign: 'start'}}>
+            <div className={`center margin-bottom ${styles.contactus}`} style={{textAlign: 'start'}}>
                 <h1 className={`text-white  text-2xl margin-bottom`}>
                 { router.locale  === 'en-US' ? 'Contact Us'
 
 : router.locale === 'fr' ? 'Nous contacter'
 
 : router.locale === 'de' ?
-                          'Kontaktiere uns'
+                          'Kontaktieren Sie uns'
 : router.locale === 'es' ?
                           'Contacta con nosotros'
 : router.locale === 'zh' ?
@@ -170,6 +171,10 @@ const Footer = () => {
                </span>
                <span className="icon flex"><a href="https://www.instagram.com/"><img className={`${styles.footerimg}`} alt="Instagram" src="images/instagram2x.png" title="instagram"/></a>instagram</span>
                <span className="icon flex"><a href="mailto:info@ahola.ch"><img className={`${styles.footerimg}`} alt="Instagram" src="images/email.png" title="email"/></a>info@ahola.ch</span>
+               <span className="icon flex"><a href="https://www.instagram.com/"><img className={`${styles.footerimg}`} alt="Instagram" src="images/zoom.png" title="instagram"/></a>instagram</span>
+               <span className="icon flex"><a href="mailto:info@ahola.ch"><img className={`${styles.footerimg}`} alt="Instagram" src="images/youtube.png" title="email"/></a>info@ahola.ch</span>
+               <span className="icon flex"><a href="https://www.instagram.com/"><img className={`${styles.footerimg}`} alt="Instagram" src="images/whatsapp.png" title="instagram"/></a>instagram</span>
+               <span className="icon flex"><a href="mailto:info@ahola.ch"><img className={`${styles.footerimg}`} alt="Instagram" src="images/skype.png" title="email"/></a>info@ahola.ch</span>
                </div>
             </div>
             <div></div>

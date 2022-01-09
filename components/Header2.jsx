@@ -30,6 +30,10 @@ const Header2 = () => {
         }
     }, [user])
 
+    useEffect(() => {
+      setshowlang(false)
+    }, [router.locale, Currency])
+
 
     const getsubjects = async() => {
         try {
@@ -70,11 +74,12 @@ const Header2 = () => {
         try {
           const {data} = await axios.get(`https://freecurrencyapi.net/api/v2/latest?apikey=646fbf50-659b-11ec-88f2-8b1f0f257506`)
           dispatch(setcurrencies(data))
-          setcurrecies(Object.keys(data.data))
+          setcurrecies(Object.keys(data.data).filter(obj => obj === 'USD' || obj === 'EUR' || obj === 'CHF' || obj === 'CNY'))
         } catch (error) {
+          alert(error)
           Notification({
             title:"Error",
-            message:`an error ocurred while getting courses`,
+            message:`an error ocurred while getting Currencies`,
             type:"danger",
             container:"top-right",
             insert:"top",

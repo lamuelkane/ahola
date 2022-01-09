@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import day from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
+import { DateTime } from "luxon";
 
 
 export function getMonth(month = dayjs().month()) {
@@ -22,19 +23,21 @@ export function getMonth(month = dayjs().month()) {
     
 }
 
-export const getlessonintimezone = (lesson) => {
-    // const day = dayjs(new Date(lesson.day.year, lesson.day.month , lesson.day.date)).format('ddd')
-    const month = dayjs(new Date(lesson.day.year, lesson.day.month , lesson.day.date)).format('MMM')
+export const getlessonintimezone = (lesson, timezone) => {
+    const month = dayjs(new Date(lesson.day.year, lesson.day.month , lesson.day.date)).format('MM')
     const date = dayjs(new Date(lesson.day.year, lesson.day.month , lesson.day.date)).format('DD')
     const year = dayjs(new Date(lesson.day.year, lesson.day.month , lesson.day.date)).format('YYYY')
     const time = getaccuratehours2(lesson?.day?.hour)
     const les = lesson.day.day + " " + month + ' ' + date + ' ' + year + '  ' + time + ':00' +  '  ' + lesson?.timezone?.offset + ' ' + "(" + lesson?.timezone?.name + ')'
-    // console.log(dayjs('Wed Dec 22 2021 12:00  GMT+14:00 (Pacific/Kiritimati)').tz('Pacific/Kiritimati').toLocaleString())
-    // console.log(les)
-    // console.log(dayjs(les).toLocaleString(), new Date(les).toLocaleString(), les)
-    // console.log(dayjs("2013-11-18 11:55").tz("America/Toronto"))
-    return new Date(les).toString()
-    
+    let overrideZone = DateTime.fromISO(`${year}-${month}-${date}T${time}`, { zone: lesson?.timezone?.name });
+    const les2 =  overrideZone.toFormat('y') + '-' + overrideZone.toFormat('LL') + '-' + overrideZone.toFormat('dd') + 'T' + overrideZone.toFormat('HH') 
+
+    let local = DateTime.fromISO(les2);
+    let rezoned = local.setZone(timezone.name);
+
+    console.log(rezoned.toString())
+    // console.log(timezone.name, local.toString(), rezoned.toString())
+    return new Date(rezoned.toFormat('y'), rezoned.toFormat('L') - 1, rezoned.toFormat('dd'), rezoned.toFormat('HH') ).toString()
 }
 
 
@@ -67,8 +70,8 @@ export const getaccuratehours2 = (lesson) => {
 
         return lesson
 }
-export const checklessonstate = (lesson) => {
-    const date = new Date(getlessonintimezone(lesson)).getTime()
+export const checklessonstate = (lesson, timezone) => {
+    const date = new Date(getlessonintimezone(lesson, timezone)).getTime()
     if(date < new Date().getTime()){
         return true
     }

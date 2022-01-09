@@ -63,6 +63,7 @@ const reducers = combineReducers({
     // sever : () => 'http://localhost:5000',
     // sever2:() => 'http://localhost:5001',
     sever2: () => 'https://aholaimageupload.herokuapp.com',
+    sever3: () => 'https://videosaverahola.herokuapp.com',
     // socket: () => io('ws://aholasocket.herokuapp.com'),
     socket: () => io('ws://localhost:8000'),
     Currency,

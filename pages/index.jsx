@@ -634,7 +634,7 @@ export default function Home() {
 : router.locale === 'es' ?
                           'Cómo actúa Ahola'
 : router.locale === 'zh' ?
-                          '阿霍拉的工作原理'
+                          'Ahola的工作原理'
 :  'How Ahola Works'
 }
       </h2>
@@ -679,7 +679,7 @@ export default function Home() {
 : router.locale === 'fr' ? 'Utilisez des filtres pour affiner votre recherche et trouver celui qui vous convient le mieux'
 
 : router.locale === 'de' ?
-                          'Verwenden Sie Filter, um Ihre Suche einzugrenzen und die perfekte Passform für Sie zu finden'
+                          'Verwenden Sie Filter, um Ihre Suche einzugrenzen und die perfekte Lösung für Sie zu finden'
 : router.locale === 'es' ?
                           'Utilice filtros para limitar su búsqueda y encontrar la opción perfecta para usted'
 : router.locale === 'zh' ?
@@ -821,7 +821,7 @@ export default function Home() {
             <h2 className={`center text-indigo-900 margin-top-80  text-3xl font-extrabold ${styles.showcaseheading}`}>
             {  router.locale  === 'en-US' ? ' We Are Available 24 hours a day, 365 days a year'
 
-: router.locale === 'fr' ? 'Nous sommes disponibles 24 heures sur 24, 365 jours par an'
+: router.locale === 'fr' ? 'Nous sommes disponibles 24 heures par jour, 365 jours par an'
 
 : router.locale === 'de' ?
                           'Wir sind 24 Stunden am Tag, 365 Tage im Jahr für Sie erreichbar'
@@ -961,7 +961,7 @@ export default function Home() {
                  
                  {  router.locale  === 'en-US' ? 'Everyone sees a better version of themselves,'
 
-: router.locale === 'fr' ? `Jeder sieht eine bessere Version von sich selbst,`
+: router.locale === 'fr' ? `Tout le monde voit une meilleure version d'eux-mêmes`
 
 : router.locale === 'de' ?
                           'Jeder sieht eine bessere Version von sich selbst,'
@@ -976,7 +976,7 @@ export default function Home() {
                   
                   {  router.locale  === 'en-US' ? 'But sometimes, we need to do a little'
 
-: router.locale === 'fr' ? `Mais parfois, nous devons faire un peu`
+: router.locale === 'fr' ? `Mais parfois, nous devons faire un peu apprendre à être là.`
 
 : router.locale === 'de' ?
                           'Aber manchmal müssen wir ein bisschen tun'
@@ -991,7 +991,7 @@ export default function Home() {
                   
                   {  router.locale  === 'en-US' ? 'learning to ge there.'
 
-: router.locale === 'fr' ? `apprendre à être là.`
+: router.locale === 'fr' ? ``
 
 : router.locale === 'de' ?
                           'lernen, dabei zu sein.'
@@ -1054,7 +1054,7 @@ export default function Home() {
 : router.locale === 'de' ?
                           'Holen Sie das Beste aus sich heraus, wenn unsere Profis Hand in Hand mit Ihnen arbeiten, um sicherzustellen, dass Sie Ihre Ziele so schnell wie möglich erreichen'
 : router.locale === 'es' ?
-                          'Obtenga lo mejor de usted mismo con nuestros profesionales trabajando de la mano con guantes para asegurarse de que logre sus objetivos lo antes posible.'
+                          'Obtenga lo mejor de usted mismo con nuestros profesionales trabajando de la mano a mano para asegurarse de que logre sus objetivos lo antes posible.'
 : router.locale === 'zh' ?
                           '让我们的专业人士与您携手合作，充分发挥您的潜能，确保您尽快实现目标'
 :  'Get the best out of yourself with our professionals working hands in gloves with you to ensure you achieve your goals as soon as possible'
@@ -1095,7 +1095,7 @@ export default function Home() {
 : router.locale === 'fr' ? `Rejoins notre équipe`
 
 : router.locale === 'de' ?
-                          'Trete unserem Team bei'
+                          'Werden Sie Teil unseres Teams'
 : router.locale === 'es' ?
                           'Unete a nuestro equipo'
 : router.locale === 'zh' ?
@@ -1156,7 +1156,7 @@ export default function Home() {
 : router.locale === 'fr' ? `Développez votre carrière`
 
 : router.locale === 'de' ?
-                          'Erweitere deine Karriere'
+                          'Erweitern deine Karriere'
 : router.locale === 'es' ?
                           'Haz crecer tu carrera'
 : router.locale === 'zh' ?
@@ -1171,7 +1171,7 @@ export default function Home() {
 : router.locale === 'fr' ? `Soyez payé`
 
 : router.locale === 'de' ?
-                          'Bezahlt werden'
+                          'Lassen Sie sich bezahlen'
 : router.locale === 'es' ?
                           'Recibir salario'
 : router.locale === 'zh' ?
@@ -1185,10 +1185,10 @@ export default function Home() {
                
                 {  router.locale  === 'en-US' ? ' Become a Tutor'
 
-: router.locale === 'fr' ? `Devenir Tuteur`
+: router.locale === 'fr' ? `Devenez Tuteur`
 
 : router.locale === 'de' ?
-                          'Werde Tutor'
+                          'Tutor Werden'
 : router.locale === 'es' ?
                           'Conviértete en tutor'
 : router.locale === 'zh' ?

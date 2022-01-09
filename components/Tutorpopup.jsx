@@ -122,7 +122,6 @@ export default function Tutorpopup({open, setOpen, teacher}) {
 
 
     const savehoursbought = async(e) => {
-      // e.preventDefault()
       const {_id: id, rate, firstname: name, timezone} = teacher
       const tutor = student.tutors.find(tut => tut.id === teacher._id)
       const stu = teacher.students.find(stu => stu.id === student._id)
@@ -232,6 +231,61 @@ export default function Tutorpopup({open, setOpen, teacher}) {
         })
       }
       localStorage.setItem('user', JSON.stringify(student))
+    }
+
+    
+    const savehoursboughtfree = async(e) => {
+      e.preventDefault()
+      const {_id: id, rate, firstname: name, timezone} = teacher
+      student.tutors.push({
+        id,
+        rate,
+        hours: 1,
+        name,
+        timezone, 
+      })
+
+      teacher.students.push({
+        id: student._id,
+        rate,
+        name: student.firstname,
+        hours: 1,
+        timezone: student.timezone
+      })
+
+
+      try{
+        const {data: res} = await axios.post(`${sever}/api/users/tutor/update`, teacher)
+        const {data} = await axios.post(`${sever}/api/users/student/update`, student)
+       const sample = await axios.post(`${sever}/api/users/tutor/hoursbought`, {
+          template: boughthours(teacher.firstname, student.firstname, selectedSize.value),
+          email: teacher.email
+        })
+        Notification({
+          title:"Hours Bought",
+          message:`successfully bought 1 hour with tutor ${name}`,
+          type:"success",
+          container:"top-right",
+          insert:"top",
+          animationIn:"fadeInUp",
+          animationOut:"fadeOut",
+          duration:10000
+        })
+
+        localStorage.setItem('user', JSON.stringify(student))
+
+      } catch(error) {
+        Notification({
+          title:"ERROR",
+          message:`An error occured`,
+          type:"danger",
+          container:"top-right",
+          insert:"top",
+          animationIn:"fadeInUp",
+          animationOut:"fadeOut",
+          duration:10000
+        })
+      }
     }
 
 
@@ -385,7 +439,7 @@ export default function Tutorpopup({open, setOpen, teacher}) {
                           <RadioGroup value={selectedSize} onChange={setSelectedSize} className="mt-4">
                             <RadioGroup.Label className="sr-only">Choose a package</RadioGroup.Label>
                             <div className="grid grid-cols-4 gap-4">
-                              {packages.map((size) => (
+                              {student ? student?.tutors?.find(tut => tut.id === teacher._id) || teacher.freetrial ?  packages.filter(pack => pack.value !== 1).map((size) => (
                                 <RadioGroup.Option
                                   key={size.name}
                                   value={size}
@@ -430,12 +484,76 @@ export default function Tutorpopup({open, setOpen, teacher}) {
                                     </>
                                   )}
                                 </RadioGroup.Option>
-                              ))}
+                              )) : packages.map((size) => (
+                                <RadioGroup.Option
+                                  key={size.name}
+                                  value={size}
+                                  disabled={!size.inStock}
+                                  className={({ active }) =>
+                                    classNames(
+                                      size.inStock
+                                        ? 'bg-white shadow-sm text-gray-900 cursor-pointer'
+                                        : 'bg-gray-50 text-gray-200 cursor-not-allowed',
+                                      active ? 'ring-2 ring-indigo-500' : '',
+                                      'group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1'
+                                    )
+                                  }
+                                >
+                                  {({ active, checked }) => (
+                                    <>
+                                      <RadioGroup.Label as="p">{size.name}</RadioGroup.Label>
+                                      {size.inStock ? (
+                                        <div
+                                          className={classNames(
+                                            active ? 'border' : 'border-2',
+                                            checked ? 'border-indigo-500' : 'border-transparent',
+                                            'absolute -inset-px rounded-md pointer-events-none'
+                                          )}
+                                          aria-hidden="true"
+                                        />
+                                      ) : (
+                                        <div
+                                          aria-hidden="true"
+                                          className="absolute -inset-px rounded-md border-2 border-gray-200 pointer-events-none"
+                                        >
+                                          <svg
+                                            className="absolute inset-0 w-full h-full text-gray-200 stroke-2"
+                                            viewBox="0 0 100 100"
+                                            preserveAspectRatio="none"
+                                            stroke="currentColor"
+                                          >
+                                            <line x1={0} y1={100} x2={100} y2={0} vectorEffect="non-scaling-stroke" />
+                                          </svg>
+                                        </div>
+                                      )}
+                                    </>
+                                  )}
+                                </RadioGroup.Option>
+                              )) : ''}
                             </div>
                           </RadioGroup>
                         </div>
 
                         <div className="mt-4">
+                        {teacher.freetrial &&  !student?.tutors?.find(tut => tut.id === teacher._id) && <button
+                          type="submit"
+                          onClick={savehoursboughtfree}
+                          className="mt-6 w-full margin-bottom bg-green-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                        >
+                          
+                          {  router.locale  === 'en-US' ? `Book Free Trial`
+
+: router.locale === 'fr' ? `Réserver un essai gratuit`
+
+: router.locale === 'de' ?
+                          `Kostenlose Testversion buchen`
+: router.locale === 'es' ?
+                            `Reserva prueba gratis`
+: router.locale === 'zh' ?
+                          `预订免费试用`
+:  'Book Free Trial'
+}
+                        </button>}
                            {(selectedSize.value * teacher.rate) > student?.currentearning ?  paypalready && <PayPalButton
                               amount={(selectedSize.value * teacher.rate) - student.currentearning} 
                               // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
@@ -449,7 +567,10 @@ export default function Tutorpopup({open, setOpen, teacher}) {
                             /> :
                              <button
                           type="submit"
-                          onClick={savehoursbought}
+                          onClick={e => {
+                            e.preventDefault()
+                            savehoursbought()
+                          }}
                           className="mt-6 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                           
@@ -466,6 +587,7 @@ export default function Tutorpopup({open, setOpen, teacher}) {
 :  'Buy hours with Ahola funds'
 }
                         </button> }
+                        
                         </div>
                       </form>
                     </section>

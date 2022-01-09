@@ -173,40 +173,7 @@ let sendimage = async(e) => {
 :  'Register as a student'
 }
             </h2> 
-            <span className={`text-w`}>
-            {  router.locale  === 'en-US' ? 'Or'
-
-: router.locale === 'fr' ? `Ou`
-
-: router.locale === 'de' ?
-                          `Oder`
-: router.locale === 'es' ?
-                          `O`
-: router.locale === 'zh' ?
-                          `或者`
-:  'Or'
-}
-            </span>
-                <div className="mt-2 sm:mt-5 sm:flex sm:justify-center lg:justify-center">
-                <div className="rounded-md margin-right margin-bottom shadow">
-                  <div className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium hover:text-indigo-500 hover:border-indigo-500 rounded-md text-white bg-indigo-600 hover:bg-white md:py-4 md:text-lg md:px-10">
-                      <Link href='/tutor_register' > 
-                      {  router.locale  === 'en-US' ? 'Become a Tutor'
-
-: router.locale === 'fr' ? `Devenir Tuteur`
-
-: router.locale === 'de' ?
-                          `Werde Tutor`
-: router.locale === 'es' ?
-                          `Conviértete en tutor`
-: router.locale === 'zh' ?
-                          `成为导师`
-:  'Become a Tutor'
-}
-                      </Link>
-                  </div>
-                </div>
-              </div>
+          
             <p className={`text-sm text-white`}>
             {  router.locale  === 'en-US' ? 'Create your very own student account with Ahola and begin your learning process'
 
@@ -306,7 +273,7 @@ let sendimage = async(e) => {
         </div>
       </div>
       <div className="mt-10 sm:mt-0">
-        <div className="md:grid md:grid-cols-3 md:gap-6">
+        <div className="md:grid md:grid-cols-3 md:gap-6 margin-left">
           <div className="md:col-span-1">
             <div className="px-4 sm:px-0">
               <h3 className="text-lg font-medium leading-6 text-gray-900">

@@ -98,7 +98,7 @@ const Mytutor = () => {
                       user?.lessons.filter(les => les.student.id === tutor._id).map(tut => (
                         <div className={`flex justify-between align-center border p-3`} key={tut.id}>
                               <div className={`flex align-center`}>
-                                  <div className={`margin-right`}>{new Date(getlessonintimezone(tut)).toLocaleString()} { '    ' }      at $ {tut.rate.toFixed(2)} </div>
+                                  <div className={`margin-right`}>{new Date(getlessonintimezone(tut, user?.timezone)).toLocaleString()} { '    ' }      at $ {tut.rate.toFixed(2)} </div>
                               </div>
                               <div className={`flex`}>
                                   <div className={`margin-right`}>

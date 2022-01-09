@@ -16,9 +16,9 @@ const Day = ({day, rowindx, row, hours}) => {
     }
 
     const geteventclass = (day, hour) => {
-         let les = user?.lessons.find(e => new Date(getlessonintimezone(e)).getDate() == day.date() &&  new Date(getlessonintimezone(e)).getHours() == hour)
+         let les = user?.lessons.find(e => new Date(getlessonintimezone(e, user?.timezone)).getDate() == day.date() &&  new Date(getlessonintimezone(e, user?.timezone)).getHours() == hour)
          if(les){
-          if(new Date(getlessonintimezone(les)).getTime() < new Date().getTime()) {
+          if(new Date(getlessonintimezone(les, user?.timezone)).getTime() < new Date().getTime()) {
             if(les.confirmed){
               return 'bg-blue-900  hover:bg-blue-900'
             }
@@ -31,7 +31,7 @@ const Day = ({day, rowindx, row, hours}) => {
     }
 
     const geteventname = (day, hour) => {
-      let les = user?.lessons.find(e => new Date(getlessonintimezone(e)).getDate() == new Date(day.toISOString()).getDate() &&  new Date(getlessonintimezone(e)).getHours() == hour)
+      let les = user?.lessons.find(e => new Date(getlessonintimezone(e, user?.timezone)).getDate() == new Date(day.toISOString()).getDate() &&  new Date(getlessonintimezone(e, user?.timezone)).getHours() == hour)
       if(les){
        if (user?.type === 'student') {
          return les.tutor.name
@@ -47,9 +47,9 @@ const Day = ({day, rowindx, row, hours}) => {
                 <div key={i} className={`border cursor-pointer ${styles.calenderday} ${geteventclass(day, i)}  flex flex-col ${getnowclass(i)}`}>
                 <header className={`flex flex-col items-center ${styles.eventname} text-white text-sm`}>{}</header>
                   <p onClick={e => {
-                    const les =  user?.lessons.find(e => new Date(getlessonintimezone(e)).getDate() == new Date(day.toISOString()).getDate() &&  new Date(getlessonintimezone(e)).getHours() == i)
+                    const les =  user?.lessons.find(e => new Date(getlessonintimezone(e, user?.timezone)).getDate() == new Date(day.toISOString()).getDate() &&  new Date(getlessonintimezone(e, user?.timezone)).getHours() == i)
                     if(les){
-                      if (new Date(getlessonintimezone(les)).getTime() < new Date().getTime()) {
+                      if (new Date(getlessonintimezone(les, user?.timezone)).getTime() < new Date().getTime()) {
                       if(les?.confirmed){
                         return
                       } 

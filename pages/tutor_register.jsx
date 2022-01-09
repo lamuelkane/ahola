@@ -1,5 +1,5 @@
 import Header2  from '../components/Header2'
-import {useEffect, useState,} from 'react'
+import {useEffect, useState, useRef} from 'react'
 import styles from '../styles/Dashboard.module.css'
 import {countries, timezones} from '../components/lists'
 import axios from 'axios'
@@ -10,6 +10,12 @@ import Footer from '../components/Footer'
 import {useRouter} from 'next/router'
 import Notification from '../components/Notification'
 import Head from 'next/head'
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import Checkbox from '@mui/material/Checkbox';
 
 
 
@@ -30,8 +36,12 @@ export default function Example() {
   const [video, setvideo] = useState('')
   const [password, setpassword] = useState('')
   const [comfirmpassword, setcomfirmpassword] = useState('')
+  const [freetrial, setfreetrial] = useState(false)
+  const [userrecorde, setuserrecorde] = useState(null)
+  const  [showrecord, setshowrecord] = useState(null)
+  const  [btnrecord, setbtnrecord] = useState(null)
 
-  const {sever, sever2, user} = useSelector((state) => state);
+  const {sever, sever2, user , sever3} = useSelector((state) => state);
 
   const getsubjects = async() => {
     try {
@@ -50,6 +60,179 @@ export default function Example() {
       })
     }
   }
+
+  const recordvideo = () => {
+    let constraintObj = { 
+      audio: true, 
+      video: { 
+          facingMode: "user", 
+          width: { min: 640, ideal: 1280, max: 1920 },
+          height: { min: 480, ideal: 720, max: 1080 } 
+      } 
+  }; 
+  // width: 1280, height: 720  -- preference only
+  // facingMode: {exact: "user"}
+  // facingMode: "environment"
+  
+  //handle older browsers that might implement getUserMedia in some way
+  if (navigator.mediaDevices === undefined) {
+      navigator.mediaDevices = {};
+      navigator.mediaDevices.getUserMedia = function(constraintObj) {
+          let getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+          if (!getUserMedia) {
+              return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+          }
+          return new Promise(function(resolve, reject) {
+              getUserMedia.call(navigator, constraintObj, resolve, reject);
+          });
+      }
+  }else{
+      navigator.mediaDevices.enumerateDevices()
+      .then(devices => {
+          devices.forEach(device=>{
+              console.log(device.kind.toUpperCase(), device.label);
+              //, device.deviceId
+          })
+      })
+      .catch(err=>{
+          // console.log(err.name, err.message);
+          alert(err.message)
+      })
+  }
+
+  navigator.mediaDevices.getUserMedia(constraintObj)
+  .then(function(mediaStreamObj) {
+      //connect the media stream to the first video element
+      let video1 = document.querySelector('#Video');
+      if ("srcObject" in video1) {
+        video1.srcObject = mediaStreamObj;
+      } else {
+          //old version
+          video1.src = window.URL.createObjectURL(mediaStreamObj);
+      }
+      // console.log(video1, document.querySelector('#Video'))
+      // return
+      
+      video1.onloadedmetadata = function(ev) {
+          //show in the video element what is being captured by the webcam
+          video1.muted = true
+          video1.play();
+      };
+      
+      //add listeners for saving video/audio
+      // let start = document.getElementById('btnStart');
+      let stop = document.getElementById('btnStop');
+      let mediaRecorder = new MediaRecorder(mediaStreamObj);
+      let chunks = [];
+      
+      // start.addEventListener('click', (ev)=>{
+          mediaRecorder.start();
+          console.log(mediaRecorder.state);
+      // })
+      stop.addEventListener('click', (ev)=>{
+        if(mediaRecorder.state === 'inactive'){
+          return
+        }
+            setuserrecorde(true)
+            mediaRecorder.stop()
+      });
+      mediaRecorder.ondataavailable = function(ev) {
+          chunks.push(ev.data);
+      }
+      mediaRecorder.onstop = (ev)=>{
+        let vidSave = document.getElementById('Vidoe2')
+        let blob = new Blob(chunks, { 'type' : 'video/mp4;' });
+        chunks = [];
+        let videoURL = window.URL.createObjectURL(blob);
+        vidSave.src = videoURL;
+        Notification({
+          title:"Recorded",
+          message:` Video Recorded successfully, click to listen to preview`,
+          type:"info",
+          container:"top-right",
+          insert:"top",
+          animationIn:"fadeInUp",
+          animationOut:"fadeOut",
+          duration:10000
+        })
+        setshowrecord(false)
+        let savebtn = document.getElementById('savevideo')
+        savebtn.addEventListener('click', async() => {
+          var bodyFormData = new FormData();
+          bodyFormData.append('file', blob); 
+          try {
+            savebtn.innerHTML = 'loading...'
+            const {data} = await axios({
+              method: "post",
+              url: `${sever3}/upload`,
+              data: bodyFormData,
+              headers: { "Content-Type": "multipart/form-data" },
+            })
+            console.log(data)
+            setbtnrecord(true)
+            setvideo(`${sever3}/file/${data.filename}`)
+            // savebtn.innerHTML = 'loading...'
+            Notification({
+              title:"Saved",
+              message:` Video Record saved successfully`,
+              type:"info",
+              container:"top-right",
+              insert:"top",
+              animationIn:"fadeInUp",
+              animationOut:"fadeOut",
+              duration:10000
+            })
+          } catch (error) {
+            Notification({
+              title:"ERROR",
+              message:`An error occured while uploading image`,
+              type:"danger",
+              container:"top-right",
+              insert:"top",
+              animationIn:"fadeInUp",
+              animationOut:"fadeOut",
+              duration:10000
+            })
+          }
+
+          
+        })
+
+      }
+  })
+  .catch(function(err) { 
+     alert(err.message); 
+  });
+  
+  /*********************************
+  getUserMedia returns a Promise
+  resolve - returns a MediaStream Object
+  reject returns one of the following errors
+  AbortError - generic unknown cause
+  NotAllowedError (SecurityError) - user rejected permissions
+  NotFoundError - missing media track
+  NotReadableError - user permissions given but hardware/OS error
+  OverconstrainedError - constraint video settings preventing
+  TypeError - audio: false, video: false
+  *********************************/
+
+  }
+
+  useEffect(() => {
+    let constraintObj = { 
+      audio: true, 
+      video: { 
+          facingMode: "user", 
+          width: { min: 640, ideal: 1280, max: 1920 },
+          height: { min: 480, ideal: 720, max: 1080 } 
+      } 
+  }; 
+
+
+
+
+
+  }, [])
 
   useEffect(() => {
     getsubjects()
@@ -122,6 +305,7 @@ const submitrequest = async(e) => {
     subject,
     image: photo,
     password,
+    freetrial,
   }
 
   const body = {
@@ -192,7 +376,7 @@ let sendimage = async(e) => {
                 <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
             </Head>
     <div className="border"><Header2 /></div>
-        <div className={`center bg-red-500 margin-bottom border py-10`}>
+        <div className={`center bg-indigo-500 margin-bottom border py-10`}>
                 <h2 className={`text-2xl text-white`}>
                 {  router.locale  === 'en-US' ? 'Register as a Tutor on Ahola'
 
@@ -207,40 +391,6 @@ let sendimage = async(e) => {
 :  'Register as a Tutor on Ahola'
 }
                 </h2> 
-                <div className={`text-white`}>
-                {  router.locale  === 'en-US' ? 'Or'
-
-: router.locale === 'fr' ? `Ou`
-
-: router.locale === 'de' ?
-                          `Oder`
-: router.locale === 'es' ?
-                          `O`
-: router.locale === 'zh' ?
-                          `或者`
-:  'Or'
-}
-                </div>
-                <div className="mt-2 sm:mt-5 sm:flex sm:justify-center lg:justify-center">
-                <div className="rounded-md margin-right margin-bottom shadow">
-                  <div className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium hover:text-indigo-500 hover:border-indigo-500 rounded-md text-white bg-indigo-600 hover:bg-white md:py-4 md:text-lg md:px-10">
-                  <Link href='/student_register' > 
-                  {  router.locale  === 'en-US' ? 'Register as a student'
-
-: router.locale === 'fr' ? `S'inscrire en tant qu'étudiant`
-
-: router.locale === 'de' ?
-                          'Als Student anmelden'
-: router.locale === 'es' ?
-                          'Registrarse como estudiante'
-: router.locale === 'zh' ?
-                          '注册为学生'
-:  'Register as a student'
-}
-                  </Link>
-                  </div>
-                </div>
-              </div>
                 <p className={`text-sm text-gray-300`}>
                 {  router.locale  === 'en-US' ? 'Create your very own tutor account with Ahola and start earning from home'
 
@@ -284,18 +434,18 @@ let sendimage = async(e) => {
                     <div className="col-span-3 sm:col-span-2">
                       <label htmlFor="company-website" className="block text-sm font-medium text-gray-700">
                         
-                        {  router.locale  === 'en-US' ? 'Intro video link'
+                                {  router.locale  === 'en-US' ? 'Intro video link'
 
-: router.locale === 'fr' ? `Lien vidéo d'introduction`
+        : router.locale === 'fr' ? `Lien vidéo d'introduction`
 
-: router.locale === 'de' ?
-                          `Einführungsvideo-Link`
-: router.locale === 'es' ?
-                          `Enlace de video de introducción`
-: router.locale === 'zh' ?
-                          `介绍视频链接`
-:  'Intro video link'
-}
+        : router.locale === 'de' ?
+                                  `Einführungsvideo-Link`
+        : router.locale === 'es' ?
+                                  `Enlace de video de introducción`
+        : router.locale === 'zh' ?
+                                  `介绍视频链接`
+        :  'Intro video link'
+        }
                       </label>
                       <div className="mt-1 flex rounded-md shadow-sm">
                         <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
@@ -325,41 +475,77 @@ let sendimage = async(e) => {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-3">
-                    {  router.locale  === 'en-US' ? 'Video preview'
+                                      <label className="block text-sm font-medium text-gray-700 mb-3">
+                                      {  router.locale  === 'en-US' ? 'Video preview'
 
-: router.locale === 'fr' ? `Aperçu vidéo`
+                  : router.locale === 'fr' ? `Aperçu vidéo`
 
-: router.locale === 'de' ?
-                          `Video Vorschau`
-: router.locale === 'es' ?
-                          `Vista previa de video`
-: router.locale === 'zh' ?
-                          `视频预览`
-:  'Video preview'
-}</label>
+                  : router.locale === 'de' ?
+                                            `Video Vorschau`
+                  : router.locale === 'es' ?
+                                            `Vista previa de video`
+                  : router.locale === 'zh' ?
+                                            `视频预览`
+                  :  'Video preview'
+                  }</label>
                     <div className={`${styles.videopreview}`}>
-                    {  !videolink ? <span>
-                      {  router.locale  === 'en-US' ? 'paste link to view video here  '
+                                    {  !videolink ? <span>
+                                      {  router.locale  === 'en-US' ? 'paste link to view video here  '
 
-: router.locale === 'fr' ? `coller le lien pour voir la vidéo ici`
+                : router.locale === 'fr' ? `coller le lien pour voir la vidéo ici`
 
-: router.locale === 'de' ?
-                          `Link einfügen, um das Video hier anzusehen`
-: router.locale === 'es' ?
-                          `pegue el enlace para ver el video aquí`
-: router.locale === 'zh' ?
-                          `粘贴链接以在此处查看视频`
-:  'paste link to view video here  '
-}
+                : router.locale === 'de' ?
+                                          `Link einfügen, um das Video hier anzusehen`
+                : router.locale === 'es' ?
+                                          `pegue el enlace para ver el video aquí`
+                : router.locale === 'zh' ?
+                                          `粘贴链接以在此处查看视频`
+                :  'paste link to view video here  '
+                }
                     </span> : <iframe className={`${styles.videopreviewiframe}`}
                          src={`${ checkvideolink(video)? `https://www.youtube.com/embed/${videolink}` : `https://player.vimeo.com/video/${videolink}`}`}>
                           </iframe>
                             }
                     </div>
+                    <div className={`${btnrecord && 'hide2'}`}>
+                              <button className={`bg-indigo-700 text-white ${userrecorde && 'hide2'}  ${showrecord && 'hide2'}  margin-bottom ${styles.recordbtn}`} type='button' onClick={ e => {
+                                recordvideo()
+                              Notification({
+                                title:"Recording....",
+                                message:` Video Recording started`,
+                                type:"success",
+                                container:"top-right",
+                                insert:"top",
+                                animationIn:"fadeInUp",
+                                animationOut:"fadeOut",
+                                duration:10000
+                              })
+                              setshowrecord(true)
+                              }}>Record Video</button>
+                              <button className={`bg-gray-700 text-white margin-bottom ${styles.recordbtn} margin-left   ${!showrecord && 'hide2'}  `} type='button' id="btnStop"> Stop Recording</button>
+                              <button className={`bg-red-700 margin-bottom ${styles.recordbtn} ${!userrecorde && 'hide2'}  margin-left`} type='button' id="3" onClick={e => {
+                                setuserrecorde(false)
+                                Notification({
+                                  title:"Recorde Deleted",
+                                  message:` Video Record Deleted click to re-record`,
+                                  type:"info",
+                                  container:"top-right",
+                                  insert:"top",
+                                  animationIn:"fadeInUp",
+                                  animationOut:"fadeOut",
+                                  duration:10000
+                                })
+                                }}>Delete</button>
+                              <button className={`bg-green-500 margin-bottom ${styles.recordbtn} ${!userrecorde && 'hide2'}  margin-left`} type='button' id="savevideo">Save</button>
+                              
+                    </div>
+                     <div className={`${styles.videopreview} ${userrecorde && 'hide2'}`}>
+                       <video className={`${styles.videopreviewiframe}  Video`}  id='Video'></video>
+                    </div> 
+                    <div className={`${styles.videopreview} ${!userrecorde && 'hide2'}`}>
+                       <video className={`${styles.videopreviewiframe} `} id='Vidoe2' controls>  </video>
+                    </div>
                   </div>
-
-              
                   <div>
                     <label className="block text-sm font-medium text-gray-700">      {  router.locale  === 'en-US' ? 'Photo'
 
@@ -470,7 +656,7 @@ let sendimage = async(e) => {
         <div className="md:grid md:grid-cols-3 md:gap-6">
           <div className="md:col-span-1">
             <div className="px-4 sm:px-0">
-              <h3 className="text-lg font-medium leading-6 text-gray-900">{  router.locale  === 'en-US' ? 'Personal Information'
+              <h3 className="text-lg margin-left font-medium leading-6 text-gray-900">{  router.locale  === 'en-US' ? 'Personal Information'
 
 : router.locale === 'fr' ? `Informations personnelles`
 
@@ -482,7 +668,7 @@ let sendimage = async(e) => {
                           `个人信息`
 :  'Personal Information'
 }</h3>
-              <p className="mt-1 text-sm text-gray-600">{  router.locale  === 'en-US' ? 'Use a permanent email address where you can receive emails.'
+              <p className="mt-1 margin-left text-sm text-gray-600">{  router.locale  === 'en-US' ? 'Use a permanent email address where you can receive emails.'
 
 : router.locale === 'fr' ? `Utilisez une adresse e-mail permanente où vous pouvez recevoir des e-mails.`
 
@@ -758,6 +944,8 @@ let sendimage = async(e) => {
                       </div>
                   </div>
 
+                  
+
                   <div className="col-span-6 sm:col-span-3">
                       <label htmlFor="country" className="block text-sm font-medium text-gray-700">
                        
@@ -787,7 +975,25 @@ let sendimage = async(e) => {
                         }
                       </select>
                     </div>
+                    
                                   
+                  </div>
+                  <div className={`margin-top margin-left`}>
+                  <FormControl component="fieldset">
+                              <RadioGroup
+                                aria-label="gender"
+                                defaultValue="female"
+                                name="radio-buttons-group"
+                              >
+                                <FormControlLabel value="female" control={<input type='checkbox' 
+                                  className={`margin-right`}
+                                  checked={freetrial} 
+                                  onClick={e => setfreetrial(!freetrial)}
+                                  />}
+                                   label="Free Trail" 
+                                   />
+                              </RadioGroup>
+                            </FormControl>
                   </div>
                 </div>
                 

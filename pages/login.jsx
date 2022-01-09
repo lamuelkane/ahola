@@ -90,7 +90,18 @@ export default function Example() {
                 </Link>
               </span>
               <span className="font-medium text-sm margin-right">
-                Or
+              {  router.locale  === 'en-US' ? 'Or'
+
+: router.locale === 'fr' ? `Ou`
+
+: router.locale === 'de' ?
+                          `Oder`
+: router.locale === 'es' ?
+                          `O`
+: router.locale === 'zh' ?
+                          `或者`
+:  'Or'
+}
               </span>
               <span className="font-medium text-indigo-600 hover:text-indigo-500">
                 <Link href={'/tutor_register'}  > 

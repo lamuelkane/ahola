@@ -63,8 +63,9 @@
 }
 
 .footerimg{
-  height: 30px;
-  width: 30px;
+  max-height: 30px;
+  margin-right: 5px;
+  max-width: 30px;
 }
 
 .about{
@@ -453,6 +454,10 @@
 
 @media screen and (max-width: 556px) {
 
+  .Footer{
+    flex-direction: column;
+  }
+  
   .course{
     width: 170px;
     padding: 1px 3px;

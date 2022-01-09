@@ -39,9 +39,6 @@ const Tutorprofile = ({open, setOpen, teacher, setteacher}) => {
 
       useEffect(() => {
         getsubjects()
-        if(subjects[0]){
-        console.log(subjects.find(sub => sub?.subject['en-US']?.toLowerCase() === teacher.subject.toLowerCase()), subjects)
-        }
       }, [axios])
 
     const router = useRouter()
@@ -121,6 +118,8 @@ const Tutorprofile = ({open, setOpen, teacher, setteacher}) => {
 :  'book a lesson '
 }
                             </button>
+
+                           
                         </div>
                     </div>
                     <div className={`${styles.tutorinfo} padding-right`}>
@@ -144,7 +143,38 @@ const Tutorprofile = ({open, setOpen, teacher, setteacher}) => {
 } :
                                 </span>
                                 <span className={`text-sm margin-left text-indigo-700`}>{teacher.country}</span>
+                                {teacher.freetrial && <div className='text-red-700 font-extrabold'>
+
+{ router.locale  === 'en-US' ? 'Free Trial'
+
+: router.locale === 'fr' ? `Essai gratuit`
+
+: router.locale === 'de' ?
+'Kostenlose Testphase'
+: router.locale === 'es' ?
+'Prueba gratis'
+: router.locale === 'zh' ?
+'免费试用'
+:  'Free Trial'
+} 
+</div >}
                             </div>
+                         {user?.type === 'student' &&   <button className={`${styles.bookbtn2} text-gray-300 hover:text-white text-xs `} onClick={e => {
+                                router.push('')
+                            }}>
+                               { router.locale  === 'en-US' ? 'message'
+
+: router.locale === 'fr' ? `message`
+
+: router.locale === 'de' ?
+                          'Botschaft'
+: router.locale === 'es' ?
+                          'mensaje'
+: router.locale === 'zh' ?
+                          '信息'
+:  'message'
+}
+                            </button>}
                         </div>
                             <Tutordetails teacher={teacher} />
                 </div>

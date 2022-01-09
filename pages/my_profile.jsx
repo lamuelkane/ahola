@@ -291,8 +291,9 @@ const submitrequest2 = async() => {
                                     {
                                       settimezone(timezones.find(tz => tz.name === e.target.value))
                                       user.timezone = timezones.find(tz => tz.name === e.target.value)
+                                      console.log(timezone)
                                     }}
-                                    value={timezone}
+                                    value={timezone?.name}
                                     id="country"
                                     name="country"
                                     autoComplete="country-name"

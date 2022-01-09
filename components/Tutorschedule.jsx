@@ -54,7 +54,7 @@ const Tutorschedule = ({weeks}) => {
             }}>
                 <option>select student</option>
                 {
-                    tutor?.students.map((stu) => (
+                    tutor?.students.filter(st => st.hours >= 1).map((stu) => (
                         <option value={stu.id} key={stu.id}>{stu.name}</option>
                     ))
                 }
@@ -131,7 +131,7 @@ const Tutorschedule = ({weeks}) => {
     </header>
     <div className={`p-3`}>
             <div className="bg-blue-50 text-sm margin padding items-center flex justify-between p-3">
-                current lesson time {new Date(getlessonintimezone(tutor.lessons.find(les => les.id === day.exist))).toLocaleString()}
+                current lesson time {new Date(getlessonintimezone(tutor.lessons.find(les => les.id === day.exist), tutor?.timezone)).toLocaleString()}
                 </div>
         <div className="bg-blue-50 items-center flex justify-between p-3">
         <select name="" className={`text-sm`} id="" onChange={e => {

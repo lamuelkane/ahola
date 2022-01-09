@@ -8,6 +8,11 @@
     transition: all .5s ease;
 }
 
+.recordbtn{
+    padding: 5px 20px;
+    border-radius: 5px;
+}
+
 .course{
     border-bottom: 1px solid black;
     min-width: 300px;

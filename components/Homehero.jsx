@@ -9,6 +9,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import {useEffect, useState} from 'react'
 import styles from '../styles/Home.module.css'
+import SearchIcon from '@mui/icons-material/Search';
 
 
 
@@ -63,9 +64,9 @@ export default function Example({subjects, setsubjects}) {
     main: "Votre aisance n'est qu'à",
     second: 'quelques leçons', 
     third: ` améliorez-vous à tout moment, n'importe où`,
-    fourth: 'Apprenez quel que soit votre niveau A1, A2, B1, B2, C1, C2', 
+    fourth: '  Apprenez peu importe votre niveau A1, A2, B1, B2, C1, C2', 
     btn1: `Explorer les tuteurs`, 
-    btn2: `Devenir Tuteur`,
+    btn2: `Devenez Tuteur`,
   } 
 
   : router.locale === 'de' ?
@@ -76,22 +77,22 @@ export default function Example({subjects, setsubjects}) {
     third: `verbessere dich jederzeit und überall`,
     fourth: `Lernen Sie unabhängig von Ihrem Niveau A1, A2, B1, B2, C1, C2`, 
     btn1: `Tutoren erkunden`, 
-    btn2: `Werde Tutor`,
+    btn2: `Tutor Werden`,
   } 
   : router.locale === 'es' ?
   
   herotext = {
-    main: `Tu fluidez está a solo unas pocas `,
-    second: 'lecciones de distancia', 
-    third: 'superarse en cualquier momento y en cualquier lugar',
-    fourth: 'Aprende sin importar tu nivel A1, A2, B1, B2, C1, C2', 
+    main: `Su fluidez es solo unas pocas `,
+    second: 'lecciones lejos', 
+    third: 'mejorarse a si mismo  en cualquier momento y en cualquier lugar',
+    fourth: '   Aprende sin importar tu nivel A1, A2, B1, B2, C1, C2', 
     btn1: 'Explorar tutores', 
     btn2: 'Conviértete en tutor',
   } 
   : router.locale === 'zh' ?
   
   herotext = {
-    main: `只需几节课，您就可以流利`,
+    main: `你的流利程度只需少数几节课`,
     second: '', 
     third: '随时随地提升自己',
     fourth: '学习任何级别的 A1、A2、B1、B2、C1、C2', 
@@ -150,7 +151,7 @@ export default function Example({subjects, setsubjects}) {
                           setcourses(subjects.filter(sub => sub.subject[router.locale].toLowerCase().includes(e.target.value.toLowerCase())))
 
                       }} />
-                      <div className={`${styles.coursessearchlabel} bg-red-700 text-white focus:ring-transparent`}>Expore Tutors</div>
+                      <div className={`${styles.coursessearchlabel} bg-red-500 text-white focus:ring-transparent`}><SearchIcon /></div>
                       <div className={`${styles.courses} ${!showsearch && 'hide2'} bg-gray-500`}>
                         {
                             courses.map(sub =>  <div key={sub._id} className={`text-gray-500  text-sm margin`}><Link href={`tutors?teach=${sub.subject['en-US']}&&country=all&&lp=0&&hp=100`}>{sub.subject[router.locale]}</Link></div>)

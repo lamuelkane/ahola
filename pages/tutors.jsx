@@ -32,7 +32,6 @@ function classNames(...classes) {
 
 
 const Tutors = () => {
-    const [openfilters, setOpenfilters] = useState(false)
     const {user, Currency, Currencies} = useSelector((state) => state);
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
     const [openrange, setopenrange] = useState(false)
@@ -54,6 +53,7 @@ const Tutors = () => {
     const [productperpage, setproductperpage] = useState(5)
     let pagesVited = (pageNumber - 1) * productperpage
     const totop = useRef()
+    const totutor = useRef()
 
 
   const getsubjects = async() => {
@@ -86,6 +86,7 @@ const Tutors = () => {
     const changing = setTimeout(() => {
       setlowprice(newValue[0])
       sethighprice(newValue[1])
+      setopenrange(false)
     }, 10000)
 };
 
@@ -101,6 +102,7 @@ const Tutors = () => {
           const {data} = await axios.get(`${sever}/api/users/tutor/${country || 'all'}/${subject || 'all'}/${lowprice || 0}/${highprice || 100}`)
           settutors(data)
           setloading(false)
+          totutor.current.scrollIntoView({behavior: 'smooth'})
         } catch (error) {
           setloading(false)
           Notification({
@@ -219,7 +221,7 @@ const Tutors = () => {
                           ))
                         }
               </select>
-              <div className={`flex justify-center align-center  border ${styles.filteritem} ${styles.rangesliderwrapper}`} >
+              <div className={`flex justify-center align-center border ${styles.filteritem} ${styles.rangesliderwrapper}`} >
                 <div onClick={e => setopenrange(!openrange)}>
                   
                   { router.locale  === 'en-US' ? 'price per hour'
@@ -287,7 +289,7 @@ const Tutors = () => {
             <img src="./images/tutorhero.svg" className={`${styles.tutorsheroimg}`} alt="" />
           </div>
           <div className={`flex justify-center align-center margin-top`}>
-            <div className={`flex justify-center align-center ${styles.tutorprofileswraper} column w-4/5`}>
+            <div ref={totutor} className={`flex justify-center align-center ${styles.tutorprofileswraper} column w-4/5`}>
                {
                 loading? <h3>
                   
@@ -325,7 +327,7 @@ const Tutors = () => {
           </div>
           </div>
           <div className='flex justify-center align-center margin-top'>
-             <Pagination count={Math.round(tutors.length / 5)} page={pageNumber} onChange={handleChange} siblingCount={0} color="primary" />
+             <Pagination count={Math.ceil(tutors.length / 5)} page={pageNumber} onChange={handleChange} siblingCount={0} color="primary" />
           </div>
           <Footer />
         </div>

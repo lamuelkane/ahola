@@ -15,8 +15,8 @@ const CalenderHeader = () => {
     const {weekindex, monthindex, user} = useSelector((state) => state);
     const dispatch = useDispatch()
     let getnextlesson = () => {
-        const lesson = user?.lessons.filter(les => new Date(getlessonintimezone(les)).getTime() > (new Date().getTime() - 3600000)).sort(function(a,b){
-            return new Date(getlessonintimezone(a)).getTime() - new Date(getlessonintimezone(b)).getTime()
+        const lesson = user?.lessons.filter(les => new Date(getlessonintimezone(les, user?.timezone)).getTime() > (new Date().getTime() - 3600000)).sort(function(a,b){
+            return new Date(getlessonintimezone(a, user?.timezone)).getTime() - new Date(getlessonintimezone(b,  user?.timezone )).getTime()
         });
         return lesson ? lesson[0] : ''
     }
@@ -35,8 +35,8 @@ const CalenderHeader = () => {
             </button>
             <div>
                  { getnextlesson()?<div className={`flex text-xs align-center`}>  <h3 className={`margin-right`}>Next lesson </h3>
-                    <div className="margin-right text-xs text-indigo-500">{new Date(getlessonintimezone(getnextlesson())).toLocaleString()}</div>
-                     { new Date(getlessonintimezone(getnextlesson())).getTime() - new Date().getTime() < 300000 && <button onClick={e => {
+                    <div className="margin-right text-xs text-indigo-500">{new Date(getlessonintimezone(getnextlesson(), user?.timezone)).toLocaleString()}</div>
+                     { new Date(getlessonintimezone(getnextlesson(), user?.timezone)).getTime() - new Date().getTime() < 300000 && <button onClick={e => {
                         //  console.log(new Date(getlessonintimezone(getnextlesson())).getTime() - new Date().getTime())
                      }} className="border rounded py-2 px-4 mr-5">
                          <a href={`https://aholalessons.netlify.app?id=${getnextlesson().id}&&user=${user?.firstname}`} rel='noreferrer' target="_blank" >Join lesson </a>

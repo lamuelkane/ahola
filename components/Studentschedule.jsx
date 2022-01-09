@@ -51,7 +51,7 @@ const Studentschedule = ({weeks}) => {
             }}>
                  <option>select tutor</option>
                 {
-                    student?.tutors.map((tut) => (
+                    student?.tutors.filter(tut => tut.hours >= 1).map((tut) => (
                         <option value={tut.id} key={tut.id}>{tut.name}</option>
                     ))
                 }
@@ -97,7 +97,6 @@ const Studentschedule = ({weeks}) => {
                         template: newlessonbooked(data.firstname, student.firstname, data.rate, data.lessons.length),
                         email: data.email
                     })
-                    console.log(lesson, student.lessons)
                     localStorage.setItem('user', JSON.stringify(student))
                     dispatch(setUser(sever))
                     Notification({
@@ -152,7 +151,7 @@ const Studentschedule = ({weeks}) => {
     </header>
     <div className={`p-3`}>
     <div className="bg-blue-50 text-sm margin padding items-center flex justify-between p-3">
-           current lesson time {new Date(getlessonintimezone(student?.lessons.find(les => les.id === day.exist))).toLocaleString()}
+           current lesson time {new Date(getlessonintimezone(student?.lessons.find(les => les.id === day.exist), student?.timezone)).toLocaleString()}
         </div>
         <div className="bg-blue-50 items-center flex justify-between p-3">
         <select name="" id="" className={`text-sm`} onChange={e => {

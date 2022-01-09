@@ -150,17 +150,16 @@ const Mytutor = () => {
                             <div className={`margin-right cursor-pointer pointer hidexs`} onClick={async(e) => {
                               try{
                                 const {data} = await axios.get(`${sever}/api/users/tutor/${tut.id}`)
-                                confirmlesson2(data, data.lessons.filter(le => le.student.id == user._id && !le.confirmed && checklessonstate(le)))
-                                user.lessons.filter(le => le.tutor.id == data._id && !le.confirmed && checklessonstate(le)).map(l => {
+                                confirmlesson2(data, data.lessons.filter(le => le.student.id == user._id && !le.confirmed && checklessonstate(le, user?.timezone)))
+                                user.lessons.filter(le => le.tutor.id == data._id && !le.confirmed && checklessonstate(le, user?.timezone)).map(l => {
                                   l.confirmed = true
+                                  tut.hours -= 1
                                 })
                                 
-                                user.lessons.filter(le => le.tutor.id == data._id  && !checklessonstate(le)).map(l => {
-                                  user.currentearning += l.rate
-                                })
+                                  user.currentearning += tut.hours * tut.rate
                                 
-                                filterlessons(user, user.lessons.filter(le => le.tutor.id === data._id  && !checklessonstate(le)))
-                                filterlessons(data, data.lessons.filter(le => le.student.id === user._id  && !checklessonstate(le)))
+                                filterlessons(user, user.lessons.filter(le => le.tutor.id === data._id  && !checklessonstate(le, user?.timezone)))
+                                filterlessons(data, data.lessons.filter(le => le.student.id === user._id  && !checklessonstate(le, user?.timezone)))
                                 
                                 user.tutors = user.tutors.filter(t => t.id !== tut.id)
                                 data.students = data.students.filter(st => st.id !== user._id)
@@ -212,15 +211,15 @@ const Mytutor = () => {
                       user?.lessons.filter(les => les.tutor.id === tutor._id).map(tut => (
                         <div className={`flex justify-between align-center border p-3`} key={tut.id}>
                               <div className={`flex align-center`}>
-                                  <div className={`margin-right`}>{new Date(getlessonintimezone(tut)).toLocaleString()} for $ {tut.rate.toFixed(2)} </div>
+                                  <div className={`margin-right`}>{new Date(getlessonintimezone(tut, user?.timezone)).toLocaleString()} for $ {tut.rate.toFixed(2)} </div>
                               </div>
                               <div className={`flex`}>
                                   <div className={`margin-right`}>
                                   <FormControlLabel  control={<input type='checkbox' 
                                   className={`margin-right`}
                                   checked={tut.confirmed? true : false} 
-                                  disabled={new Date(getlessonintimezone(tut)).getTime() > new Date().getTime() ? true : false || tut.confirmed? true : false}
-                                   onClick={e => confirmlesson(tutor, tut)}/>} label="Confirmed" />
+                                  disabled={new Date(getlessonintimezone(tut, user?.timezone)).getTime() > new Date().getTime() ? true : false || tut.confirmed? true : false}
+                                  onClick={e => confirmlesson(tutor, tut)}/>} label="Confirmed" />
                                   </div>
                               </div>
                         </div>
