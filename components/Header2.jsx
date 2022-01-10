@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import dayjs from 'dayjs'
 import { useSelector, useDispatch} from 'react-redux';
-import DashBoardHeader from '../components/DashBoardHeader'
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
 import ReorderIcon from '@mui/icons-material/Reorder';
@@ -9,17 +7,15 @@ import CloseIcon from '@mui/icons-material/Close';
 import Notification from '../components/Notification';
 import ReactNotification from "react-notifications-component";
 import axios from 'axios'
-import {setUser , setcurrency, setcurrencies} from '../actions/User'
+import {setUser , setcurrency, setcurrencies, setCourses} from '../actions/User'
 import {useRouter} from 'next/router'
-import Languagedropdown from './Languagedropdown'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 
 const Header2 = () => {
     const [show, setshow] = useState(false)
     const [showlang, setshowlang] = useState(false)
-    const [courses, setcourses] = useState([])
-    const {user, sever, Currency, Currencies} = useSelector((state) => state);
+    const {user, sever, Currency, Currencies, Courses} = useSelector((state) => state);
     const [currencies, setcurrecies] = useState([])
     const dispatch = useDispatch()
     const router = useRouter()
@@ -31,28 +27,16 @@ const Header2 = () => {
     }, [user])
 
     useEffect(() => {
+      if(!Courses[0]) {
+        dispatch(setCourses(sever))
+      }
+  }, [Courses])
+
+    useEffect(() => {
       setshowlang(false)
     }, [router.locale, Currency])
 
 
-    const getsubjects = async() => {
-        try {
-          const {data} = await axios.get(`${sever}/api/users/subjects`)
-          setcourses(data)
-        } catch (error) {
-          Notification({
-            title:"Error",
-            message:`an error ocurred while getting courses`,
-            type:"danger",
-            container:"top-right",
-            insert:"top",
-            animationIn:"fadeInUp",
-            animationOut:"fadeOut",
-            duration:10000
-          })
-        }
-      }
-      
       const getlanguagename = (lang) => {
           switch (lang) {
             case 'en-US':
@@ -91,7 +75,6 @@ const Header2 = () => {
       }
 
         useEffect(() => {
-            getsubjects()
             if(!Currencies){
               getcurrencies()
             }
@@ -166,8 +149,8 @@ const Header2 = () => {
                 <CloseIcon />
             </div> }
         </div>
-            <div className={`${styles.headersmall} bg-gray-500  ${show ? 'showsidebar' : 'sidebar'}`}>
-                <soan className={`${styles.homenaveitem}`}><Link href='/tutors'>
+            <div className={`${styles.headersmall} bg-indigo-900  ${show ? 'showsidebar' : 'sidebar'}`}>
+                <span className={`${styles.homenaveitem}`}><Link href='/tutors'>
                                   {  router.locale  === 'en-US' ? 'Find a Tutor'
 
                   : router.locale === 'fr' ? 'Trouver un tuteur'
@@ -182,7 +165,21 @@ const Header2 = () => {
                   :  'Find a Tutor'
                   }
                   
-                  </Link></soan>
+                  </Link></span>
+                  <span className={`${styles.homenaveitem}`}><Link href='/tutors'>
+                                    {  router.locale  === 'en-US' ? ' Become a Tutor'
+
+                  : router.locale === 'fr' ? `Devenez Tuteur`
+
+                  : router.locale === 'de' ?
+                                            'Tutor Werden'
+                  : router.locale === 'es' ?
+                                            'Conviértete en tutor'
+                  : router.locale === 'zh' ?
+                                            '成为导师'
+                  :  ' Become a Tutor'
+                  }
+                  </Link></span>
                 <span className={`${styles.homenaveitem}`}><Link href='/login'>
                           {  router.locale  === 'en-US' ? 'login'
 
@@ -197,59 +194,6 @@ const Header2 = () => {
                           :  'login'
                           }
                   </Link></span>
-                <span className={`${styles.homenaveitem} text-indigo-700`}>
-                                        {  router.locale  === 'en-US' ? 'Feature Languages'
-
-                        : router.locale === 'fr' ? 'Langues des fonctionnalités'
-
-                        : router.locale === 'de' ?
-                                                  'Feature-Sprachen'
-                        : router.locale === 'es' ?
-                                                  'Idiomas de funciones'
-                        : router.locale === 'zh' ?
-                                                  '功能语言'
-                        :  'Feature Languages'
-                        }
-                </span>
-                {
-                courses.filter(course => course.type === 'lang').slice(0, 6).map(co => <span className={`${styles.homenaveitems} margin-left text-gray-200 text-sm`}><Link href={`tutors?teach=${co.subject['en-US']}&&country=all&&lp=0&&hp=100`}>{co.subject[router.locale]}</Link></span>)
-                }
-                <span className={`${styles.homenaveitem} text-indigo-700`}>
-                 
-                  {  router.locale  === 'en-US' ? ' Feature Skills'
-
-                    : router.locale === 'fr' ? 'Compétences fonctionnelles'
-
-                    : router.locale === 'de' ?
-                                              'Feature-Fähigkeiten'
-                    : router.locale === 'es' ?
-                                              'Habilidades de funciones'
-                    : router.locale === 'zh' ?
-                                              '特色技能'
-                    :  ' Feature Skills'
-                    }
-                  </span>
-                {
-                courses.filter(course => course.type === 'subj').slice(0, 6).map(co => <span className={`${styles.homenaveitems} margin-left text-gray-200 text-sm`}><Link href={`tutors?teach=${co.subject['en-US']}&&country=all&&lp=0&&hp=100`}>{co.subject[router.locale]}</Link></span>)
-                }
-                <span className={`${styles.homenaveitem} text-indigo-700`}>
-                  
-                  {  router.locale  === 'en-US' ? ' Feature Subjects'
-
-                    : router.locale === 'fr' ? 'Sujets vedettes'
-
-                    : router.locale === 'de' ?
-                                              'Feature-Themen'
-                    : router.locale === 'es' ?
-                                              'Temas destacados'
-                    : router.locale === 'zh' ?
-                                              '特色科目'
-                    :  ' Feature Subjects'
-                    }
-                </span>
-                {
-                courses.filter(course => course.type === 'skill').slice(0, 6).map(co => <span className={`${styles.homenaveitems} margin-left text-gray-200 text-sm`}><Link href={`tutors?teach=${co.subject['en-US']}&&country=all&&lp=0&&hp=100`}>{co.subject[router.locale]}</Link></span>)
-                }
             </div>
         <ReactNotification />
         </>

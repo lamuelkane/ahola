@@ -10,6 +10,7 @@ import 'aos/dist/aos.css';
 import {useEffect, useState} from 'react'
 import styles from '../styles/Home.module.css'
 import SearchIcon from '@mui/icons-material/Search';
+import useTranslation from 'next-translate/useTranslation'
 
 
 
@@ -23,22 +24,13 @@ const navigation = [
 
 
 
-export default function Example({subjects, setsubjects}) {
+export default function Example({subjects, setsubjects, herotext}) {
     const [courses, setcourses] = useState([])
     const [showsearch, setshowsearch] = useState(false)
-
+    
     useEffect(() => {
       setcourses(subjects)
     }, [subjects])
-
-  let herotext = {
-    main: 'Your Fluency Is Just A Few',
-    second: 'Lessons Away', 
-    third: ' improve yourself anytime, anywhere',
-    fourth: ' Learn no matter your level A1, A2, B1, B2, C1, C2', 
-    btn1: 'Explore Tutors', 
-    btn2: ' Become a Tutor',
-  }
 
   useEffect(() => {
     AOS.init({duration: 1000});
@@ -46,69 +38,6 @@ export default function Example({subjects, setsubjects}) {
 
 
   const router = useRouter()
-
-  router.locale  === 'en-US' ? 
-  
-  herotext = {
-    main: 'Your Fluency Is Just A Few',
-    second: 'Lessons Away', 
-    third: ' improve yourself anytime, anywhere',
-    fourth: ' Learn no matter your level A1, A2, B1, B2, C1, C2', 
-    btn1: 'Explore Tutors', 
-    btn2: ' Become a Tutor',
-  }
-
-   : router.locale === 'fr' ? 
-
-   herotext = {
-    main: "Votre aisance n'est qu'à",
-    second: 'quelques leçons', 
-    third: ` améliorez-vous à tout moment, n'importe où`,
-    fourth: '  Apprenez peu importe votre niveau A1, A2, B1, B2, C1, C2', 
-    btn1: `Explorer les tuteurs`, 
-    btn2: `Devenez Tuteur`,
-  } 
-
-  : router.locale === 'de' ?
-  
-  herotext = {
-    main: `Ihre Sprachgewandtheit ist nur noch wenige `,
-    second: 'Lektionen entfernt', 
-    third: `verbessere dich jederzeit und überall`,
-    fourth: `Lernen Sie unabhängig von Ihrem Niveau A1, A2, B1, B2, C1, C2`, 
-    btn1: `Tutoren erkunden`, 
-    btn2: `Tutor Werden`,
-  } 
-  : router.locale === 'es' ?
-  
-  herotext = {
-    main: `Su fluidez es solo unas pocas `,
-    second: 'lecciones lejos', 
-    third: 'mejorarse a si mismo  en cualquier momento y en cualquier lugar',
-    fourth: '   Aprende sin importar tu nivel A1, A2, B1, B2, C1, C2', 
-    btn1: 'Explorar tutores', 
-    btn2: 'Conviértete en tutor',
-  } 
-  : router.locale === 'zh' ?
-  
-  herotext = {
-    main: `你的流利程度只需少数几节课`,
-    second: '', 
-    third: '随时随地提升自己',
-    fourth: '学习任何级别的 A1、A2、B1、B2、C1、C2', 
-    btn1: '探索导师', 
-    btn2: '成为导师',
-  } 
-  :  herotext = {
-    main: 'Your Fluency Is Just A Few',
-    second: 'Lessons Away', 
-    third: ' improve yourself anytime, anywhere',
-    fourth: ' Learn no matter your level A1, A2, B1, B2, C1, C2', 
-    btn1: 'Explore Tutors', 
-    btn2: ' Become a Tutor',
-  }
-
-
 
 
   return (

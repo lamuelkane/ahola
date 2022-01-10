@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Notification from '../components/Notification';
 
 export const setUser = (sever, user) => async(dispatch) => {
     if(user){
@@ -45,24 +46,29 @@ export const setcurrencies = (Currency) => {
         payload: Currency
     }
 }
-     
 
 
+export const setCourses = (sever) => async(dispatch) => {
+    try{
+        const {data} = await axios.get(`${sever}/api/users/subjects`)
+        dispatch( {
+            type:'SET_COURSES',
+            payload: data
+        })
+    } catch(err){
+        Notification({
+            title:"Error",
+            message:`an error ocurred getting courses`,
+            type:"danger",
+            container:"top-right",
+            insert:"top",
+            animationIn:"fadeInUp",
+            animationOut:"fadeOut",
+            duration:10000
+          })
+    }
+ }
 
-// export const setUser = (sever, user) => async(dispatch) => {
-//     if(user){
-//         localStorage.setItem('user', JSON.stringify(user))
-//         dispatch( {
-//             type:'SET_USER',
-//             payload: user
-//         })
-//     }
-//     let user2 = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')): null
-//     dispatch( {
-//         type:'SET_USER',
-//         payload: user2
-//     })
-//  }
 
  
 

@@ -4,8 +4,7 @@ import styles from '../styles/Tutor.module.css'
 import Pagination from '@mui/material/Pagination'
 import {countries} from '../components/lists'
 import { useState, useEffect, useRef } from 'react'
-import React, { useMemo } from 'react'
-import countryList from 'react-select-country-list'
+import React from 'react'
 import { useSelector } from 'react-redux';
 import axios from 'axios'
 import Tutorpopup from '../components/Tutorpopup';
@@ -33,14 +32,14 @@ function classNames(...classes) {
 
 const Tutors = () => {
     const {user, Currency, Currencies} = useSelector((state) => state);
-    const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+    // const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
     const [openrange, setopenrange] = useState(false)
     const [value, setValue] = useState('')
     const [open, setOpen] = useState(false)
     const [teach, setteacher] = useState({})
     const [tutors, settutors, ] = useState([])
     const [subjects, setsubjects] = useState([])
-    const {sever} = useSelector((state) => state);
+    const {sever, Courses} = useSelector((state) => state);
     const router = useRouter()
     const {teach: sub, country: coun , lp, hp} = router.query
     const [loading, setloading] = useState(true)
@@ -55,31 +54,11 @@ const Tutors = () => {
     const totop = useRef()
     const totutor = useRef()
 
-
-  const getsubjects = async() => {
-    try {
-      const {data} = await axios.get(`${sever}/api/users/subjects`)
-      setsubjects(data)
-    } catch (error) {
-      Notification({
-        title:"Error",
-        message:`an error ocurred getting courses`,
-        type:"danger",
-        container:"top-right",
-        insert:"top",
-        animationIn:"fadeInUp",
-        animationOut:"fadeOut",
-        duration:10000
-      })
-    }
-  }
-
   const handleChange = (event, value) => {
     setpageNumber(value)
     totop.current.scrollIntoView({behavior: 'smooth'})
   };
 
-  
   const changerange = (event, newValue) => {
     clearTimeout(changing)
     setrange(newValue);
@@ -92,8 +71,10 @@ const Tutors = () => {
 
 
   useEffect(() => {
-    getsubjects()
-  }, [axios])
+    if(Courses){
+      setsubjects(Courses)
+    }
+  }, [Courses])
 
 
       const gettutors = async() => {
@@ -102,7 +83,7 @@ const Tutors = () => {
           const {data} = await axios.get(`${sever}/api/users/tutor/${country || 'all'}/${subject || 'all'}/${lowprice || 0}/${highprice || 100}`)
           settutors(data)
           setloading(false)
-          totutor.current.scrollIntoView({behavior: 'smooth'})
+          // totutor.current.scrollIntoView({behavior: 'smooth'})
         } catch (error) {
           setloading(false)
           Notification({
@@ -191,7 +172,16 @@ const Tutors = () => {
 }
                   </option>
                 {
-                  subjects.map(sub => <option value={sub.subject['en-US']} >{sub.subject[router.locale]}</option>)
+                  subjects.sort((a, b) => {
+                    let fa = a.subject['en-US'].toLowerCase(),
+                    fb = b.subject['en-US'].toLowerCase();
+                    if (fa < fb) {
+                        return -1;
+                    }
+                    if (fa > fb) {
+                        return 1;
+                    }
+                }).map(sub => <option value={sub.subject['en-US']} >{sub.subject[router.locale]}</option>)
                 }
               </select>
           <select name="" id="" className={` ${styles.countryselect} ${styles.filteritem}`} onChange={e => {
@@ -216,7 +206,16 @@ const Tutors = () => {
 }
                 </option>
                 {
-                          countries.map((country, i) => (
+                          countries.sort((a, b) => {
+                            let fa = a.label.toLowerCase(),
+                            fb = b.label.toLowerCase();
+                            if (fa < fb) {
+                                return -1;
+                            }
+                            if (fa > fb) {
+                                return 1;
+                            }
+                        }).map((country, i) => (
                             <option key={i} >{troncate(country.label, 20)}</option>
                           ))
                         }

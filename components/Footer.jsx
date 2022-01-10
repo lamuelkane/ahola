@@ -1,34 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
-import Notification from './Notification';
+// import Notification from './Notification';
 import { useSelector } from 'react-redux'
-import axios from 'axios'
-import Link from 'next/link'
+// import axios from 'axios'
+// import Link from 'next/link'
 import {useRouter} from 'next/router'
 
 const Footer = () => {
     const [subjects, setsubjects] = useState([])
-  const {sever} = useSelector((state) => state);
+  const {Courses} = useSelector((state) => state);
   const router = useRouter()
-
-
-    const getsubjects = async() => {
-      try {
-        const {data} = await axios.get(`${sever}/api/users/subjects`)
-        setsubjects(data)
-      } catch (error) {
-        Notification({
-          title:"Error",
-          message:`an error ocurred getting courses`,
-          type:"danger",
-          container:"top-right",
-          insert:"top",
-          animationIn:"fadeInUp",
-          animationOut:"fadeOut",
-          duration:10000
-        })
-      }
-    }
 
     const translate = (text, lang) => {
         if(text === 'learn') {
@@ -59,16 +40,16 @@ const Footer = () => {
 
     }
 
-
-
     useEffect(() => {
-        getsubjects()
-      }, [axios])
+        if(Courses){
+            setsubjects(Courses)
+        }
+      }, [Courses])
 
 
     return (
         <>
-        <div className={`flex justify-between wrap bg-gray-700 text-white padding ${styles.Footer}`}>
+        <div className={`flex justify-between wrap bg-indigo-900 text-white padding ${styles.Footer}`}>
             <div></div>
             <div></div>
             <div></div>
@@ -152,10 +133,8 @@ const Footer = () => {
                 <div>
                <span className="icon flex"><a href="https://www.facebook.com/"><img className={`${styles.footerimg}`} alt="Facebook" src="images/facebook2x.png" title="facebook"/></a>
                facebook
-               
                </span>
                <span className="icon flex"><a href="https://www.twitter.com/"><img className={`${styles.footerimg}`} alt="Twitter" src="images/twitter2x.png" title="twitter"/></a>
-               
                { router.locale  === 'en-US' ? 'twitter'
 
 : router.locale === 'fr' ? 'Twitter'
@@ -171,10 +150,10 @@ const Footer = () => {
                </span>
                <span className="icon flex"><a href="https://www.instagram.com/"><img className={`${styles.footerimg}`} alt="Instagram" src="images/instagram2x.png" title="instagram"/></a>instagram</span>
                <span className="icon flex"><a href="mailto:info@ahola.ch"><img className={`${styles.footerimg}`} alt="Instagram" src="images/email.png" title="email"/></a>info@ahola.ch</span>
-               <span className="icon flex"><a href="https://www.instagram.com/"><img className={`${styles.footerimg}`} alt="Instagram" src="images/zoom.png" title="instagram"/></a>instagram</span>
-               <span className="icon flex"><a href="mailto:info@ahola.ch"><img className={`${styles.footerimg}`} alt="Instagram" src="images/youtube.png" title="email"/></a>info@ahola.ch</span>
-               <span className="icon flex"><a href="https://www.instagram.com/"><img className={`${styles.footerimg}`} alt="Instagram" src="images/whatsapp.png" title="instagram"/></a>instagram</span>
-               <span className="icon flex"><a href="mailto:info@ahola.ch"><img className={`${styles.footerimg}`} alt="Instagram" src="images/skype.png" title="email"/></a>info@ahola.ch</span>
+               <span className="icon flex"><a href="https://www.instagram.com/"><img className={`${styles.footerimg}`} alt="Instagram" src="images/zoom.png" title="instagram"/></a>Zoom</span>
+               <span className="icon flex"><a href="mailto:info@ahola.ch"><img className={`${styles.footerimg}`} alt="Instagram" src="images/youtube.png" title="email"/></a>Youtube</span>
+               <span className="icon flex"><a href="https://wa.me/41791587777"><img className={`${styles.footerimg}`} alt="Instagram" src="images/whatsapp.png" title="whatsapp"/></a> 0041791587777</span>
+               <span className="icon flex"><a href="https://join.skype.com/invite/ljrOZQel5nt0"><img className={`${styles.footerimg}`} alt="Instagram" src="images/skype.png" title="email"/></a>Skype</span>
                </div>
             </div>
             <div></div>

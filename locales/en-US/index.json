@@ -1,0 +1,29 @@
+{
+    "features" : [
+        [
+            {
+              "name": "Immerse yourself in a new culture",
+              "description": "Connect with language experts from around the world, master the basics and speak like a Native",
+              "icon": "{{GlobeAltIcon}}"
+            },
+            {
+              "name":"Get expert help when you need it",
+              "description":
+                "Learn to solve any problem in any language, our tutors are always at your disposal whenever, whereever, you can get help you desire",
+              "icon": "{{ScaleIcon}}"
+            },
+            {
+              "name": "Speak naturally",
+              "description":
+                "always Make a good impression and build trust in any language , enjoy speaking with confidence and communicate in social & business situation",
+              "icon": "{{LightningBoltIcon}}"
+            },
+            {
+              "name": "Succeed in your career",
+              "description":
+                "Develop your working vocabulary and communicate clearly and get that job you've always had your eyes on",
+              "icon": "{{AnnotationIcon}}"
+            }
+          ]
+    ]
+}

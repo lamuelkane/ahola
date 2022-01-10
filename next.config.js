@@ -1,10 +1,7 @@
-// module.exports = {
-//   reactStrictMode: true,
-// }
+const nextTranslate = require('next-translate')
 
-module.exports = {
-  i18n: {
-    locales: ['en-US', 'fr', 'es', 'zh', 'de'],
-    defaultLocale: 'en-US',
-  },
-}
+module.exports = nextTranslate({
+  webpack: (config, { isServer, webpack }) => {
+    return config;
+  }
+})

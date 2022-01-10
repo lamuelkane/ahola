@@ -36,13 +36,11 @@ const Tutorprofile = ({open, setOpen, teacher, setteacher}) => {
         }
       }
 
-
       useEffect(() => {
         getsubjects()
       }, [axios])
 
     const router = useRouter()
-
 
     return (
         <div className={`${styles.tutor}`}>
@@ -143,7 +141,16 @@ const Tutorprofile = ({open, setOpen, teacher, setteacher}) => {
 } :
                                 </span>
                                 <span className={`text-sm margin-left text-indigo-700`}>{teacher.country}</span>
-                                {teacher.freetrial && <div className='text-red-700 font-extrabold'>
+                                {teacher.freetrial && <div className='text-red-700 font-extrabold pointer' onClick={e => {
+                                     if(user?.type !== 'student'){
+                                        router.push('/student_register')
+                                        return
+                                    }else{
+                                        setOpen(true)
+                                        setteacher(teacher)
+                                        return
+                                    }
+                                }}>
 
 { router.locale  === 'en-US' ? 'Free Trial'
 
@@ -160,7 +167,7 @@ const Tutorprofile = ({open, setOpen, teacher, setteacher}) => {
 </div >}
                             </div>
                          {user?.type === 'student' &&   <button className={`${styles.bookbtn2} text-gray-300 hover:text-white text-xs `} onClick={e => {
-                                router.push('')
+                                router.push(`messages?convid=${teacher._id + user._id}&&name=${teacher.firstname}&&rcrid=${teacher._id}`)
                             }}>
                                { router.locale  === 'en-US' ? 'message'
 

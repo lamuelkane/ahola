@@ -129,6 +129,8 @@ export default function Tutorpopup({open, setOpen, teacher}) {
       if(tutor || stu){
           tutor.hours += selectedSize.value 
           stu.hours += selectedSize.value
+          tutor.rate = rate 
+          stu.rate = rate
           if(student?.currentearning > 0){
             if((selectedSize.value * tutor.rate) > student?.currentearning) {
                 student.currentearning = 0
@@ -239,7 +241,7 @@ export default function Tutorpopup({open, setOpen, teacher}) {
       const {_id: id, rate, firstname: name, timezone} = teacher
       student.tutors.push({
         id,
-        rate,
+        rate: 0,
         hours: 1,
         name,
         timezone, 
@@ -247,7 +249,7 @@ export default function Tutorpopup({open, setOpen, teacher}) {
 
       teacher.students.push({
         id: student._id,
-        rate,
+        rate: 0,
         name: student.firstname,
         hours: 1,
         timezone: student.timezone

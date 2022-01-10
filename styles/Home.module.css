@@ -486,7 +486,7 @@
     width: 230px;
     height: 100vh;
     color: white;
-    z-index: 5;
+    z-index: 5000;
   }
   
   
