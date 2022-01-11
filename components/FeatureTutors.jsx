@@ -28,7 +28,6 @@ const FeatureTutors = ({FeatureTutors}) => {
           const {data} = await axios.get(`${sever}/api/users/tutors`)
           settutors(data)
         } catch (error) {
-            alert(error)
           Notification({
             title:"Error",
             message:`an error ocurred while getting tutors`,

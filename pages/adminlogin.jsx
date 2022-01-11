@@ -69,7 +69,6 @@ export default function Example() {
                   localStorage.setItem('admin', JSON.stringify(data))
                   router.push('/dashboard')
                  } catch (error) {
-                     alert(error)
                   Notification({
                     title:"ERROR",
                     message:`An error occured, please try again`,

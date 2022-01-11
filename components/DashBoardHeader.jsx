@@ -56,11 +56,11 @@ const  DashBoardHeader = () => {
                             <span className={`hidexs`} >{user?.currentearning.toFixed(2)} USD</span>
                             <KeyboardArrowDownIcon />
                            </div>
-                        {show && <div className={styles.accountbalancedropdown}>
+                        {/* {show && <div className={styles.accountbalancedropdown}>
                             <div className={styles.accountbalancedropdowntitle}>Your balance</div>
                             <div className={styles.accountbalancedropdownfunds}>${user?.currentearning.toFixed(2)}</div>
                             <button className={`${styles.accountbalancedropdownbtn} text-sm`}>withdraw funds</button>
-                        </div>}
+                        </div>} */}
                         </div>
                         <div className="margin-right flex align-center padding-right border-right">
                           {user?.firstname}

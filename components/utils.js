@@ -30,14 +30,13 @@ export const getlessonintimezone = (lesson, timezone) => {
     const time = getaccuratehours2(lesson?.day?.hour)
     const les = lesson.day.day + " " + month + ' ' + date + ' ' + year + '  ' + time + ':00' +  '  ' + lesson?.timezone?.offset + ' ' + "(" + lesson?.timezone?.name + ')'
     let overrideZone = DateTime.fromISO(`${year}-${month}-${date}T${time}`, { zone: lesson?.timezone?.name });
-    const les2 =  overrideZone.toFormat('y') + '-' + overrideZone.toFormat('LL') + '-' + overrideZone.toFormat('dd') + 'T' + overrideZone.toFormat('HH') 
+    
+    let local = DateTime.fromISO(overrideZone);
+    let rezoned =  local.setZone(timezone.name);
+    
+    const les2 =  rezoned.toFormat('ccc') + " " + rezoned.toFormat('LLL') + ' ' + rezoned.toFormat('dd') + ' ' + rezoned.toFormat('y') + '  ' + rezoned.toFormat('HH') + ':00' +  '  ' + timezone?.offset + ' ' + "(" + timezone?.name + ')'
 
-    let local = DateTime.fromISO(les2);
-    let rezoned = local.setZone(timezone.name);
-
-    console.log(rezoned.toString())
-    // console.log(timezone.name, local.toString(), rezoned.toString())
-    return new Date(rezoned.toFormat('y'), rezoned.toFormat('L') - 1, rezoned.toFormat('dd'), rezoned.toFormat('HH') ).toString()
+    return rezoned.toString()
 }
 
 
@@ -54,7 +53,7 @@ export const getlessoninactualtime = (lesson) => {
     const month = parseInt(lesson.day.day.toISOString().slice(5, 8)) - 1
     const day1 = parseInt(lesson.day.day.toISOString().slice(8, 10)) + 1
     
-    return new Date(year, month , day1, parseInt(getaccuratehours2(lesson.day.hour))).toLocaleString()
+    return new Date(year, month , day1, parseInt(getaccuratehours2(lesson.day.hour))).toLocaleString('en-US', {timeZone: lesson.timezone.name})
 }
 export const getlessoninactualtime2 = (lesson) => {
     const year = parseInt(lesson.day.day.slice(0, 4))
@@ -71,8 +70,9 @@ export const getaccuratehours2 = (lesson) => {
         return lesson
 }
 export const checklessonstate = (lesson, timezone) => {
-    const date = new Date(getlessonintimezone(lesson, timezone)).getTime()
-    if(date < new Date().getTime()){
+    // const date = new Date(getlessonintimezone(lesson, timezone)).getTime()
+    const date = DateTime.fromISO(getlessonintimezone(lesson, timezone), { zone: timezone.name }).toMillis()
+    if(date < DateTime.now().setZone(timezone.name).toMillis()){
         return true
     }
     return false

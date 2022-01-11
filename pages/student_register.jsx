@@ -109,7 +109,6 @@ const submitrequest = async(e) => {
     })
     router.push('/calender')
 } catch(err) {
-  alert(err)
   Notification({
     title:"Error",
     message:`an error ocurred`,

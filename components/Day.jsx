@@ -4,6 +4,8 @@ import {getaccuratehours2, getlessoninactualtime3, getlessonintimezone} from './
 import {showeventmodalaction} from '../actions/Event'
 import { useSelector, useDispatch } from 'react-redux';
 import styles from '../styles/Dashboard.module.css'
+import { DateTime } from "luxon";
+
 
 
 const Day = ({day, rowindx, row, hours}) => {
@@ -16,9 +18,9 @@ const Day = ({day, rowindx, row, hours}) => {
     }
 
     const geteventclass = (day, hour) => {
-         let les = user?.lessons.find(e => new Date(getlessonintimezone(e, user?.timezone)).getDate() == day.date() &&  new Date(getlessonintimezone(e, user?.timezone)).getHours() == hour)
+         let les = user?.lessons.find(e => DateTime.fromISO(getlessonintimezone(e, user?.timezone), { zone: user?.timezone?.name }).toFormat('dd') == day.date() &&   DateTime.fromISO(getlessonintimezone(e, user?.timezone), { zone: user?.timezone?.name }).toFormat('H') == hour)
          if(les){
-          if(new Date(getlessonintimezone(les, user?.timezone)).getTime() < new Date().getTime()) {
+          if(DateTime.fromISO(getlessonintimezone(les, user?.timezone), { zone: user?.timezone?.name }).toMillis() <DateTime.now().setZone(user?.timezone.name).toMillis()) {
             if(les.confirmed){
               return 'bg-blue-900  hover:bg-blue-900'
             }
@@ -31,7 +33,7 @@ const Day = ({day, rowindx, row, hours}) => {
     }
 
     const geteventname = (day, hour) => {
-      let les = user?.lessons.find(e => new Date(getlessonintimezone(e, user?.timezone)).getDate() == new Date(day.toISOString()).getDate() &&  new Date(getlessonintimezone(e, user?.timezone)).getHours() == hour)
+      let les = user?.lessons.find(e => DateTime.fromISO(getlessonintimezone(e, user?.timezone), { zone: user?.timezone?.name }).toFormat('dd') == day.date() &&   DateTime.fromISO(getlessonintimezone(e, user?.timezone), { zone: user?.timezone?.name }).toFormat('H') == hour)
       if(les){
        if (user?.type === 'student') {
          return les.tutor.name

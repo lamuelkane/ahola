@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import dayjs from 'dayjs'
 import {getaccuratehours2, getlessonintimezone,  getlessoninactualtime2} from '../components/utils'
 import Link from 'next/link'
+import { DateTime } from "luxon";
+
 
 
 
@@ -19,6 +21,7 @@ const CalenderHeader = () => {
             return new Date(getlessonintimezone(a, user?.timezone)).getTime() - new Date(getlessonintimezone(b,  user?.timezone )).getTime()
         });
         return lesson ? lesson[0] : ''
+        // DateTime.now().setZone('America/New_York')
     }
     return (
         <header className={`px-4 py-2 flex items-center border`}>
@@ -35,9 +38,8 @@ const CalenderHeader = () => {
             </button>
             <div>
                  { getnextlesson()?<div className={`flex text-xs align-center`}>  <h3 className={`margin-right`}>Next lesson </h3>
-                    <div className="margin-right text-xs text-indigo-500">{new Date(getlessonintimezone(getnextlesson(), user?.timezone)).toLocaleString()}</div>
-                     { new Date(getlessonintimezone(getnextlesson(), user?.timezone)).getTime() - new Date().getTime() < 300000 && <button onClick={e => {
-                        //  console.log(new Date(getlessonintimezone(getnextlesson())).getTime() - new Date().getTime())
+                    <div className="margin-right text-xs text-indigo-500">{DateTime.fromISO(getlessonintimezone(getnextlesson(), user?.timezone), { zone: user?.timezone?.name }).toFormat('D')} at {DateTime.fromISO(getlessonintimezone(getnextlesson(), user?.timezone), { zone: user?.timezone?.name }).toFormat('t')}</div>
+                     {DateTime.fromISO(getlessonintimezone(getnextlesson(), user?.timezone), { zone: user?.timezone?.name }) - DateTime.now().setZone(user?.timezone.name).toMillis() < 300000 && <button onClick={e => {
                      }} className="border rounded py-2 px-4 mr-5">
                          <a href={`https://aholalessons.netlify.app?id=${getnextlesson().id}&&user=${user?.firstname}`} rel='noreferrer' target="_blank" >Join lesson </a>
                     </button> } </div> 

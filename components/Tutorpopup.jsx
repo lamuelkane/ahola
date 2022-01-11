@@ -561,7 +561,6 @@ export default function Tutorpopup({open, setOpen, teacher}) {
                               // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
                               // onSuccess={savehoursbought}
                               onSuccess={(details, data) => {
-                                // alert("Transaction completed by " + details.payer.name.given_name);
                                 savehoursbought()
                                 // OPTIONAL: Call your server to save the transaction
                                 // return savehoursbought()

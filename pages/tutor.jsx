@@ -42,7 +42,6 @@ const Tutor = () => {
             const {data} = await axios.get(`${sever}/api/users/tutor/${id}`)
             settutor(data)
          } catch (error) {
-             alert(error)
              Notification({
                 title:"Error",
                 message:`an error ocurred while getting tutor information`,

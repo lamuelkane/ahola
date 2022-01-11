@@ -71,10 +71,8 @@ import Notification from './Notification';
                           })
                         //   try {
                         //     await axios.get(`${sever}/api/users/registeredtutor/delete/${tutor._id}`)
-                        //     alert('everything went fine')
                         //     gettutors()
                         //   } catch (error) {
-                        //     alert('an error occured')
                         //   }
                         }}
                         >

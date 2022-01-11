@@ -60,7 +60,6 @@ const Header2 = () => {
           dispatch(setcurrencies(data))
           setcurrecies(Object.keys(data.data).filter(obj => obj === 'USD' || obj === 'EUR' || obj === 'CHF' || obj === 'CNY'))
         } catch (error) {
-          alert(error)
           Notification({
             title:"Error",
             message:`an error ocurred while getting Currencies`,
@@ -149,7 +148,7 @@ const Header2 = () => {
                 <CloseIcon />
             </div> }
         </div>
-            <div className={`${styles.headersmall} bg-indigo-900  ${show ? 'showsidebar' : 'sidebar'}`}>
+            <div className={`${styles.headersmall} bg-gray-700  ${show ? 'showsidebar' : 'sidebar'}`}>
                 <span className={`${styles.homenaveitem}`}><Link href='/tutors'>
                                   {  router.locale  === 'en-US' ? 'Find a Tutor'
 

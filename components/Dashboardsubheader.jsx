@@ -32,7 +32,6 @@ const Dashboardsubheader = () => {
             })
             setconversations(count)
         } catch (error) {
-            // alert(error)
             Notification({
                 title:"Error",
                 message:`an error ocurred while getting conversations`,

@@ -96,7 +96,6 @@ export default function Example() {
       })
       .catch(err=>{
           // console.log(err.name, err.message);
-          alert(err.message)
       })
   }
 
@@ -201,7 +200,7 @@ export default function Example() {
       }
   })
   .catch(function(err) { 
-     alert(err.message); 
+     console.log(err.message); 
   });
   
   /*********************************

@@ -163,8 +163,6 @@ const Mytutor = () => {
                                 
                                 user.tutors = user.tutors.filter(t => t.id !== tut.id)
                                 data.students = data.students.filter(st => st.id !== user._id)
-                                
-
                                 await axios.post(`${sever}/api/users/student/update`,  user)
                                 await axios.post(`${sever}/api/users/tutor/update`, data)
                                 Notification({
@@ -218,7 +216,7 @@ const Mytutor = () => {
                                   <FormControlLabel  control={<input type='checkbox' 
                                   className={`margin-right`}
                                   checked={tut.confirmed? true : false} 
-                                  disabled={new Date(getlessonintimezone(tut, user?.timezone)).getTime() > new Date().getTime() ? true : false || tut.confirmed? true : false}
+                                  disabled={checklessonstate(tut, user?.timezone) || tut.confirmed? true : false}
                                   onClick={e => confirmlesson(tutor, tut)}/>} label="Confirmed" />
                                   </div>
                               </div>

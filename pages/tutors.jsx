@@ -30,7 +30,7 @@ function classNames(...classes) {
 }
 
 
-const Tutors = () => {
+const Tutors = (props) => {
     const {user, Currency, Currencies} = useSelector((state) => state);
     // const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
     const [openrange, setopenrange] = useState(false)
@@ -119,35 +119,11 @@ const Tutors = () => {
           <div >
           <div className={`center bg-blue-700 ${styles.tuttorshero}`}>
             <h2 className={`text-2xl text-white margin-bottom`}>
-              
-              { router.locale  === 'en-US' ? 'Find the best tutor for you'
-
-: router.locale === 'fr' ? 'Encuentra el mejor tutor para ti'
-
-: router.locale === 'de' ?
-                          'Finden Sie den besten Nachhilfelehrer für Sie'
-: router.locale === 'es' ?
-                          'Encuentra el mejor tutor para ti'
-: router.locale === 'zh' ?
-                          '为您找到最好的导师'
-:  'Find the best tutor for you'
-}
+             {props.pagecontent.findthebest}
           </h2>
             <p className={`text-sm text-white`}>
             
-                  
-              { router.locale  === 'en-US' ? '  The right tutor always makes a difference'
-
-: router.locale === 'fr' ? 'Le bon tuteur fait toujours la différence'
-
-: router.locale === 'de' ?
-                          'Der richtige Nachhilfelehrer macht immer einen Unterschied'
-: router.locale === 'es' ?
-                          'El tutor adecuado siempre marca la diferencia'
-: router.locale === 'zh' ?
-                          '合适的导师总是有所作为'
-:  '  The right tutor always makes a difference'
-}
+            {props.pagecontent.therighttutor}
               </p>
             <div className={`flex wrap justify-center ${styles.tutorsfilterwrapper} margin-y align-center bg-white`}>
             <select name="" id="" className={`margin-right ${styles.countryselect} ${styles.filteritem}`}  onChange={e => {
@@ -157,19 +133,7 @@ const Tutors = () => {
             setsubject(e.target.value)
           }} ref={totop}>
                 <option value='Courses' >
-                  
-                  { router.locale  === 'en-US' ? 'Courses'
-
-: router.locale === 'fr' ? 'Le tuteur enseigne'
-
-: router.locale === 'de' ?
-                          'Tutor unterrichtet'
-: router.locale === 'es' ?
-                          'Tutor enseña'
-: router.locale === 'zh' ?
-                          '导师教'
-:  'Courses'
-}
+                    courses
                   </option>
                 {
                   subjects.sort((a, b) => {
@@ -191,19 +155,7 @@ const Tutors = () => {
             setcountry(e.target.value)
           }}>
               <option >
-                
-                { router.locale  === 'en-US' ? 'Tutor from'
-
-: router.locale === 'fr' ? 'Tuteur de'
-
-: router.locale === 'de' ?
-                          'Nachhilfelehrer aus'
-: router.locale === 'es' ?
-                          'Tutor de'
-: router.locale === 'zh' ?
-                          '导师来自'
-:  'Tutor from'
-}
+                {props.pagecontent.tutorfrom}
                 </option>
                 {
                           countries.sort((a, b) => {
@@ -223,19 +175,7 @@ const Tutors = () => {
               <div className={`flex justify-center align-center border ${styles.filteritem} ${styles.rangesliderwrapper}`} >
                 <div onClick={e => setopenrange(!openrange)}>
                   
-                  { router.locale  === 'en-US' ? 'price per hour'
-
-: router.locale === 'fr' ? `prix à l'heure`
-
-: router.locale === 'de' ?
-                          'Preis pro Stunde'
-: router.locale === 'es' ?
-                          'precio por hora'
-: router.locale === 'zh' ?
-                          '每小时价格'
-:  'price per hour'
-}
-                  
+                 {props.pagecontent.priceperhour}
                     {Currency === 'USD' ? <span>  {range[0]} - {range[1]}</span> : <span>    {(range[0] * Currencies?.data[Currency]).toFixed(0)} - {(range[1] * Currencies?.data[Currency]).toFixed(0)}</span>} {Currency}
                 </div>
                         <div className={`${styles.slider} ${!openrange && 'hide2'}`}>
@@ -245,18 +185,7 @@ const Tutors = () => {
                         </div>
               </div>
              
-              <input className={`${styles.filteritem} ${styles.countryselect}`} placeholder={ router.locale  === 'en-US' ? 'search tutor'
-
-: router.locale === 'fr' ? `recherche de tuteur`
-
-: router.locale === 'de' ?
-                          'Nachhilfelehrer suchen'
-: router.locale === 'es' ?
-                          'tutor de búsqueda'
-: router.locale === 'zh' ?
-                          '寻找导师'
-:  'search tutor'
-} type="text" onChange={async(e) => {
+              <input className={`${styles.filteritem} ${styles.countryselect}`} placeholder={props.pagecontent.saerchtutor} type="text" onChange={async(e) => {
                  clearTimeout(chnaging)
                  const chnaging = setTimeout(async() => {
                    if (e.target.value === '') {
@@ -291,33 +220,10 @@ const Tutors = () => {
             <div ref={totutor} className={`flex justify-center align-center ${styles.tutorprofileswraper} column w-4/5`}>
                {
                 loading? <h3>
-                  
-                  { router.locale  === 'en-US' ? 'Loading tutors...'
-
-: router.locale === 'fr' ? 'Chargement des tuteurs...'
-
-: router.locale === 'de' ?
-                          'Tutoren werden geladen...'
-: router.locale === 'es' ?
-                          'Cargando tutores ...'
-: router.locale === 'zh' ?
-                          '正在加载导师...'
-:  'Loading tutors...'
-}
+                 {props.pagecontent.loadingtutors}
                   </h3> : tutors.length < 1 ? <h3>
                     
-                    { router.locale  === 'en-US' ? 'No tutor available'
-
-: router.locale === 'fr' ? 'Pas de tuteur disponible'
-
-: router.locale === 'de' ?
-                          'Kein Nachhilfelehrer verfügbar'
-: router.locale === 'es' ?
-                          'No hay tutor disponible'
-: router.locale === 'zh' ?
-                          '没有导师'
-:  'No tutor available'
-}
+                    {props.pagecontent.notutor}
                     </h3> : tutors.filter(tut => !tut.hidden).slice(pagesVited, pagesVited + 5).map((teacher, i) => (
                   <Tutorprofile key={i} open={open} teacher={teacher} setOpen={setOpen} setteacher={setteacher} />
                 )) 
@@ -334,3 +240,107 @@ const Tutors = () => {
 }
 
 export default Tutors
+
+
+
+
+export async function getStaticProps({locale}) {
+  const pagecontent = { 
+    notutor: locale  === 'en-US' ? 'No tutor available'
+
+    : locale === 'fr' ? 'Pas de tuteur disponible'
+    
+    : locale === 'de' ?
+                              'Kein Nachhilfelehrer verfügbar'
+    : locale === 'es' ?
+                              'No hay tutor disponible'
+    : locale === 'zh' ?
+                              '没有导师'
+    :  'No tutor available',
+    loadingtutors: locale  === 'en-US' ? 'Loading tutors...'
+
+: locale === 'fr' ? 'Chargement des tuteurs...'
+
+: locale === 'de' ?
+            'Tutoren werden geladen...'
+: locale === 'es' ?
+            'Cargando tutores ...'
+: locale === 'zh' ?
+            '正在加载导师...'
+:  'Loading tutors...',
+saerchtutor: locale  === 'en-US' ? 'search tutor'
+
+: locale === 'fr' ? `recherche de tuteur`
+
+: locale === 'de' ?
+                          'Nachhilfelehrer suchen'
+: locale === 'es' ?
+                          'tutor de búsqueda'
+: locale === 'zh' ?
+                          '寻找导师'
+:  'search tutor',
+priceperhour:locale  === 'en-US' ? 'price per hour'
+
+: locale === 'fr' ? `prix à l'heure`
+
+: locale === 'de' ?
+                          'Preis pro Stunde'
+: locale === 'es' ?
+                          'precio por hora'
+: locale === 'zh' ?
+                          '每小时价格'
+:  'price per hour',
+tutorfrom: locale  === 'en-US' ? 'Tutor from'
+
+      :locale === 'fr' ? 'Tuteur de'
+
+      :locale === 'de' ?
+                'Nachhilfelehrer aus'
+      :locale === 'es' ?
+                'Tutor de'
+      :locale === 'zh' ?
+                '导师来自'
+      :  'Tutor from',
+      courses: locale  === 'en-US' ? 'Courses'
+
+: locale === 'fr' ? 'Le tuteur enseigne'
+
+: locale === 'de' ?
+              'Tutor unterrichtet'
+: locale === 'es' ?
+              'Tutor enseña'
+: locale === 'zh' ?
+              '导师教'
+:  'Courses',
+ therighttutor: locale  === 'en-US' ? '  The right tutor always makes a difference'
+
+: locale === 'fr' ? 'Le bon tuteur fait toujours la différence'
+
+: locale === 'de' ?
+             'Der richtige Nachhilfelehrer macht immer einen Unterschied'
+: locale === 'es' ?
+             'El tutor adecuado siempre marca la diferencia'
+: locale === 'zh' ?
+             '合适的导师总是有所作为'
+:  '  The right tutor always makes a difference',
+       findthebest: locale  === 'en-US' ? 'Find the best tutor for you'
+
+: locale === 'fr' ? 'Encuentra el mejor tutor para ti'
+
+: locale === 'de' ?
+                   'Finden Sie den besten Nachhilfelehrer für Sie'
+: locale === 'es' ?
+                   'Encuentra el mejor tutor para ti'
+: locale === 'zh' ?
+                   '为您找到最好的导师'
+:  'Find the best tutor for you',       
+
+
+    
+  }
+  return {
+    props: {
+      pagecontent
+    }
+  }
+}

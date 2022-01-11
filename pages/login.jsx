@@ -11,7 +11,7 @@ import Footer from '../components/Footer'
 import Head from 'next/head'
 
 
-export default function Example() {
+export default function Example(props) {
  const [email, setemail ] = useState('')
  const [pass, setpass] = useState('')
  const [tutor, settutor] = useState(false)
@@ -45,78 +45,23 @@ export default function Example() {
               alt="Workflow"
             />
             <h2 className="mt-6 text-center text-2xl font-extrabold text-gray-900">
-            {  router.locale  === 'en-US' ? 'login to your account'
-
-: router.locale === 'fr' ? 'Connectez-vous à votre compte'
-
-: router.locale === 'de' ?
-                          'Melde dich in deinem Konto an'
-: router.locale === 'es' ?
-                          'Ingrese a su cuenta'
-: router.locale === 'zh' ?
-                          '登录到您的帐户'
-:  'login to your account'
-}
+              {props.pagecontent.login}
             </h2>
             <p className="mt-2 text-center  text-gray-600">
               <div>
-              {  router.locale  === 'en-US' ? 'do not have an account?'
-
-            : router.locale === 'fr' ? `Vous n'avez pas de compte?`
-
-            : router.locale === 'de' ?
-                                      'Haben Sie kein Konto?'
-            : router.locale === 'es' ?
-                                      '¿No tiene una cuenta?'
-            : router.locale === 'zh' ?
-                                      '还没有账号？'
-            :  'do not have an account?'
-            }
+                {props.pagecontent.noaccount}
               </div>
               <span className="font-medium text-indigo-600 hover:text-indigo-500 margin-right">
                 <Link href={'/student_register'}  > 
-                {  router.locale  === 'en-US' ? 'Sign up as a Student '
-
-: router.locale === 'fr' ? `Inscrivez-vous en tant qu'étudiant`
-
-: router.locale === 'de' ?
-                          'Als Student anmelden'
-: router.locale === 'es' ?
-                          'Regístrate como estudiante'
-: router.locale === 'zh' ?
-                          '注册为学生'
-:  'Sign up as a Student'
-}
+                  {props.pagecontent.studentsignup}
                 </Link>
               </span>
               <span className="font-medium text-sm margin-right">
-              {  router.locale  === 'en-US' ? 'Or'
-
-: router.locale === 'fr' ? `Ou`
-
-: router.locale === 'de' ?
-                          `Oder`
-: router.locale === 'es' ?
-                          `O`
-: router.locale === 'zh' ?
-                          `或者`
-:  'Or'
-}
+                {props.pagecontent.or}
               </span>
               <span className="font-medium text-indigo-600 hover:text-indigo-500">
                 <Link href={'/tutor_register'}  > 
-                {  router.locale  === 'en-US' ? 'sign up as a tutor'
-
-: router.locale === 'fr' ? 'Inscrivez-vous en tant que tuteur'
-
-: router.locale === 'de' ?
-                          'Melden Sie sich als Tutor an'
-: router.locale === 'es' ?
-                          'Regístrate como tutor'
-: router.locale === 'zh' ?
-                          '注册为导师'
-:  'sign up as a tutor'
-}
+                {props.pagecontent.signuptutor}
                  </Link>
               </span>
             </p>
@@ -163,18 +108,7 @@ export default function Example() {
               <div>
                 <label htmlFor="email-address" className="sr-only">
                   
-                  {  router.locale  === 'en-US' ? 'Email address'
-
-: router.locale === 'fr' ? 'Adresse e-mail'
-
-: router.locale === 'de' ?
-                          'E-Mail-Addresse'
-: router.locale === 'es' ?
-                          'Dirección de correo electrónico'
-: router.locale === 'zh' ?
-                          '电子邮件地址'
-:  'Email address'
-}
+                  {props.pagecontent.emailaddress}
                 </label>
                 <input
                 value={email}
@@ -191,18 +125,7 @@ export default function Example() {
               <div>
                 <label htmlFor="password" className="sr-only">
                   
-                  {  router.locale  === 'en-US' ? 'Password'
-
-: router.locale === 'fr' ? 'Mot de passe'
-
-: router.locale === 'de' ?
-                          'Passwort'
-: router.locale === 'es' ?
-                          'Contraseña'
-: router.locale === 'zh' ?
-                          '密码'
-:  'Password'
-}
+                {props.pagecontent.password}
                 </label>
                 <input
                 value={pass}
@@ -226,16 +149,16 @@ export default function Example() {
                   type="checkbox"
                   className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+                {/* <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
                   Remember me
-                </label>
+                </label> */}
               </div>
 
-              <div className="text-sm">
+              {/* <div className="text-sm">
                 <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
                   Forgot your password?
                 </a>
-              </div>
+              </div> */}
             </div>
 
             <div>
@@ -256,4 +179,100 @@ export default function Example() {
       <Footer />
     </>
   )
+}
+
+
+export async function getStaticProps({locale}) {
+  const pagecontent = {
+    password:locale  === 'en-US' ? 'Password'
+
+    : locale === 'fr' ? 'Mot de passe'
+    
+    : locale === 'de' ?
+                              'Passwort'
+    : locale === 'es' ?
+                              'Contraseña'
+    : locale === 'zh' ?
+                              '密码'
+    :  'Password',
+
+    emailaddress: locale  === 'en-US' ? 'Email address'
+
+    : locale === 'fr' ? 'Adresse e-mail'
+    
+    : locale === 'de' ?
+                              'E-Mail-Addresse'
+    : locale === 'es' ?
+                              'Dirección de correo electrónico'
+    : locale === 'zh' ?
+                              '电子邮件地址'
+    :  'Email address',
+    signuptutor: locale  === 'en-US' ? 'sign up as a tutor'
+
+    : locale === 'fr' ? 'Inscrivez-vous en tant que tuteur'
+    
+    : locale === 'de' ?
+                              'Melden Sie sich als Tutor an'
+    : locale === 'es' ?
+                              'Regístrate como tutor'
+    : locale === 'zh' ?
+                              '注册为导师'
+    :  'sign up as a tutor',
+
+    or: locale  === 'en-US' ? 'Or'
+
+    : locale === 'fr' ? `Ou`
+    
+    : locale === 'de' ?
+                              `Oder`
+    : locale === 'es' ?
+                              `O`
+    : locale === 'zh' ?
+                              `或者`
+    :  'Or',
+    studentsignup: locale  === 'en-US' ? 'Sign up as a Student '
+
+    : locale === 'fr' ? `Inscrivez-vous en tant qu'étudiant`
+    
+    : locale === 'de' ?
+                              'Als Student anmelden'
+    : locale === 'es' ?
+                              'Regístrate como estudiante'
+    : locale === 'zh' ?
+                              '注册为学生'
+    :  'Sign up as a Student',
+    noaccount:locale  === 'en-US' ? 'do not have an account?'
+
+    : locale === 'fr' ? `Vous n'avez pas de compte?`
+
+    : locale === 'de' ?
+                              'Haben Sie kein Konto?'
+    : locale === 'es' ?
+                              '¿No tiene una cuenta?'
+    : locale === 'zh' ?
+                              '还没有账号？'
+    :  'do not have an account?',
+
+    login:locale  === 'en-US' ? 'login to your account'
+
+    : locale === 'fr' ? 'Connectez-vous à votre compte'
+    
+    : locale === 'de' ?
+                              'Melde dich in deinem Konto an'
+    : locale === 'es' ?
+                              'Ingrese a su cuenta'
+    : locale === 'zh' ?
+                              '登录到您的帐户'
+    :  'login to your account',
+
+    
+
+
+    
+  }
+  return {
+    props: {
+      pagecontent
+    }
+  }
 }
