@@ -1,16 +1,10 @@
 
-import { Fragment } from 'react'
-import { Popover, Transition } from '@headlessui/react'
-import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
 import Header2 from './Header2'
 import {useRouter} from 'next/router'
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import {useEffect, useState} from 'react'
 import styles from '../styles/Home.module.css'
 import SearchIcon from '@mui/icons-material/Search';
-import useTranslation from 'next-translate/useTranslation'
 
 
 
@@ -31,11 +25,6 @@ export default function Example({subjects, setsubjects, herotext}) {
     useEffect(() => {
       setcourses(subjects)
     }, [subjects])
-
-  useEffect(() => {
-    AOS.init({duration: 1000});
-}, [])
-
 
   const router = useRouter()
 
@@ -60,8 +49,8 @@ export default function Example({subjects, setsubjects, herotext}) {
           <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
             <div className="sm:text-center lg:text-left">
               <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-6xl md:text-6xl">
-                <span className="block xl:inline"  data-aos="fade-up">{herotext.main}</span>{' '}
-                <span className="block text-red-600 xl:inline"  data-aos="slide-left">{herotext.second}</span>
+                <span className="block xl:inline" >{herotext.main}</span>{' '}
+                <span className="block text-red-600 xl:inline" >{herotext.second}</span>
               </h1>
               <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
               {herotext.third}

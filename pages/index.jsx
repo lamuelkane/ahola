@@ -6,9 +6,9 @@ import Course from '../components/Course'
 import ShowCase from '../components/ShowCase'
 import { AnnotationIcon, GlobeAltIcon, LightningBoltIcon, ScaleIcon } from '@heroicons/react/outline'
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+// import axios from 'axios'
 import { useSelector } from 'react-redux'
-import Notification from '../components/Notification';
+// import Notification from '../components/Notification';
 import Footer from '../components/Footer'
 import Link from 'next/link'
 import LocalLibraryTwoToneIcon from '@mui/icons-material/LocalLibraryTwoTone';
@@ -17,8 +17,6 @@ import LanguageTwoToneIcon from '@mui/icons-material/LanguageTwoTone';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import EventAvailableTwoToneIcon from '@mui/icons-material/EventAvailableTwoTone';
-import FeatureTutors from '../components/FeatureTutors'
-import CastForEducationTwoToneIcon from '@mui/icons-material/CastForEducationTwoTone';
 import {useRouter} from 'next/router'
 
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch} from 'react-redux';
 import styles from '../styles/Home.module.css'
 import Link from 'next/link'
@@ -80,6 +80,7 @@ const Header2 = () => {
             else{
               setcurrecies(Object.keys(Currencies.data))
             }
+            console.log('currency getting...')
         }, [])
 
     return (

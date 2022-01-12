@@ -1,19 +1,8 @@
 
 import styles from '../styles/Home.module.css'
 import Paper from '@mui/material/Paper';
-import { motion } from "framer-motion"
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import {useEffect} from 'react'
 
 const ShowCase = ({showcase}) => {
-
-
-    useEffect(() => {
-        AOS.init({duration: 1000});
-    }, [])
-
-
     return (
         <div className={`${styles.showcase} `} data-aos="fade-down">
             <Paper>
