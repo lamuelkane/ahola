@@ -1,10 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch} from 'react-redux';
-import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc'
-import timezone from 'dayjs/plugin/timezone'
-import timezones from 'timezones-list';
-import axios from 'axios'
+
 
 
 const Test = () => {
