@@ -8,7 +8,7 @@ import styles from '../styles/Admin.module.css'
 import Tutortable from '../components/Tutortable'
 import Head from 'next/head'
 
-const ahola_tutors = () => {
+const Ahola_tutors = () => {
     const {sever} = useSelector((state) => state);
     const [tutors, settutors] = useState([])
     const gettutors = async() => {
@@ -37,7 +37,8 @@ const ahola_tutors = () => {
           <Head>
                 <title>Ahola Tutors</title>
                 <link rel="icon" href="./images/logo1.png" />
-                <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
+                <script src="//code.tidio.co/kjrtn6giffsfdwcwl2hlmkeqrrwk1b42.js" async></script>
+                {/* <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script> */}
             </Head>
             <AdminHeader />
             <main className={`${styles.main}`}>
@@ -53,4 +54,4 @@ const ahola_tutors = () => {
     )
 }
 
-export default ahola_tutors
+export default Ahola_tutors

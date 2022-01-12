@@ -45,7 +45,8 @@ const Registered_tutors = () => {
             <Head>
                 <title>Tutor Information</title>
                 <link rel="icon" href="./images/logo1.png" />
-                <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
+                {/* <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script> */}
+                <script src="//code.tidio.co/kjrtn6giffsfdwcwl2hlmkeqrrwk1b42.js" async></script>
             </Head>
             <AdminHeader />
             <div className={`${styles.main} w-80 margin-auto margin-top`}>

@@ -372,7 +372,8 @@ let sendimage = async(e) => {
                 <title>Register</title>
                 <meta name="description" content="Become a tutor on Ahola" />
                 <link rel="icon" href="./images/logo1.png" />
-                <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
+                <script src="//code.tidio.co/kjrtn6giffsfdwcwl2hlmkeqrrwk1b42.js" async></script>
+                {/* <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script> */}
             </Head>
     <div className="border"><Header2 /></div>
         <div className={`center bg-indigo-500 margin-bottom border py-10`}>
@@ -506,7 +507,8 @@ let sendimage = async(e) => {
                           </iframe>
                             }
                     </div>
-                    <div className={`${btnrecord && 'hide2'}`}>
+                            <div className={'hidel'}>
+                            <div className={`${btnrecord && 'hide2'}`}>
                               <button className={`bg-indigo-700 text-white ${userrecorde && 'hide2'}  ${showrecord && 'hide2'}  margin-bottom ${styles.recordbtn}`} type='button' onClick={ e => {
                                 recordvideo()
                               Notification({
@@ -544,6 +546,7 @@ let sendimage = async(e) => {
                     <div className={`${styles.videopreview} ${!userrecorde && 'hide2'}`}>
                        <video className={`${styles.videopreviewiframe} `} id='Vidoe2' controls>  </video>
                     </div>
+                            </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700">      {  router.locale  === 'en-US' ? 'Photo'

@@ -8,7 +8,7 @@ import Studenttable from '../components/Studenttable';
 import Notification from '../components/Notification';
 import Head from 'next/head'
 
-const ahola_students = () => {
+const Ahola_students = () => {
 
     const {sever} = useSelector((state) => state);
     const [tutors, settutors] = useState([])
@@ -39,7 +39,8 @@ const ahola_students = () => {
            <Head>
                 <title>Ahola Students</title>
                 <link rel="icon" href="./images/logo1.png" />
-                <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
+                <script src="//code.tidio.co/kjrtn6giffsfdwcwl2hlmkeqrrwk1b42.js" async></script>
+                {/* <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script> */}
             </Head>
             <AdminHeader />
             <main className={`${styles.main}`}>
@@ -52,4 +53,4 @@ const ahola_students = () => {
     )
 }
 
-export default ahola_students
+export default Ahola_students

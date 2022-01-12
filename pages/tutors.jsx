@@ -110,7 +110,8 @@ const Tutors = (props) => {
             <title>Ahola Tutors</title>
             <meta name="description" content="The right Tutor always makes a difference" />
             <link rel="icon" href="./images/logo1.png" />
-            <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
+            {/* <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script> */}
+            <script src="//code.tidio.co/kjrtn6giffsfdwcwl2hlmkeqrrwk1b42.js" async></script>
           </Head>
           <Tutorpopup open={open} setOpen={setOpen} teacher={teach} />
           <div className="border">
@@ -145,7 +146,7 @@ const Tutors = (props) => {
                     if (fa > fb) {
                         return 1;
                     }
-                }).map(sub => <option value={sub.subject['en-US']} >{sub.subject[router.locale]}</option>)
+                }).map(sub => <option key={sub._id} value={sub.subject['en-US']} >{sub.subject[router.locale]}</option>)
                 }
               </select>
           <select name="" id="" className={` ${styles.countryselect} ${styles.filteritem}`} onChange={e => {

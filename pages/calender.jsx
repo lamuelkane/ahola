@@ -28,7 +28,8 @@ const Calender = () => {
                 <title>User Calender</title>
                 <meta name="description" content="View your events on ahola" />
                 <link rel="icon" href="./images/logo1.png" />
-                <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
+                <script src="//code.tidio.co/kjrtn6giffsfdwcwl2hlmkeqrrwk1b42.js" async></script>
+                {/* <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script> */}
             </Head>
     <Eventmodal />
             <div className="border">

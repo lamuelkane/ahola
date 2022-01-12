@@ -246,7 +246,8 @@ export default function Home(props) {
         <title>Ahola language school</title>
         <meta name="description" content="Learn Any language with ease" />
         <link rel="icon" href="./images/logo1.png" />
-        <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
+        {/* <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script> */}
+        <script src="//code.tidio.co/kjrtn6giffsfdwcwl2hlmkeqrrwk1b42.js" async></script>
       </Head>
       <Homehero herotext={herotext} subjects={subjects} setsubjects={setsubjects}/>
      

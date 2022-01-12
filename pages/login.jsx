@@ -33,7 +33,8 @@ export default function Example(props) {
         <title>Login</title>
         <meta name="description" content="Login to your user account" />
         <link rel="icon" href="./images/logo1.png" />
-        <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
+        {/* <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script> */}
+        <script src="//code.tidio.co/kjrtn6giffsfdwcwl2hlmkeqrrwk1b42.js" async></script>
       </Head>
       <Header2 />
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">

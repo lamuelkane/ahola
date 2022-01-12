@@ -154,7 +154,8 @@ let sendimage = async(e) => {
                 <title>Register</title>
                 <meta name="description" content="Become a student on Ahola" />
                 <link rel="icon" href="./images/logo1.png" />
-                <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
+                <script src="//code.tidio.co/kjrtn6giffsfdwcwl2hlmkeqrrwk1b42.js" async></script>
+                {/* <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script> */}
             </Head>
     <div className="border"><Header2 /></div>
     <div className={`center border bg-red-500  py-10 margin-bottom`}>

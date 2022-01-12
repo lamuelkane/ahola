@@ -9,7 +9,7 @@ import axios from 'axios';
 import Notification from '../components/Notification';
 import Head from 'next/head'
 
-const my_profile = () => {
+const My_profile = () => {
   const [videolink, setvideolink] = useState()
   const [description, setdescription] = useState('')
   const [timezone, settimezone] = useState('')
@@ -146,7 +146,8 @@ const submitrequest2 = async() => {
                 <title>Student Profile</title>
                 {/* <meta name="description" content="Learn Any language with ease" /> */}
                 <link rel="icon" href="./images/logo1.png" />
-                <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
+                <script src="//code.tidio.co/kjrtn6giffsfdwcwl2hlmkeqrrwk1b42.js" async></script>
+                {/* <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script> */}
             </Head>
             <div className="border">
                  <DashBoardHeader />
@@ -235,7 +236,8 @@ const submitrequest2 = async() => {
           <Head>
                 <title>Tutor's Profile</title>
                 <link rel="icon" href="./images/logo1.png" />
-                <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script>
+                <script src="//code.tidio.co/kjrtn6giffsfdwcwl2hlmkeqrrwk1b42.js" async></script>
+                {/* <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/25400134.js"></script> */}
             </Head>
           <div className="border">
                <DashBoardHeader />
@@ -397,4 +399,4 @@ const submitrequest2 = async() => {
   )
 }
 
-export default my_profile
+export default My_profile

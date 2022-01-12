@@ -131,7 +131,7 @@ const Header2 = () => {
                     <div className={`${styles.courses2} ${!showlang && 'hide'} bg-gray-500`}>
                       <div>
                           {
-                              router.locales.map((locale, i) =>  <div className={`text-gray-500 ${styles.lanitem} `}><Link href={router.asPath} locale={locale} key={i}>{getlanguagename(locale)}</Link></div>)
+                              router.locales.map((locale, i) =>  <div key={locale} className={`text-gray-500 ${styles.lanitem} `}><Link href={router.asPath} locale={locale} key={i}>{getlanguagename(locale)}</Link></div>)
                           }
                       </div>
                             <select className={`${styles.currencies}`} value={Currency} onChange={e => dispatch(setcurrency(e.target.value))}>
@@ -166,7 +166,7 @@ const Header2 = () => {
                   }
                   
                   </Link></span>
-                  <span className={`${styles.homenaveitem}`}><Link href='/tutors'>
+                  <span className={`${styles.homenaveitem}`}><Link href='/tutor_register'>
                                     {  router.locale  === 'en-US' ? ' Become a Tutor'
 
                   : router.locale === 'fr' ? `Devenez Tuteur`
