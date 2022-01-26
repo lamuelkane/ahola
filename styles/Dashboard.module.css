@@ -1,0 +1,272 @@
+.logoimg{
+    height: 70px;
+}
+
+.header{
+    background: transparent;
+    width: 100vw;
+    transition: all .5s ease;
+}
+
+.recordbtn{
+    padding: 5px 20px;
+    border-radius: 5px;
+}
+
+.course{
+    border-bottom: 1px solid black;
+    min-width: 300px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.coursename{
+    /* min-width: 150px; */
+}
+.coursebtn{
+    padding: 5px 20px;
+    color: white;
+}
+
+
+
+.mainsignupwrapper{
+    width:70%;
+    margin: 30px  auto;      
+}
+
+.mainsignp{
+    width:500px;
+    padding: 20px;
+}
+
+.tutorphotowrapper, .tutorvideowrapper{
+    width: 70%;
+    margin: 20px auto;
+}
+
+.tutorphoto{
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.tutorphoto1{
+
+}
+
+.tutorphoto2{
+
+}
+
+.videopreview{
+    height: 200px;
+    width: 400px;
+    border: .5px dashed grey;
+    /* background: grey; */
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stepsbodywrapper{
+    background: rgb(249, 249, 249)
+}
+
+.stepswrapper{
+    background: rgb(107, 107, 107);
+    color: rgb(163, 160, 160);
+}
+
+.dashboardsubheader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: rgb(107, 107, 107);
+    color: white;
+
+}
+
+.descriptionwrapper{
+    width: 60%;
+    margin: 20px auto;
+}
+
+.description{
+    padding: 20px;
+
+}
+
+.profileimage{
+    border-radius: 5px;
+}
+
+.descriptiontextwrapper{
+    max-width: 500px;
+    margin-top: 30px;
+}
+
+.decsriptiontextarea{
+    padding: 5px 10px;
+
+}
+
+.decsriptiontextarea:focus{
+    border: .2px solid grey;
+}
+
+.backbtn, .nextbtn{
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-right: 10px;
+    background: #7ad7f3;
+    border: none;
+    transition: all .5s ease;
+    cursor: pointer;
+}
+
+.nextbtn:hover{
+    background: #7ad7f3;
+    color: black;
+}
+
+
+.backbtn:hover{
+    background: white;
+    text: #7ad7f3;
+    border: .5px solid #7ad7f3;
+}
+
+.nextbtn:hover  .backbtn{
+    background: white;
+    text: #7ad7f3;
+    border: .5px solid #7ad7f3;
+}
+
+.backbtn:hover + .nextbtn{
+    background: #7ad7f3;
+    color: black;
+}
+
+.nextbtn{
+    background: white;
+    text: #7ad7f3;
+    border: .5px solid #7ad7f3;
+}
+
+
+
+@media screen and (max-width: 700px) {
+    .mainsignp{
+        width:300px;
+        padding: 20px;
+    }
+    
+.mainsignupwrapper{
+    width:95%;
+    margin: 30px  auto;      
+}
+
+.tutorphotowrapper{
+    width: 100%;
+    background-color: blue;
+}
+
+.samplephoto{
+    width: 80px;
+    height: 80px;
+}
+
+
+}
+
+.acountbalance{
+    position: relative;
+}
+
+.accountbalancedropdown{
+    position: absolute;
+    bottom: -230px;
+    background: white;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    left: -20px;
+    width: 250px;
+    min-height: 150px;
+    align-items: center;
+    justify-content:space-between;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4); 
+
+}
+
+.accountbalancedropdowntitle{
+
+}
+
+.accountbalancedropdownfunds{
+    color: blue;
+}
+
+.accountbalancedropdownbtn{
+    border-radius: 5px;
+    transition: all .5s ease;
+    padding: 5px;
+    min-width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: white;
+}
+
+
+.calenderday{
+    /* position: relative; */
+    z-index: 0 !important;
+}
+
+.eventname{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.videopreviewiframe{
+    height: 100%;
+    width: 100%;
+}
+
+@media screen and (max-width: 1200px) {
+
+.tutorphotowrapper{
+    width:90%;
+}
+
+}
+
+@media screen and (max-width: 1700px) {
+
+    .tutorphotowrapper{
+        width:80%;
+    }
+    
+}
+
+@media screen and (max-width: 556px) {
+
+    .tutorphotowrapper{
+        width:80%;
+    }
+
+    .videopreview{
+        width: 300px;
+    }
+
+    .descriptionwrapper{
+        width: 90%;
+    }
+    
+}

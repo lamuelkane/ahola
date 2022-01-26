@@ -1,0 +1,528 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&family=Oswald:wght@694&display=swap');
+
+.header{
+  background: transparent;
+  width: 100vw;
+  transition: all .5s ease;
+}
+
+.homeheroheader{
+  width: 100vw;
+}
+
+.header:hover{
+  background: white;
+  color: black;
+}
+
+
+.homehero{
+  color: white;
+  font-family: 'Oswald', sans-serif;
+  background: url('../public/images/hero.jpg');
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  height: 90vh;
+  min-height: 400px !important;
+  position: relative;
+}
+
+.homeheroheader{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background: rgba(255, 0, 0, .2);
+  height: 100%;
+  z-index: -1;
+}
+
+.homeherotext{
+  margin-top: 100px;
+  margin-left: 50px;
+  background: linear-gradient(to right, red,
+  #ff6b08, #cf23cf, #eedd44);
+-webkit-text-fill-color: transparent;
+-webkit-background-clip: text;
+}
+
+.homeheroh1{
+  font-weight: 900;
+  background: linear-gradient(to right, #f32170,
+                    #ff6b08, #cf23cf, #eedd44);
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+}
+
+.logoimg{
+  height: 70px;
+}
+
+.homeherop{
+  font-weight: bolder;
+}
+
+.footerimg{
+  max-height: 30px;
+  margin-right: 5px;
+  max-width: 30px;
+}
+
+.about{
+  max-width: 200px;
+}
+
+.homeherobutton{
+  padding: 15px;
+  padding-left: 30px;
+  padding-right: 30px;
+  border-radius: 10px;
+  background: white;
+  color: black;
+  transition: all .5s ease;
+  border: none;
+}
+
+.justify{
+  text-align:start;
+}
+
+.footerlogoimg{
+  width: 100px;
+  height: 50px;
+}
+
+.Footer{
+  padding: 30px;
+  margin-top: 30px;
+  /* background: grey; */
+}
+
+.homeherobutton:hover{
+  background: transparent;
+  color: white;
+  border: .5px solid #4F46E5;
+}
+
+.courseimg{
+  height: 50px;
+  width: 50px;
+  margin-right: 20px;
+}
+
+
+
+.course{
+  border: .2px solid black;
+  cursor: pointer;
+  padding: 5px;
+  width: 180px;
+  /* background: rgb(175, 36, 36); */
+  background: white;
+  color: black;
+  border-radius: 10px;
+  transition: all .5s ease;
+  margin-top: 20px;
+}
+
+.coureswrapper{
+  width: 80vw;
+  margin: auto;
+}
+
+.coolsectionwrapper{
+  width: 95vw;
+  margin: 50px auto;
+}
+
+.somewrapper{
+  width: 95vw;
+  margin: 30px auto;
+}
+
+.somewrapper2{
+  padding: 20px;
+  width: 95vw;
+  margin: 20px auto;
+}
+
+.chourseshowcase{
+  width: 95vw;
+  margin: 50px auto;
+  padding: 20px;
+  position: relative;
+}
+
+.coursessearch{
+  position: relative;
+  z-index: 400;
+}
+
+.coursessearchlabel{
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.1); 
+  padding: 17px 15px;
+    border: none;
+}
+
+.courses{
+  background: white;
+  display: flex;
+  flex-direction: column-reverse;
+  /* justify-content: flex-end; */
+  padding: 15px;
+  width: 100%;
+  height: 150px;
+  overflow-y: scroll;
+  top: -160px;
+  position: absolute;
+  box-shadow: 5px 5px 16px -8px rgba(0, 0, 0, 1);
+  right: 0;
+  margin: auto;
+  color: black;
+}
+
+
+
+
+
+.courseiconhoder{
+  background: #ff1616;
+  padding: 20px;
+  position: absolute;
+  top: -20px;
+  color: white;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border-radius: 50%;
+  width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.course:hover{
+  background: #4F46E5;
+  color: white;
+
+}
+
+
+.showmoercoursesbutton{
+  padding: 10px;
+  color: black;
+  border-radius: 10px;
+  padding-left: 35px;
+  padding-right: 35px;
+  transition: all .5s ease;
+  margin-top: 30px;
+  background: #4F46E5;
+  border: 1px solid #4F46E5
+}
+
+.showmoercoursesbutton:hover{
+  color: white;
+}
+
+.showcase{
+  border-left: 2px solid #4F46E5;
+  border-right: 2px solid #4F46E5;
+  width: 300px;
+  margin-bottom: 20px;
+  /* margin-left: 10px; */
+  border-radius: 10px;
+  
+}
+
+.showcaseheading{
+  margin-bottom: 50px;
+}
+
+.showcaseinner{
+  padding: 10px;
+}
+
+.showcaseimg{
+  margin-right: 20px;
+  height: 50px;
+  width: 50px;
+}
+
+.showcaseh2{
+  margin-bottom: 5px;
+  text-align: center;
+  /* font-weight: 100; */
+}
+
+.featuretutor{
+  box-shadow: 5px 23px 20px rgba(0, 0, 0, 0.3); 
+  border-bottom: .5px solid rgb(202, 201, 201);
+  max-height: 350px;
+  max-width: 200px;
+}
+
+.featuretutorbody{
+  width: 100%;
+  padding: 10px;
+  /* background: black; */
+}
+
+.featuretutorbtn{
+  padding: 5px 0px;
+  color: white;
+  width: 95%;
+  margin: 10px auto 0px auto;
+}
+
+.featuretutorimg{
+  width: 100%;
+  height: 150px;
+  /* border: 0.5px solid black; */
+}
+
+.coolimage{
+  height: 300px;
+  width: 450px;
+  border-radius: 50px;
+  border-bottom-left-radius: 0px;
+}
+
+.coolimage1{
+  height: 300px;
+  width: 450px;
+  /* border-radius: 50px; */
+  /* border-bottom-left-radius: 0px; */
+}
+
+.coolimagereverse{
+  height: 300px;
+  width: 450px;
+  border-radius: 50px;
+  border-bottom-right-radius: 0px;
+}
+
+.coolimagereverse1{
+  height: 300px;
+  width: 450px;
+  /* border-radius: 50px;
+  border-bottom-right-radius: 0px; */
+}
+
+.coolsection{
+  margin-top: 50px;
+}
+
+.tutringlevelsitem{
+  width: 200px;
+  text-align: center;
+}
+
+/* .shwcasewrapper{
+  margin: 0 20px;        
+} */
+
+.homeheader{
+  background: white;
+  padding: 10px;
+}
+
+.homeimg{
+  height: 50px;
+  width: 100px;
+  margin-right: 50px;
+  margin-left: 20px;
+}
+
+.shwcasewrapper{
+  width: 95vw;
+  margin: auto;
+  padding: 20px;
+  position: relative;
+}
+
+.homenaveitem{
+  margin-right: 30px;
+  font-size: large;
+}
+
+.homenaveitems{
+  /* margin-right: 30px; */
+  font-size: large;
+  border-bottom: 1px solid white;
+  padding: 10px;
+}
+
+.registersection{
+  width: 100%;
+  min-height: 400px;
+  margin: auto;
+  text-align: center;
+  margin-top: 40px;
+  justify-content: space-between !important;
+}
+
+.registerimage{
+  width: 100%;
+  height: 300px;
+}
+
+.special{
+  box-shadow: 5px 5px 16px -3px rgba(0, 0, 0, 5);
+  margin-top: -60px;
+  z-index: 100;
+
+}
+
+
+.courses2{
+    background: white;
+    flex-wrap: wrap;
+    width: 200px;
+    left: -60px;
+    top: 40px;
+    position: absolute;
+    box-shadow: 5px 5px 16px -8px rgba(0, 0, 0, .5);
+    right: 0;
+    margin: auto;
+    color: black;
+    z-index: 100;
+}
+
+.lanitem{
+  padding: 2px 10px;
+}
+
+.currencies{
+  padding: 2px !important;
+  width: 120px;
+  margin: 10px 10px;
+}
+
+.coursesholder{
+  position: relative;
+}
+
+.coursesholder:hover > .courses{
+  display: flex;
+}
+
+.headersmall{
+  display: none;
+  /* transition: all 0.05s ease; */
+}
+
+@media screen and (min-width: 1200px) {
+  .course{
+    width: 200px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .studentlevels{
+    justify-content: center;
+  }
+
+  .homeheader{
+    justify-content: space-between;
+  }
+
+  .coolimagereverse, .coolimage{
+    width: 80vw;
+  }
+
+  .shwcasewrapper{
+    justify-content: center;
+    /* padding: 0px; */
+    align-items: center;
+  }
+
+  .showcase{
+    align-self: center;
+    width: 300px;
+    margin-bottom: 20px;
+  }
+
+  .coolsectionreverse{
+    flex-direction: column-reverse;
+  }
+
+  .menunav{
+    position: fixed;
+    top: 0;
+    right: 0;
+    background: grey;
+    height: 100vh;
+    width: 300px;
+    transform: translateX(101%);
+  }
+}
+
+
+@media screen and (max-width: 556px) {
+
+  .Footer{
+    flex-direction: column;
+  }
+  
+  .course{
+    width: 170px;
+    padding: 1px 3px;
+  }
+
+  .headerlarge{
+    display: none;
+  }
+
+  .homenaveitem{
+    font-size: medium;
+    /* color: blue; */
+  }
+
+  .joinimageholder{
+    width: 100% !important;
+    height: 50% !important;
+  }
+  
+  .headersmall{
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    position: absolute;
+    right: 0;
+    width: 100%;
+    /* height: 100vh; */
+    color: white;
+    z-index: 5000;
+  }
+  
+  
+  .courseimg{
+    margin-right: 10px;
+  }
+
+.registerimage{
+  /* height: 200px; */
+  /* width: 100%; */
+}
+
+  .registersection{
+    flex-direction: column-reverse;
+    width: 90%;
+  }
+  .homehero{
+    height: 500px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+
+  .course{
+    width: 150px;
+    padding: 1px 3px;
+
+  }
+  
+  .courseimg{
+    margin-right: 10px;
+  }
+}

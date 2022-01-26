@@ -1,0 +1,5 @@
+
+
+export const paypalclient = 'ARix2IWfwGTKjIorVPQzAaGwzYyrg9jQgPDOHfPyZz6GFIfwPo06k0JKyraYqLrtNcwyt76EHdWfNc7d'
+
+export const paypalclientlive = 'AWooKjgu_VxIE3v6KvPvLIVCOvMCHw2icDFhRZcm-kmsU7ZxrIDi2AgM77C83Wd0wnZfR_ArGO_IM4sh'

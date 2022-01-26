@@ -1,0 +1,418 @@
+.filter{
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: red;
+}
+
+.tutorimg{
+    height: 150px;
+    width: 150px;
+    cursor: pointer;
+}
+
+.tutorimgholder{
+    position: relative;
+}
+
+.rangesliderwrapper{
+    padding:  20px 30px;
+    background-color: white;
+    /* max-height: 45px; */
+    border: none;
+    position: relative;
+}
+
+.slider{
+    background: white;
+    /* display: none; */
+    /* flex-wrap: wrap; */
+    min-height: 100px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    padding: 15px;
+    width: 400px;
+    left: -105px;
+    top: 60px;
+    position: absolute;
+    box-shadow: 5px 5px 16px -8px rgba(0, 0, 0, 1);
+    right: 0;
+    margin: auto;
+    color: black;
+    z-index: 300;
+    border-radius: 10px;
+}
+
+.countyicon{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.tutorsheroimg{
+    /* max-height: 500px; */
+    height: 100px;
+    margin: auto;
+}
+
+.tutoroverlay{
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    background: rgba(0, 0, 0, .5);
+    /* z-index: 200; */
+}
+
+.countryselect{
+    border: none;
+}
+
+.filteritem{
+    transition: all .3s ease;
+    padding: 20px 30px;
+}
+
+.filteritem:hover{
+    box-shadow: 5px 23px 50px rgba(0, 0, 0, 0.3); 
+    /* padding: 20px; */
+    border-radius: 10px;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+.tutorsfilterwrapper{
+    width: 80%;
+    border-radius: 10px;
+    /* padding: 10px; */
+    position: sticky;
+    top: 0;
+    margin: auto;
+}
+
+.tutorshedule{
+    height: 215px;
+    width: 350px;
+    max-height: 215px;
+}
+
+.tutors{
+    margin-top: 30px;
+}
+
+.tutorpage{
+    background: rgb(253, 251, 251);
+    padding: 50px;
+}
+
+.tutor{
+    margin-top: 10px;
+    max-width: 1000px;
+    min-width: 70vw;
+    /* max-height: 300px; */
+}
+
+.tuttorshero{
+    /* padding: 50px 20px; */
+    padding-top: 70px;
+    padding-bottom: 70px;
+    /* background: green; */
+}
+
+.tutoridentity{
+    padding: 30px;
+}
+
+.tutoridentityinfo{
+    margin-top:10px;
+    margin-bottom:10px
+}
+
+.tutoridentityvideo{
+    width: 100%;
+    height: 400px;
+    margin-bottom: 30px;
+}
+
+.tutordesciptiontext{
+    padding: 30px; 
+}
+
+.tutorinfoaboutwrapper{
+    align-items: flex-start;
+}
+
+.tutoridentityinfoimgholder{
+    margin-right: 10px;
+}
+
+.tutoridentityinfoimgholder{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.tutoraction{
+    width: 300px;
+    padding: 10px;
+}
+
+.tutorrate{
+    margin-bottom: 30px;
+}
+
+.tutoractionbtn{
+    padding: 10px;
+    border-radius: 10px;
+    border: .2px solid rgb(122, 215, 243);
+    margin-top: 20px;
+    background: white;
+}
+
+.tutorschedule{
+    width: 300px;
+    height: 300px;
+    background: blue;
+    margin-top: -540px;
+    overflow: scroll;
+}
+
+.tutoractionwrapper{
+    position: sticky;
+    top: 0;
+    border-top:  5px solid rgb(122, 215, 243 );
+    border-radius: 10px;
+}
+
+.tutorreviewoverlay{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tutorreview{
+    padding: 20px;
+    margin-top: 10px;
+    border-top: .2px solid rgba(128, 128, 128, .2);
+    border-left: 5px solid rgb(122, 215, 243 );
+    border-radius: 10px;
+}
+
+.tutorreviewimg{
+    height: 100px;
+    width: 100px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.tutorreviewtext{
+
+}
+
+.tutorpaewrapper{
+    margin-top: 30px;
+}
+
+.tutorschedulewrapper{
+    display: flex;
+    flex-direction: row-reverse;
+    margin: auto;
+    width: 80%;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.searchinput{
+    border: none;
+}
+
+.searchinput:focus{
+    outline: none !important;
+}
+
+.searchinputwrapper{
+    background-color: white;
+    padding: 0px 5px;
+}
+
+
+.priceinput{
+    width: 100px;
+    border-radius: 10px;
+}
+
+.bookbtn{
+    padding: 10px 35px;
+    margin: 5px 0px;
+    border-radius: 5px;
+    border: 1px solid #4F46E5;
+    transition: all 0.5s ease;
+    background-color: transparent;
+}
+
+.bookbtn2{
+    padding: 10px 35px;
+    margin: 5px 0px;
+    border-radius: 5px;
+    border: none;
+    background-color: #4F46E5;
+}
+
+.bookbtn:hover{
+    background-color: #4F46E5;;
+
+}
+
+.tutorreviews{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.tutorreviewswrapper{
+    margin-right: 20px;
+    max-width: 700px;
+    border-top: 5px solid rgb(122, 215, 243 );
+    border-radius: 10px;
+}
+
+.tutoridentitywrapper{
+    max-width: 700px;
+    margin-right: 20px;
+    border-top:  5px solid rgb(122, 215, 243 );
+    border-radius: 10px;
+}
+
+.tutorinfo{
+
+
+
+}
+
+.tutorabout{
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width: 650px) {
+    .tutorpage{
+        padding: 10px;
+    }
+
+    .tutorimg{
+        margin-right: 30px;
+        width: 80px;
+        height: 80px;
+    }
+
+    .bookbtn{
+        padding: 10px 7px;
+        margin: 5px 0px;
+        background-color: transparent;
+        border-radius: 10px;
+        border: 1px solid #4F46E5;
+        transition: all 0.5s ease;
+    }
+
+    .bookbtn2{
+        padding: 10px 7px;
+        margin: 5px 0px;
+        background-color: transparent;
+        border-radius: 10px;
+        border: 1px solid #4F46E5;
+        transition: all 0.5s ease;
+    }
+
+
+    .tutorabout{
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    .tutoridentitywrapper, .tutoractionwrapper, .tutorreviewswrapper{
+        width: 95%;
+        margin-right: 0;
+    }
+
+    .tutorinfo{
+        border-right: none;
+        padding-right: 3px !important;
+    }
+
+    .tutorimg{
+        /* width: 250px; */
+    }
+
+    .tutoraction{
+        width: 80%;
+        margin: auto;
+    }
+
+    .tutorsmallscreen{
+        flex-direction: column;
+    }
+
+}
+
+@media screen and (max-width: 1200px){
+    .tutorschedulewrapper{
+        flex-direction: column;
+
+    }
+
+    .tutorprofileswraper{
+        /* background-color: blue; */
+        width: 95vw;
+    }
+
+    .tutorschedule{
+        margin-top: 0px;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .tutorreviewswrapper{
+        margin-top: 20px;
+    }
+  
+  }
+
+
+  @media screen and (max-width: 950px){
+    .tutoridentitywrapperparent{
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+
+    .tutorabout{
+        /* flex-direction: row;
+        background: blue; */
+    }
+
+    .tutorprofileswraper{
+        /* background-color: rgb(212, 52, 132); */
+    }
+
+  
+    .tutoridentitywrapper{
+        margin-bottom: 30px;
+        max-width: 95%;
+    }
+
+    .tutoraction{
+        width: 90%;
+        margin: auto;
+        max-width: 700px;
+    }
+
+    .tutoractionwrapper{
+        max-width: 700px;
+        width: 100%;
+    }
+  }
+  

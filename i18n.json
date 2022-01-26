@@ -1,0 +1,7 @@
+{
+    "locales": ["en-US", "fr", "es", "zh", "de"],
+    "defaultLocale": "en-US",
+    "pages": {
+        "*": ["homehero"]
+    } 
+}

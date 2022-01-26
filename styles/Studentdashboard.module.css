@@ -1,0 +1,46 @@
+.mytutorswrapper{
+    width: 80vw;
+    margin: 30px auto;
+    padding: 30px 10px;
+    background-color: white;
+}
+
+.tutordetailswrapper{
+    width: 100vw;
+    height: 100vh;
+    background: rgba(212, 209, 209, .3);
+    z-index: 1;
+    position: fixed;
+    top: 0;
+}
+
+.tutordetails{
+    width: 90%;
+    height: 90%;
+    background: white;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: scroll;
+}
+
+.tutordetailsclose{
+    /* position: absolute; */
+    float: right;
+    margin-right: 20px;
+    margin-top: 10px;
+    padding: 10px;
+    background: grey;
+    border-radius: 50%;
+    color: white;
+}
+
+.tutorlessonwrapper{
+    width: 80%;
+    margin: auto;
+    margin: 40px auto;
+}
+
